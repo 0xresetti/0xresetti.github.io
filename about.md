@@ -4,12 +4,13 @@ title: /about
 permalink: /about/
 ---
 
-# jekyll-theme-console
+# whoami?
 
-A jekyll theme with inspiration from linux consoles for hackers, developers and script kiddies.
-You can find the source code for this theme at [github.com/b2a3e8/jekyll-theme-console](https://github.com/b2a3e8/jekyll-theme-console).
+hello.
+my name is wyvn (pronounced why-vn), im a 20 year old kid from the uk, i love hacking, and i love to exploit shit. 
 
-## What is jekyll?
+im a simple guy. and you should follow me on twitter: [@0xwyvn](https://twitter.com/0xwyvn)
 
-Jekyll is a simple, blog-aware, static site generator for personal, project, or organization sites. Written in Ruby by Tom Preston-Werner, GitHub's co-founder, it is distributed under an open source license.
-<br />Instead of using databases, Jekyll takes the content, renders Markdown or Textile and Liquid templates, and produces a complete, static website ready to be served by Apache HTTP Server, Nginx or another web server. Jekyll is the engine behind GitHub Pages, a GitHub feature that allows users to host websites based on their GitHub repositories for no additional cost.
+## what is this?
+
+this is my blog dedicated to writeups, whether that be reverse engineering an iot camera, or debuting my new c2 agent, ill be writing all about it here. stay tuned for more.
