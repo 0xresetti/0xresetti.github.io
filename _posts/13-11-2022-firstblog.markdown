@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "First blog"
-date:   13-11-2022
+date:   2022-11-13
 categories:
 ---
 
