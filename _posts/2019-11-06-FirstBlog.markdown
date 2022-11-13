@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "First blog"
+title:  "First Blog"
 categories:
 ---
 
