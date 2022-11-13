@@ -8,6 +8,6 @@ permalink: /contact
 
 
 
-telegram:- [@dev_wyvn](https://t.me/dev_wyvn)
-twitter:- [@0xwyvn](https://twitter.com/0xwyvn)
-xmpp:- wyvn@exploit.im
+telegram - [@dev_wyvn](https://t.me/dev_wyvn)
+twitter - [@0xwyvn](https://twitter.com/0xwyvn)
+xmpp - wyvn@exploit.im
