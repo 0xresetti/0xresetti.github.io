@@ -12,3 +12,5 @@ permalink: /
 # Welcome
 
 Bla bla bla bla. Bla bla bla bla bla bla bla bla.
+
+- [ 13/11/2022 ] [firstblog](https://0xwyvn.github.io/firstblog/)
