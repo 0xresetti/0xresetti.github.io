@@ -4,3 +4,4 @@ header_pages:
   - home.md
   - about.md
   - contact.md
+footer: 'check out my <a href="https://github.com/0xwyvn">github!</a>'
