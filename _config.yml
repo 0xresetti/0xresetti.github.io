@@ -2,6 +2,5 @@ remote_theme: b2a3e8/jekyll-theme-console
 markdown: kramdown
 header_pages:
   - home.md
-  - about.md
   - contact.md
 footer: 'check out my <a href="https://github.com/0xwyvn">github!</a>'
