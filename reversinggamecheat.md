@@ -56,7 +56,7 @@ After:
 A lot easier to read!
 Looking through this command, at first it is making a fake message box pop up that says **"No VM/VPS allowed! Try running on a real device!"**. Keep in mind there are no checks for VM applications or anything, this is just a fake message box to confuse the victim into thinking something is wrong with their computer meanwhile the malware fully executes in the background.
 
-After the fake message box, the malware adds itself to the Windows Defender Exclusion list, pretty normal evasion technique here. Following that, the malware downloads and executes files from ```https://rentry[.]org/ebg7e/raw```, this is more likely the actual malware which will be dropped onto the device. Lets take a browse to that link:
+After the fake message box, the malware adds itself to the Windows Defender Exclusion list, pretty normal evasion technique here. Following that, the malware downloads and executes files from ```https://rentry.org/ebg7e/raw```, this is more likely the actual malware which will be dropped onto the device. Lets take a browse to that link:
 
 <img src="/images/reentry.png" alt= "reentry" width="70%" height="70%">
 
@@ -149,3 +149,5 @@ Both functions use the ```advapi32.dll``` DLL to perform these token impersonati
 Apart from that, there isnt much else, I think this is just used for privilege escalation. There is also a ```GetProcessOwner``` function, which from what I can see, it's in the name lol, it just gets the owner of the processes that it's targeting. 
 
 **```ezzzzzzz.exe```**
+
+**Stay tuned! I'm still working on this blog!**
