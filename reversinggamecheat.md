@@ -66,7 +66,7 @@ Not gonna lie, i wasn't expecting **5** different exe files, looks like I've got
 
 To save time and to not fill this whole page up with screenshot of each individual malware, I'm going to list the information from DetectItEasy & PEBear here:
 
-First binary: **```LEMON.exe```**
+**The first binary:** **```LEMON.exe```**
 - Microsoft Visual C/C++ Compiled.
 - MD5: ```6d5f74f263d5ab9b0e3315b495eb72d5```
 - Heavily Obfuscated, lots of Anti-Analysis & Anti-Debugging techniques.
@@ -77,7 +77,7 @@ Turns out the file was a build of **Rhadamanthys Stealer**, a new Stealer malwar
 
 [You can take a look at the Any.Run scan here (click me!)](https://app.any.run/tasks/2e3aea94-e1a3-4dab-95fd-1ec803aae2ef)
 
-Second binary: **```LEM.exe```**
+**The second binary:** **```LEM.exe```**
 - Also Microsoft Visual C/C++ Compiled.
 - MD5: ```edf0360a7aab3d02e4f99f85dfa2d0fa```
 - Extremely noisy, drops the same RAT binary multiple times
@@ -121,7 +121,7 @@ Looking up the **SearchIndexer.exe** file on VirusTotal shows us that the file i
 
 So, we have a Rhadamanthys Stealer, and DCRAT. I wonder what we will run into with the next binary... Ransomware maybe? LOL
 
-Third binary: **```LicGet.exe```**
+**The third binary:** **```LicGet.exe```**
 - .NET v4.0 Executable
 - MD5: ```2b125292307de39b8be71d73a8eb2f8f```
 - Requires Admin privileges to execute.
@@ -146,6 +146,6 @@ Both functions use the ```advapi32.dll``` DLL to perform these token impersonati
 
 Apart from that, there isnt much else, I think this is just used for privilege escalation. There is also a ```GetProcessOwner``` function, which from what I can see, it's in the name lol, it just gets the owner of the processes that it's targeting. 
 
-Fourth binary: **```ezzzzzzz.exe```**
+**The fourth binary:** **```ezzzzzzz.exe```**
 
 **Stay tuned! I'm still working on this blog!**
