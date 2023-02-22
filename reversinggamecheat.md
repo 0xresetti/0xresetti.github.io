@@ -71,11 +71,11 @@ To save time and to not fill this whole page up with screenshot of each individu
 - MD5: ```6d5f74f263d5ab9b0e3315b495eb72d5```
 - Heavily Obfuscated, lots of Anti-Analysis & Anti-Debugging techniques.
 
-Unfortunately, I don't have IDA Pro and I'm still learning when it comes to going deep into malware with reverse engineering and I wasn't able to understand muc to do with this file, however, thankfully websites like ```app.any.run``` exist! This website does live dynamic analysis on files, making it easy for anyone to understand what is going on.
+Unfortunately, I don't have IDA Pro and I'm still learning when it comes to going deep into malware with reverse engineering and I wasn't able to understand much to do with this file, however, thankfully websites like ```app.any.run``` exist! This website does live dynamic analysis on files, making it easy for anyone to understand what is going on.
 
 Turns out the file was a build of **Rhadamanthys Stealer**, a new Stealer malware designed to steal Crypto Coins, System Information, and execute separate processes such as Powershell.
 
-[You can take a look at the Any.Run scan here](https://app.any.run/tasks/2e3aea94-e1a3-4dab-95fd-1ec803aae2ef)
+[You can take a look at the Any.Run scan here (click me!)](https://app.any.run/tasks/2e3aea94-e1a3-4dab-95fd-1ec803aae2ef)
 
 Moving onto the next file:
 
@@ -83,7 +83,7 @@ Moving onto the next file:
 - Also Microsoft Visual C/C++ Compiled.
 - MD5: ```edf0360a7aab3d02e4f99f85dfa2d0fa```
 - Extremely noisy, drops the same RAT binary multiple times
-- Adds Windows Defender Exclusions for the entire C: Drive and every single folder inside of it? 🤣
+- Adds Windows Defender Exclusions for the entire C: Drive and every single folder inside of it? A bit strange 🤣
 - Also adds about a million scheduled tasks to execute each previously dropped RAT binary.
 
 Upon execution of this **LEM.exe** file, it immediately drops multiple other RAT binaries, they are named: 
@@ -124,3 +124,28 @@ Looking up the **SearchIndexer.exe** file on VirusTotal shows us that the file i
 So, we have a Rhadamanthys Stealer, and DCRAT. I wonder what we will run into with the next binary... Ransomware maybe? LOL
 
 **```LicGet.exe```**
+- .NET v4.0 Executable
+- MD5: ```2b125292307de39b8be71d73a8eb2f8f```
+- Requires Admin privileges to execute.
+
+Opening the file in dnSpy, it is a fairly simple and small file with not much happening. First, the file checks to see if it is running as Administrator or not, given that the file prompts UAC when opened, most unknowing people would click Yes. This will give the process Administrator privileges, and then move to the ```jumptoSys``` function. If you click No on the UAC prompt, the file moves to the ```Disable``` function. 
+
+<img src="/images/checkadmin.png" alt= "checkadmin" width="70%" height="70%">
+
+Looking at the ```jumptoSys``` function, it's concept is to use the WinAPI's ```GetProcessByName``` method to get the Process Token of the ```winlogon``` process, which runs with Administrator privileges. It then duplicates this token and creates a new process using the duplicated token, this is probably to migrate the **LicGet.exe** process to a less obvious one, since ```winlogon``` is known to run with Administrator privileges.
+
+<img src="/images/jumptosysfunc.png" alt= "jump2sys" width="70%" height="70%">
+
+On the other hand, looking at the ```Disable``` function, it's concept is slightly different, it again uses the WinAPI's ```GetProcessByName``` method to get the Process Token, but instead of targeting the ```winlogon``` process, it targets the ```MsMpEng``` process, this process is the core process of the Windows Defender Anti-malware Application, and also runs with Administrator privileges. 
+
+It looks like the ```Disable``` functions job is to emulate the ```MsMpEng``` process token, then allocate new memory and set the process token information to the same process token as the ```MsMpEng``` process, giving the **LicGet.exe** process Administrator privileges.
+
+<img src="/images/disablefunc.png" alt= "jump2sys" width="70%" height="70%">
+
+By the way, I could be completely wrong with this process, but thats what it looks like haha, as I say I'm still learning.
+
+Both functions use the ```advapi32.dll``` DLL to perform these token impersonation actions.
+
+Apart from that, there isnt much else, I think this is just used for privilege escalation. There is also a ```GetProcessOwner``` function, which from what I can see, it's in the name lol, it just gets the owner of the processes that it's targeting. 
+
+**```ezzzzzzz.exe```**
