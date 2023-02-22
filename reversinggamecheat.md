@@ -63,3 +63,64 @@ After the fake message box, the malware adds itself to the Windows Defender Excl
 Not gonna lie, i wasn't expecting **5** different exe files, looks like I've got a lot more analysing to do...
 
 ## Analysing the real malware.
+
+To save time and to not fill this whole page up with screenshot of each individual malware, I'm going to list the information from DetectItEasy & PEBear here:
+
+**```LEMON.exe```**
+- Microsoft Visual C/C++ Compiled.
+- MD5: ```6d5f74f263d5ab9b0e3315b495eb72d5```
+- Heavily Obfuscated, lots of Anti-Analysis & Anti-Debugging techniques.
+
+Unfortunately, I don't have IDA Pro and I'm still learning when it comes to going deep into malware with reverse engineering and I wasn't able to understand muc to do with this file, however, thankfully websites like ```app.any.run``` exist! This website does live dynamic analysis on files, making it easy for anyone to understand what is going on.
+
+Turns out the file was a build of **Rhadamanthys Stealer**, a new Stealer malware designed to steal Crypto Coins, System Information, and execute separate processes such as Powershell.
+
+[You can take a look at the Any.Run scan here](https://app.any.run/tasks/2e3aea94-e1a3-4dab-95fd-1ec803aae2ef)
+
+Moving onto the next file:
+
+**```LEM.exe```**
+- Also Microsoft Visual C/C++ Compiled.
+- MD5: ```edf0360a7aab3d02e4f99f85dfa2d0fa```
+- Extremely noisy, drops the same RAT binary multiple times
+- Adds Windows Defender Exclusions for the entire C: Drive and every single folder inside of it? 🤣
+- Also adds about a million scheduled tasks to execute each previously dropped RAT binary.
+
+Upon execution of this **LEM.exe** file, it immediately drops multiple other RAT binaries, they are named: 
+- **BlockNet.exe**
+- **SearchIndexer.exe**
+- **OSPPSVC.exe**
+- **lsass.exe**
+- **dwm.exe**
+- **dllhost.exe**
+- **lsm.exe**
+- **taskeng.exe**
+- **ctfmon.exe**
+- **System.exe**
+- **15d52deeb054a73b130d4cbd0fb351b54021f4f6.exe**
+
+What's funny is... **All of these binaries have the exact same MD5 hash, compilation time & file size, they are identical...**
+
+MD5 for all 11 dropped binaries: ```8c855395009a5d4b17ef2849fca409fa```
+
+<img src="/images/lemexe.png" alt= "lemexe" width="70%" height="70%">
+
+As I said before as well, it also adds Windows Defender Exclusions for the entire C: drive, and every single folder within it. I think the C: drive alone would have been good enough, but oh well...
+
+Regarding the "million scheduled tasks" I spoke about earlier, these are all tasks to execute all 11 of these binaries on startup.
+
+The most interesting binary out of all of these 11 is **SearchIndexer.exe**, since it is the only one that actually executes and connects to the CnC server. (The other 10 binaries are just dropped and their respective scheduled startup task is added)
+
+**Here is the CnC information:**
+- IP: 195.3.223.218
+- Destination Port: 80
+
+Looking up the **SearchIndexer.exe** file on VirusTotal shows us that the file is a DCRAT binary.
+
+<img src="/images/av1.png" alt= "av1" width="70%" height="70%">
+
+<img src="/images/av2.png" alt= "av2" width="70%" height="70%">
+
+So, we have a Rhadamanthys Stealer, and DCRAT. I wonder what we will run into with the next binary... Ransomware maybe? LOL
+
+**```LicGet.exe```**
