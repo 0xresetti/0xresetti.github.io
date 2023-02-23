@@ -220,5 +220,5 @@ Next up, the binary runs & adds to startup what seems to be **another** backdoor
 
 Finally, just in case the second cmd.exe command didn't work, cmd.exe runs all the commands again, but this time, one-by-one.
 
-<img src="/images/4cmdstopservice.png" alt= "4cmdstopservice" width="75%" height="75%">
+<img src="/images/4cmdstopservice2.png" alt= "4cmdstopservice" width="75%" height="75%">
 
