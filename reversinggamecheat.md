@@ -124,7 +124,7 @@ So, we have a Rhadamanthys Stealer, and DCRAT. I wonder what we will run into wi
 **The third binary:** **```LicGet.exe```**
 - .NET v4.0 Executable
 - MD5: ```2b125292307de39b8be71d73a8eb2f8f```
-- Requires Admin privileges to execute.
+- Prompts UAC on execution.
 
 Opening the file in dnSpy, it is a fairly simple and small file with not much happening. First, the file checks to see if it is running as Administrator or not, given that the file prompts UAC when opened, most unknowing people would click Yes. This will give the process Administrator privileges, and then move to the ```jumptoSys``` function. If you click No on the UAC prompt, the file moves to the ```Disable``` function. 
 
@@ -138,7 +138,7 @@ On the other hand, looking at the ```Disable``` function, it's concept is slight
 
 It looks like the ```Disable``` functions job is to emulate the ```MsMpEng``` process token, then allocate new memory and set the process token information to the same process token as the ```MsMpEng``` process, giving the **LicGet.exe** process Administrator privileges.
 
-<img src="/images/disablefunc.png" alt= "jump2sys" width="70%" height="70%">
+<img src="/images/disablefunc.png" alt= "disable" width="70%" height="70%">
 
 By the way, I could be completely wrong with this process, but thats what it looks like haha, as I say I'm still learning.
 
@@ -147,5 +147,35 @@ Both functions use the ```advapi32.dll``` DLL to perform these token impersonati
 Apart from that, there isnt much else, I think this is just used for privilege escalation. There is also a ```GetProcessOwner``` function, which from what I can see, it's in the name lol, it just gets the owner of the processes that it's targeting. 
 
 **The fourth binary:** **```ezzzzzzz.exe```**
+- PureBasic Compiled (???)
+- MD5: ```18e5764810cfb3bdb2ebec7d2d276fdd```
 
-**Stay tuned! I'm still working on this blog!**
+After skimming through the file with Ghidra, and looking at the strings list, there wasn't much information that was popping out to me, ```app.any.run``` didn't want to run the file, it would just throw an error. This meant I had to actually open the file and debug it myself to see what it was doing.
+
+So I fired up my FlareVM (shoutout Mandiant), and put the binary on the system, first I ran it with FakeNet-NG, which is some software which emulates a network connection and keeps a log of any C2 connection activity or external files being downloaded. But alas, I didn't find anything here.
+
+Next, I opened up **Process Hacker** and **x64dbg**, Process Hacker showed me that the binary was opening a cmd shell and executing some hidden commands from that, so I tried to find the place in memory where this was happening with x64dbg. Now, I am not very experienced with this tool but I am trying to learn it as it is one of the more popular debuggers out there and its apparently very good for malware analysis. Unfortunately, I wasn't able to find the address in memory where the cmd shell was being executed so i couldnt analyse it further, but I knew something was happening in that cmd shell and I wasn't going to stop until i found out what it was.
+
+Finally, I opened up **ProcMon** to monitor what processes the binary was opening and what else it was doing under the hood. I created a filter for **"if (Process Name) is (".exe) then (include) in the list.** I opened the binary and this worked perfectly, I was able to see the commands that the cmd shell was running.
+
+<img src="/images/ezbat.png" alt= "batcommand" width="75%" height="75%">
+
+As you can see, the cmd shell was executing a **.bat** file, and because .bat files essentially are cmd shells when they are executed, I was able to see what this .bat file was doing after execution. To me, it looked like it was creating a bunch of registy entries, possibly something to do with persistence? I wasn't too sure.
+
+After all of this, the binary finally opens a Microsoft Edge and redirects to the domain ```antileaktab.com```
+
+<img src="/images/ezedge.png" alt= "ezedge" width="75%" height="75%">
+
+<img src="/images/antileak.png" alt= "antileak" width="70%" height="70%">
+
+I would assume this is some sort of cover to make it seem like a game cheat ***was*** going to execute, in this case though, there's a suspicious .bat file running in the background which is all up in the Registry causing chaos lol...
+
+VirusTotal gives it a 25/70 detection rate, interestingly Fortinet call it a "CoinMiner", maybe i missed something or it's just too well obfuscated for me haha. Soon I will learn the ways of debugging anti-debugging and analysing anti-analysis!
+
+<img src="/images/ezzzvt.png" alt= "ezvt" width="70%" height="70%">
+
+**The fifth (and final) binary:** **```meMin.exe```**
+- GNU Linker (???)
+- MD5: ```d5a3aaa28767c4fcf4ba7398fd841cb0```
+- Prompts UAC on execution.
+
