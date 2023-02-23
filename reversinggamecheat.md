@@ -158,13 +158,13 @@ Next, I opened up **Process Hacker** and **x64dbg**, Process Hacker showed me th
 
 Finally, I opened up **ProcMon** to monitor what processes the binary was opening and what else it was doing under the hood. I created a filter for **"if (Process Name) is (".exe) then (include) in the list.** I opened the binary and this worked perfectly, I was able to see the commands that the cmd shell was running.
 
-<img src="/images/ezbat.png" alt= "batcommand" width="75%" height="75%">
+<img src="/images/ezbat.png" alt= "batcommand" width="90%" height="90%">
 
 As you can see, the cmd shell was executing a **.bat** file, and because .bat files essentially are cmd shells when they are executed, I was able to see what this .bat file was doing after execution. To me, it looked like it was creating a bunch of registy entries, possibly something to do with persistence? I wasn't too sure.
 
 After all of this, the binary finally opens a Microsoft Edge and redirects to the domain ```antileaktab.com```
 
-<img src="/images/ezedge.png" alt= "ezedge" width="75%" height="75%">
+<img src="/images/ezedge.png" alt= "ezedge" width="90%" height="90%">
 
 <img src="/images/antileak.png" alt= "antileak" width="70%" height="70%">
 
