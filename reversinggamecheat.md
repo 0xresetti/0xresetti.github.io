@@ -237,6 +237,8 @@ Oh and incase you were wondering, all of the "Cheats", "Spoofers", "Cracked Paid
 
 <img src="/images/allthesame.png" alt= "4cmdstopservice" width="70%" height="70%">
 
+<img src="/images/gloader.png" alt= "Gloader" width="60%" height="60%">
+
 
 ### I think that wraps up just about everything to do with this/these malware(s)!
 
