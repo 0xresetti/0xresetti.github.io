@@ -162,15 +162,17 @@ Finally, I opened up **ProcMon** to monitor what processes the binary was openin
 
 As you can see, the cmd shell was executing a **.bat** file, and because .bat files essentially are cmd shells when they are executed, I was able to see what this .bat file was doing after execution. To me, it looked like it was creating a bunch of registy entries, possibly something to do with persistence? I wasn't too sure.
 
-After all of this, the binary finally opens a Microsoft Edge and redirects to the domain ```antileaktab.com```
+After all of this, the binary finally opens Microsoft Edge and redirects to the domain ```antileaktab.com``` 
 
 <img src="/images/ezedge.png" alt= "ezedge" width="90%" height="90%">
 
 <img src="/images/antileak.png" alt= "antileak" width="70%" height="70%">
 
-I would assume this is some sort of cover to make it seem like a game cheat ***was*** going to execute, in this case though, there's a suspicious .bat file running in the background which is all up in the Registry causing chaos lol...
+When you click on "Sign in with Steam", a seperate browser box opens, which prompts you to login with your Steam credentials, this is a fake phishing page intended to steal your Steam login, ***just in case Rhadamanthys Stealer & DCRAT wasn't enough*** 🤣
 
-VirusTotal gives it a 25/70 detection rate, interestingly Fortinet call it a "CoinMiner", maybe i missed something or it's just too well obfuscated for me haha. Soon I will learn the ways of debugging anti-debugging and analysing anti-analysis!
+<img src="/images/phish.png" alt= "phish" width="70%" height="70%">
+
+VirusTotal gives the binary a 25/70 detection rate, interestingly Fortinet call it a "CoinMiner", maybe i missed something or it's just too well obfuscated for me haha. Soon I will learn the ways of debugging anti-debugging and analysing anti-analysis!
 
 <img src="/images/ezzzvt.png" alt= "ezvt" width="70%" height="70%">
 
