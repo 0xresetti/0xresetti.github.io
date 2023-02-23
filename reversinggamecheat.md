@@ -228,7 +228,7 @@ So, overall, what do we have here?
 1. **A build of Rhadamanthys Stealer**
 2. **A build of DCRAT**
 3. **Some sort of privilege escalation/token impersonation method**
-4. **A Steam phishing page & possibly another CoinMiner (**
+4. **A binary that opens a Steam Login phishing page**
 5. **Probably an XMR Miner and Windows Update Service disabler**
 
 All of which enable themselves to execute on startup, ensuring persistence on the victims device.
@@ -237,6 +237,7 @@ Oh and incase you were wondering, all of the "Cheats", "Spoofers", "Cracked Paid
 
 <img src="/images/allthesame.png" alt= "4cmdstopservice" width="70%" height="70%">
 
-I think that wraps up just about everything to do with this/these malware(s)! lol
 
-Thank you for reading, and stay tuned for my next writeup! :)
+###**I think that wraps up just about everything to do with this/these malware(s)!**
+
+##**Thank you for reading, and stay tuned for my next writeup! :)**
