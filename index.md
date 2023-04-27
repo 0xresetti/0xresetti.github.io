@@ -22,3 +22,7 @@ this is my blog dedicated to writeups, whether that be reverse engineering an io
 # [First writeup: Reversing a "Game Cheat" ;)](./reversinggamecheat.html)
 
 One day I was chilling on Telegram, when someone who shared a group with me decided to mass spread some leaked game cheats & other tools! Lets take a look and see if they are what they say they are... 
+
+# [Architecture 1001: x86-64 Assembly Notes](./assemblynotes.html)
+
+This is just a page of notes and important things to me to remember while going through the "Architecture 1001: x86-64 Assembly" Course.
