@@ -106,3 +106,35 @@ _**r/mX could be a single register like ```rbx``` or it could be a complicated m
 | ```push [rbx+rcx*4]```      |
 | ```push [rbx+rcx*8+0x20]``` |
 
+**A scenario: ```push RAX```**
+
+![Screenshot_15](https://user-images.githubusercontent.com/114181159/234850844-3a2b162c-d691-46cc-8b2f-c9b0e10d2921.png)
+
+**What happened?**
+
+1. ```RSP``` value decremented by 8 because the stack pointer ```(RSP)``` is automatically decremented by 8 after being pushed onto the stack
+2. ```RSP``` ***WAS*** at memory address ```0x014FE08```. ***AFTERWARDS*** it is at ```0x014FE00```. Again because the stack pointer is automatically decremented by 8 after being pushed.
+3. Also, the value of memory address ```0x014FE00``` is now ```3```, because the ```RAX``` value was ```3```. Previously, it was ```undefined```
+4. In the end, ```0x014FE00``` is the new stack pointer, and its value is still ```3```. (it was always going to be 3 anyways, because we are pushing a value onto the stack from the predefined register ```RAX```)
+
+**POP**
+- Pop a value from the stack
+
+**Opposite scenario: ```pop RAX```**
+
+![Screenshot_16](https://user-images.githubusercontent.com/114181159/234853608-e4f149bf-aaa0-4b78-94bd-33198b64d66c.png)
+
+**What happened?**
+
+1. ```RAX``` had some random value before the POP, in this case it is ```5007```
+2. ```RSP``` was pointing at our previous memory address: ```0x014FE00``` with the value still being ```3```
+3. After execution, the ```3``` value from the stack is popped off of the stack and into the ```RAX``` register, overwriting the ```5007```
+4. ```RSP``` register is incremented by 8 as a side effect automatically after being popped off of the stack
+5. Memory address ```0x014FE00``` is now known as ```undefined```
+6. ```RSP``` is now at memory address ```0x014FE08``` with a memory address value of ```2```
+7. The value ```3``` is now stored in the ```RAX``` register
+8. Data does still exist past the end of the stack.
+
+**32-bit Information**
+- Executing in 32-bit mode, push/pop will add/remove values 32 bits at a time rather than 64 bits, therefore they decrement/increment the ```RSP``` register by 4 instead of 8.
+- Likewise with 16-bit mode, push/pop 16 bits at a time, and decrement/increment by 2.
