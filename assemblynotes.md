@@ -99,13 +99,19 @@ _**r/mX could be a single register like ```rbx``` or it could be a complicated m
 
 **r/mX Examples:**
 
-|      **push register**      |<br>
-|:---------------------------:|<br>
-| ```push rbx```              |<br>
-|       **push memory**       |<br>
-| ```push [rbx]```            |<br>
-| ```push [rbx+rcx*4]```      |<br>
-| ```push [rbx+rcx*8+0x20]``` |<br>
+|      **push register**      |
+
+|:---------------------------:|
+
+| ```push rbx```              |
+
+|       **push memory**       |
+
+| ```push [rbx]```            |
+
+| ```push [rbx+rcx*4]```      |
+
+| ```push [rbx+rcx*8+0x20]``` |
 
 **A scenario: ```push RAX```**
 
