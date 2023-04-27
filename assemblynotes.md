@@ -8,6 +8,7 @@ Little Endian Example:
 
 Big Endian Example:
 ```0x12345678``` = ```0x12, 0x34, 0x56, 0x78```
+
 Network traffic is sent in Big Endian
 - Endianness applies to _**memory, not registers!**_
 - Endianness applies to _**bytes, not bits!**_
