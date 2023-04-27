@@ -19,7 +19,8 @@ Top of Hierarchy is small storange, quick access, volatile.
 - Small size
 - Small capacity
 - Fast/very fast to access
-Lower, non volatile storage.
+
+Lower part of Hierarchy is large, slow, non volatile storage.
 - Flash/USB memory, Harddrives, Tape drives
 - Slow/very slow to access
 - Large/Very large capacity
