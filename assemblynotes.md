@@ -75,7 +75,7 @@ Lower part of Hierarchy is large, slow, non volatile storage.
 # Push & Pop Instructions
 - Why do the GCC/Clang compilers have balanced Push/Pop instructions but Visual Studio doesnt?
 
-**PUSH**
+### PUSH
 - Places (pushes) an operand onto the top of stack
 - Automatically decrements the stack pointer RSP by 8 (ESP by 4)
 
@@ -99,19 +99,7 @@ _**r/mX could be a single register like ```rbx``` or it could be a complicated m
 
 **r/mX Examples:**
 
-|      **push register**      |
-
-|:---------------------------:|
-
-| ```push rbx```              |
-
-|       **push memory**       |
-
-| ```push [rbx]```            |
-
-| ```push [rbx+rcx*4]```      |
-
-| ```push [rbx+rcx*8+0x20]``` |
+![Screenshot_17](https://user-images.githubusercontent.com/114181159/234862219-51cfe178-aca9-495b-b295-37e8d074373b.png)
 
 **A scenario: ```push RAX```**
 
@@ -124,7 +112,7 @@ _**r/mX could be a single register like ```rbx``` or it could be a complicated m
 3. Also, the value of memory address ```0x014FE00``` is now ```3```, because the ```RAX``` value was ```3```. Previously, it was ```undefined```
 4. In the end, ```0x014FE00``` is the new stack pointer, and its value is still ```3```. (it was always going to be 3 anyways, because we are pushing a value onto the stack from the predefined register ```RAX```)
 
-**POP**
+### POP
 - Pop a value from the stack
 
 **Opposite scenario: ```pop RAX```**
@@ -145,3 +133,46 @@ _**r/mX could be a single register like ```rbx``` or it could be a complicated m
 **32-bit Information**
 - Executing in 32-bit mode, push/pop will add/remove values 32 bits at a time rather than 64 bits, therefore they decrement/increment the ```RSP``` register by 4 instead of 8.
 - Likewise with 16-bit mode, push/pop 16 bits at a time, and decrement/increment by 2.
+
+### CALL
+- Transfer control to a different function
+- First it _pushes_ the address of the next instruction onto the stack (for use by **return address** for when the procedure is done)
+- Then changes ```RIP``` to the address given in the instruction
+- Destination address for the target function can be specified in multiple ways
+- - Absolute address
+- - Relative address
+
+### RET - Return from Procedure
+- ***Two forms:***
+- Pop the top of the stack into ```RIP``` (remember that _pop_ implicitly increments the stack pointer, ```RSP```)
+- - ^^^ In this form, the instruction is just written as ```ret```
+- Pop the top of the stack into ```RIP``` and also add a constant number of bytes to ```RSP```
+- - ^^^ In this form, the instruction is written as ```ret 0x8```, or ```ret 0x20```, etc etc.
+
+### How to read two-operand instructions: Intel vs AT&T Syntax
+
+![Screenshot_18](https://user-images.githubusercontent.com/114181159/234865033-f2cce2ba-01d9-436f-a0ce-afa0f8cbc5d6.png)
+
+### MOV (aka Move)
+Can move:
+- Register to Register
+- Memory to register, register to memory
+- Immediate to register, immidate to memory
+- NEVER memory to memory!
+- Memory addresses are given in ```r/mX``` form
+
+**See examples below:**
+
+![Screenshot_19](https://user-images.githubusercontent.com/114181159/234865564-41a19f9b-5149-49f0-a3d5-3f6d7c1b3686.png)
+
+### ADD and SUB
+- Adds or Subtracts, just as expected
+- Destination operant can be ```r/mX``` or register
+- Source operand can be ```r/mX``` or register or immediate
+- No source ***and*** desination as ```r/mX```, because that could allow for memory to memory transfer which isn't allowed on x86
+
+**Examples:**
+
+```add rsp, 8``` -> (rsp = rsp + 8)
+
+```sub rax, [rbx*2]``` -> (rax = rax - memorypointedtoby(rbx * 2))
