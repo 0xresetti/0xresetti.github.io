@@ -5,6 +5,7 @@
 # Endianness
 Little Endian Example:
 ```0x12345678``` = ```0x78, 0x56, 0x34, 0x12```
+
 Big Endian Example:
 ```0x12345678``` = ```0x12, 0x34, 0x56, 0x78```
 Network traffic is sent in Big Endian
