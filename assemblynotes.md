@@ -98,10 +98,10 @@ _**Basically a complicated way of addressing memory locations**_
 _**r/mX could be a single register like ```rbx``` or it could be a complicated memory address calculation like ```[rbx+rcx*X+Y]```**_
 
 **r/mX Examples:**
-| **push register**           |
-|-----------------------------|
+|      **push register**      |
+|:---------------------------:|
 | ```push rbx```              |
-| **push memory**             |
+|       **push memory**       |
 | ```push [rbx]```            |
 | ```push [rbx+rcx*4]```      |
 | ```push [rbx+rcx*8+0x20]``` |
