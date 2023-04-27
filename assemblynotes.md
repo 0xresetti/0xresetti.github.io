@@ -88,7 +88,7 @@ Lower part of Hierarchy is large, slow, non volatile storage.
 
 1. Register -> ```rbx```
 2. Memory, base-only -> ```[rbx]```
-3. Memory, base + index * scale -> ```[rbx+rcx*X]
+3. Memory, base + index * scale -> ```[rbx+rcx*X]```
 - For X = 1, 2, 4 or 8
 4. Memory, base + index * scale + displacement -> ```[rbx+rcx*X+Y]```
 - For Y of 1 byte (0-2^8) or 4 bytes (0-2^32)
