@@ -17,7 +17,7 @@ im a simple guy. and you should follow me on twitter: [@0xwyvn](https://twitter.
 
 this is my blog dedicated to writeups, whether that be reverse engineering an iot camera, or debuting my new c2 agent, ill be writing all about it here. stay tuned for more.
 
-[contact](./contact.html).
+[contact](./contact.md).
 
 # [First writeup: Reversing a "Game Cheat" ;)](./reversinggamecheat.html)
 
