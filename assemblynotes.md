@@ -176,3 +176,26 @@ Can move:
 ```add rsp, 8``` -> (rsp = rsp + 8)
 
 ```sub rax, [rbx*2]``` -> (rax = rax - memorypointedtoby(rbx * 2))
+
+### Writing in Visual Studio
+Writing some simple subroutine call code:
+
+```
+int func() {
+    return 0xbeef;
+}
+int main() {
+    func();
+    return 0xf00d;
+}
+```
+
+Debugging the code results in the ```RSP``` register being changed after hitting the ```main()``` breakpoint and stepping into the function:
+
+**Before**
+
+![Screenshot_20](https://user-images.githubusercontent.com/114181159/234883443-3c41278b-97d0-41e6-8dcf-ed86731abe02.png)
+
+**After**
+
+![Screenshot_21](https://user-images.githubusercontent.com/114181159/234883461-32d3c245-d45a-4ede-a53f-1cc0cce44085.png)
