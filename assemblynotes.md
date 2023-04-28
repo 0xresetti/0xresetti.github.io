@@ -73,7 +73,6 @@ Lower part of Hierarchy is large, slow, non volatile storage.
 ![Screenshot_13](https://user-images.githubusercontent.com/114181159/234846964-cce0f7ee-5c58-42af-906c-b48865a1a18b.png)
 
 # Push & Pop Instructions
-- Why do the GCC/Clang compilers have balanced Push/Pop instructions but Visual Studio doesnt?
 
 ### PUSH
 - Places (pushes) an operand onto the top of stack
@@ -199,3 +198,4 @@ Debugging the code results in the ```RSP``` register being changed after hitting
 **After**
 
 ![Screenshot_21](https://user-images.githubusercontent.com/114181159/234883461-32d3c245-d45a-4ede-a53f-1cc0cce44085.png)
+
