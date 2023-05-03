@@ -10,7 +10,7 @@ xmpp - wyvn@exploit.im
 
 email - [wyvn@riseup.net](mailto:wyvn@riseup.net)
 
-pgp key - [public.txt](https://pastebin.com/raw/K9kWpmgk)
+if you would like to use pgp when contacting me, [click here](https://pastebin.com/raw/K9kWpmgk)
 
 
 [back](./)
