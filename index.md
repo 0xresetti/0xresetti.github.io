@@ -26,3 +26,7 @@ One day I was chilling on Telegram, when someone who shared a group with me deci
 # [Architecture 1001: x86-64 Assembly Notes](./assemblynotes.html)
 
 This is just a page of notes and important things to me to remember while going through the "Architecture 1001: x86-64 Assembly" Course.
+
+# [Binary Exploitation Notes](./binex.html)
+
+This is just a page of notes and important things to me to remember while learning Binary Exploitation
