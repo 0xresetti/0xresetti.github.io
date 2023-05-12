@@ -37,10 +37,16 @@
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/01dd8a62-e9b1-4978-b8d8-d7679ac14857)
 
-![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/c66b5cd4-980c-4762-9455-91bc43f80d4e)
-
 - Sometimes, exploits will crash on execution due to ***"The Movaps Problem.*** This is where a general protection fault is triggered when the ```movaps``` instruction is operating on unaligned data, aka any time ```movaps``` isn't aligned prior to a call. It is a ```libc``` problem that means we need to find a way to align bytes properly.
 - I solved this by changing the exploit code to use ```0x04005ba```, which is 4 bytes away from ```*give_shell+0```.
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/c66b5cd4-980c-4762-9455-91bc43f80d4e)
+
+- I believe char arrays move up in the stack, therefore calculating offsets for the below stack frame would be as follows: ```0x31 - 0x1d = 0x14 bytes``` and ```0x1d - 0x9 = 0x14.``` Both offets are ```0x14```
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/54636ee7-0579-46e0-a753-0519d4f0c7fc)
+
+- Also, keep an eye out for **char sequences** by hovering over ```0x``` addresses. For example, hovering over ```0x73303325``` shows a ```char[]``` value of ```s03%```, and because this is a 32-bit executable the endinness is little, meaning we need to reverse this to ```%30s```, which ends up giving us ```dword ptr [EBP + fmt],"%30s"``` instead of ```dword ptr [EBP + fmt],0x73303325```
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/4364542f-f061-4550-af6d-63b7ecf1ca15)
 
