@@ -26,3 +26,21 @@
 
 - Relabelling variables/functions/etc is a good idea, click on one and press "L" to relabel it
 
+- ```seach-pattern``` in **gef** and ```search``` in **pwndbg** are very useful, use them.
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/c7a3b729-0594-45a6-bdba-bbeb12446965)
+
+- See above, the function ```gets``` has executed and has our input of ```15935728``` (random number inputted). So that means that the ```rip``` (return address, because the final gets function is finished so now we are ```ret```'ing) register is at ```0x7fffffffdac8```, and the start of our  input is ```0x7fffffffdaa0```. I ran ```search-pattern 15935728``` in order to find out where my input started on the stack.
+- Another note, in x64 the saved base pointer is stored at ```rbp+0x0``` and the saved instruction pointer is stored at ```rbp+0x8```
+- ```0x7fffffffdac8 - 0x7fffffffdaa0 = 0x28``` byte offset (```0x28 = 40 in decimal```), WE HAVE TO WRITE 40 BYTES WORTH OF INPUT AND WE CAN OVERWRITE THE RETURN ADDRESS!!! BASICALLY REDIRECTING THE CODE FLOW TO ANOTHER FUNCTION IF WE WANT!!!
+- ***^^^^^ REMEMBER!!! ^^^^^ Sometimes, when calculating how many bytes of data are needed to fill up a buffer (or for padding), decimal values may need to be used***
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/01dd8a62-e9b1-4978-b8d8-d7679ac14857)
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/c66b5cd4-980c-4762-9455-91bc43f80d4e)
+
+- Sometimes, exploits will crash on execution due to ***"The Movaps Problem.*** This is where a general protection fault is triggered when the ```movaps``` instruction is operating on unaligned data, aka any time ```movaps``` isn't aligned prior to a call. It is a ```libc``` problem that means we need to find a way to align bytes properly.
+- I solved this by changing the exploit code to use ```0x04005ba```, which is 4 bytes away from ```*give_shell+0```.
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/c66b5cd4-980c-4762-9455-91bc43f80d4e)
+
