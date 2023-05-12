@@ -23,3 +23,6 @@
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/677256a5-d04b-43ef-9ea8-6326b2d42a5c)
 
 **(14 was the wrong value, 20 was the correct amount of bytes)**
+
+- Relabelling variables/functions/etc is a good idea, click on one and press "L" to relabel it
+
