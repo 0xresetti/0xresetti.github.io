@@ -50,3 +50,40 @@
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/4364542f-f061-4550-af6d-63b7ecf1ca15)
 
+- **A quick few notes on Mitigations**
+- NX aka DEP - The No eXecute or the NX bit (also known as Data Execution Prevention or DEP) marks certain areas of the program as not executable, meaning that stored input or data cannot be executed as code. This is significant because it prevents attackers from being able to jump to custom shellcode that they've stored on the stack or in a global variable.
+- ASLR - This is the randomization of the place in memory where the program, shared libraries, the stack, and the heap are. This makes can make it harder for an attacker to exploit a service, as knowledge about where the stack, heap, or libc can't be re-used between program launches. This is a partially effective way of preventing an attacker from jumping to, for example, libc without a leak. [Click here to learn more and how to bypass ASLR](https://github.com/hoppersroppers/nightmare/blob/master/modules/04-Overflows/5.1-mitigation_aslr_pie/readme.md)
+- - PIE - Position Independent Executable (PIE) is another binary mitigation extremely similar to ASLR. It is basically ASLR but for the binary's code / memory regions
+- Relocation Read-Only (RELRO) - Partial RELRO is the default setting in GCC, and nearly all binaries you will see have at least partial RELRO. From an attackers point-of-view, partial RELRO makes almost no difference, other than it forces the GOT to come before the BSS in memory, eliminating the risk of a buffer overflows on a global variable overwriting GOT entries. Full RELRO makes the entire GOT read-only which removes the ability to perform a "GOT overwrite" attack, where the GOT address of a function is overwritten with the location of another function or a ROP gadget an attacker wants to run. Full RELRO is not a default compiler setting as it can greatly increase program startup time since all symbols must be resolved before the program is started. In large programs with thousands of symbols that need to be linked, this could cause a noticable delay in startup time.
+- Stack Canaries - Stack Canaries are a secret value placed on the stack which changes every time the program is started. The general idea is, a random value is placed at the bottom of the stack frame, which is below the stack variables where we actually have input. If had a buffer overflow to overwrite the saved return address, this value on the stack would be overwritten. Then before the return address is executed, it checks to see if that value is the same one it set. If it isn't then it knows that there is a memory corruption bug happening and terminates the program.  Stack Canaries seem like a clear cut way to mitigate any stack smashing as it is fairly impossible to just guess a random 64-bit value. However, leaking the address and bruteforcing the canary are two methods which would allow us to get through the canary check.
+- ```<__stack_chk_fail@plt>``` is probably a Stack Canary
+- **RE: Stack Canaries** - For x64 elfs, the pattern is an 0x8 byte qword, where the first seven bytes are random and the last byte is a null byte.
+- **RE: Stack Canaries** - For x86 elfs, the pattern is a 0x4 byte dword, where the first three bytes are random and the last byte is a null byte.
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/c66e9190-ec78-4277-9f27-eb6dc281ad3c)
+
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/95e7ac93-f1e8-431b-bc6e-f8c49e6e7697)
+
+**^^^ Examples of Stack Canaries ^^^**
+
+For more information on Stack Canary bruteforcing, [go here.](https://ctf101.org/binary-exploitation/stack-canaries/)
+
+- libc is where standard functions like ```fgets``` and ```puts``` live.
+
+- **While the addresses in a memory space will change, the offset between the addresses themselves will not change**
+
+- Getting an infoleak for certain parts of the memory, like ```libc``` for example, means that that infoleak is only good for the ```libc``` region of memory, we cant use that infoleak for areas like ```stack``` or ```heap```
+
+- [Shell Storm is a good place to get shellcode](http://shell-storm.org/shellcode/)
+
+- Offset/Hex Calculation can be done with Python using ```hex(addr1 - addr2)```
+
+- The ```info frame``` or ```i f``` command can show more information aboutthe ```ebx, ebp, and eip registers```
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/76d475c9-2783-4ac2-9bef-47ae040e2cd5)
+
+- The ```search-pattern``` command is also very useful for finding input in the stack
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/a1b342dc-a953-49e3-ac87-e6ddb65401a2)
+
