@@ -14,7 +14,7 @@ This was when I messaged the guy back saying "wait this is malware isnt it LOL".
 
 After browsing around on the website for a while, I ended up downloading the "COD Warzone: Wallhack / ESP / NoRecoil / Aimbot" which came in the form of a .RAR file, named "Gloader by Dv9.rar".
 
-**It's also pretty funny to see at the bottom it says "1. Turn off Windows defender / Antivirus (as all cheats are detected due to false-positive code)". Cmon hackermanz, couldn't you afford a decent crypter? 🤣**
+**It's also pretty funny to see at the bottom it says "1. Turn off Windows defender / Antivirus (as all cheats are detected due to false-positive code)". Cmon hackermanz, couldn't you afford a decent crypter?**
 
 To be fair though, a lot of legitimate cheats are still detected as false positives, or "HackTools". So disabling Windows Defender in order to get your super cool cheat working is normal to the victims who download them.
 
@@ -81,7 +81,7 @@ Turns out the file was a build of **Rhadamanthys Stealer**, a new Stealer malwar
 - Also Microsoft Visual C/C++ Compiled.
 - MD5: ```edf0360a7aab3d02e4f99f85dfa2d0fa```
 - Extremely noisy, drops the same RAT binary multiple times
-- Adds Windows Defender Exclusions for the entire C: Drive and every single folder inside of it? A bit strange 🤣
+- Adds Windows Defender Exclusions for the entire C: Drive and every single folder inside of it? A bit strange.
 - Also adds about a million scheduled tasks to execute each previously dropped RAT binary.
 
 Upon execution of this **LEM.exe** file, it immediately drops multiple other RAT binaries, they are named: 
@@ -168,7 +168,7 @@ After all of this, the binary finally opens a browser and redirects to the domai
 
 <img src="/images/antileak.png" alt= "antileak" width="70%" height="70%">
 
-When you click on "Sign in with Steam", a seperate browser box opens, which prompts you to login with your Steam credentials, this is a fake phishing page intended to steal your Steam login, ***just in case Rhadamanthys Stealer & DCRAT wasn't enough*** 🤣
+When you click on "Sign in with Steam", a seperate browser box opens, which prompts you to login with your Steam credentials, this is a fake phishing page intended to steal your Steam login, ***just in case Rhadamanthys Stealer & DCRAT wasn't enough*** 
 
 <img src="/images/phish.png" alt= "phish" width="70%" height="70%">
 
@@ -210,7 +210,7 @@ The binary stops & deletes the registry entries for the following services:
 - **```bits```** stands for **Background Intelligent Transfer Service**. It is used to download files from or upload files to HTTP web servers and SMB file shares, it is most likely the malware is disabling this service so the previously mentioned Update services cannot reach out to the Windows Update servers to download the latest updates.
 - **```dosvc```** is the **Delivery Optimization Service**, it ensures reliable and secure downloads of content or Windows Updates.
 
-*I guess the binary REALLY doesn't want us to get the latest security updates..* 🤣
+*I guess the binary REALLY doesn't want us to get the latest security updates..*
 
 Next up, the binary copies itself & adds itself to startup with Administrator privileges, renaming itself to ```updater.exe``` with the following command:
 
@@ -239,6 +239,7 @@ Oh and incase you were wondering, all of the "Cheats", "Spoofers", "Cracked Paid
 
 <img src="/images/gloader.png" alt= "Gloader" width="60%" height="60%">
 
+**If you would like to download these samples or any other samples on my blog, you can [click here](https://github.com/0xwyvn/0xwyvn.github.io/tree/main/live-malware)**
 
 ### I think that wraps up just about everything to do with this/these malware(s)!
 
