@@ -87,3 +87,34 @@ For more information on Stack Canary bruteforcing, [go here.](https://ctf101.org
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/a1b342dc-a953-49e3-ac87-e6ddb65401a2)
 
+- A Format String attack is an alternate form of exploiting programming that doesn't necessarily require smashing the stack. Instead, it leverages the format characters in a format string to generate excessive data, read from arbitrary memory, or write to arbitrary memory
+
+Example:
+```user@si485H-base:demo$ ./format_error "Hello World"
+Hello World
+user@si485H-base:demo$ ./format_error "Go Navy"
+Go Navy
+user@si485H-base:demo$ ./format_error "%x"
+b7fff000
+```
+
+- ```%x``` caused the program to output an address on the stack
+
+```user@si485H-base:demo$ ./format_error "%s.%s.%s.%s.%s.%s.%s"
+4.??u?.UW1?VS???????unull).(null).?$?U?
+user@si485H-base:demo$ ./format_error "%s.%s.%s.%s.%s.%s.%s.%s"
+Segmentation fault (core dumped)
+```
+
+- Using ```%s``` can also cause crashes as seen above
+
+- List of formats:
+- ```%d``` : signed number
+- ```%u``` : unsigned number
+- ```%x``` : hexadecimal number
+- ```%f``` : floating point number
+- ```%s``` : string conversion
+- ```%n``` : printf has a ```%n``` flag. This will write an integer to memory equal to the amount of bytes printed
+
+- Using ```%#x``` will output ```0xdeadbeef``` instead of ```deadbeef```
+
