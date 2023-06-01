@@ -118,3 +118,22 @@ Segmentation fault (core dumped)
 
 - Using ```%#x``` will output ```0xdeadbeef``` instead of ```deadbeef```
 
+- Format String exploits are confusing asf, learn more about them.
+
+- The GOT Table is a table of addresses in the binary that hold libc address functions
+
+- Sometimes, random functions may not actually be random, they may be based off of a certain condition, for example. A random number is generated depending on the current TIME, or DATE, or current VARIABLE in memory... This is pretty rare to see, but still worth knowing.
+
+- RAX - Stores function return values
+- RBX - Base pointer to the data section
+- RCX - Counter for string and loop operations
+- RDX - I/O pointer
+- RSI - Source Index pointer for string operations
+- RDI - Destination Index pointer for string operations
+- RSP - Stack (top) Pointer
+- RBP - Stack frame Base Pointer
+- RIP - Pointer to next instruction to execute (Instruction Pointer)
+
+- LEAST SIGNIFICANT BYTE OVERWRITES EXIST, AND THEY WORK LIKE THIS:
+- When we looked at the saved return address, we saw that it was equal to ```0x8048668```. The function we are trying to call (```printFlag```) is at ```0x8048672```. Since the only difference between the two addresses is the least significant byte, WHICH IS ```72``` AND ```68```, BECAUSE BOTH THE ADDRESSES HAVE THE SAME FIRST 5 VALUES: ```0x80486``` AND ```0x80486```, THE LEAST SIGNIFICANT BYTE FOR EACH ADDRESS IS ```72``` AND ```68```... And because we want to call the ```printFlag``` function which is at ```0x8048672```, we need to overwrite that with ```0x72``` bytes at the end to call the ```printFlag``` function
+
