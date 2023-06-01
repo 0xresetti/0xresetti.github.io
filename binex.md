@@ -137,3 +137,11 @@ Segmentation fault (core dumped)
 - LEAST SIGNIFICANT BYTE OVERWRITES EXIST, AND THEY WORK LIKE THIS:
 - When we looked at the saved return address, we saw that it was equal to ```0x8048668```. The function we are trying to call (```printFlag```) is at ```0x8048672```. Since the only difference between the two addresses is the least significant byte, WHICH IS ```72``` AND ```68```, BECAUSE BOTH THE ADDRESSES HAVE THE SAME FIRST 5 VALUES: ```0x80486``` AND ```0x80486```, THE LEAST SIGNIFICANT BYTE FOR EACH ADDRESS IS ```72``` AND ```68```... And because we want to call the ```printFlag``` function which is at ```0x8048672```, we need to overwrite that with ```0x72``` bytes at the end to call the ```printFlag``` function
 
+- ANOTHER EXAMPLE:
+- The address that it is initialized to is ```0x565556ad```, and the address we want to set it to is ```0x565556d8``` (for ```print_flag```). The difference between these two is just the least significant byte. So we can just overwrite the least significant byte to be ```0xd8```, and that will call ```print_flag```.
+
+- ROP (Return Oriented Programming) is a technique in exploitation to reuse existing code gadgets in a target binary as a method to bypass DEP
+- A Gadget is a sequence of meaningful instructions typically followed by a return instruction
+- Usually multiple Gadgets are chained together to complete malicious actions similar to what shellcode would do
+- These are called ROP Chains
+
