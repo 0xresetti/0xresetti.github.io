@@ -145,3 +145,7 @@ Segmentation fault (core dumped)
 - Usually multiple Gadgets are chained together to complete malicious actions similar to what shellcode would do
 - These are called ROP Chains
 
+- Using ```shell``` in gdb will pop you back to a shell, and searching for the process with ```ps -aux | grep <processname>``` will get you the process ID which you can use with ```cat /proc/<PROCESSID>/maps``` to get linked libraries
+
+![Screenshot_20230602_113606](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/f8b7303e-dc20-496d-a182-a64ebb6ebc1b)
+
