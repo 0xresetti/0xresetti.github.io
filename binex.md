@@ -162,3 +162,11 @@ Segmentation fault (core dumped)
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/2935489c-62b7-4665-8ee4-9a7649539ee1)
 
+- Sometimes, searching in HEX values is required for ```search-pattern```
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/4f8a01b5-dbc5-4313-999a-84d483343a91)
+
+- Using python to get PLT and GOT addresses is also useful:
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/b8cabd95-5ae7-46a9-9628-e24a5d6fc877)
+
