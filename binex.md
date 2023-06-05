@@ -146,6 +146,19 @@ Segmentation fault (core dumped)
 - These are called ROP Chains
 
 - Using ```shell``` in gdb will pop you back to a shell, and searching for the process with ```ps -aux | grep <processname>``` will get you the process ID which you can use with ```cat /proc/<PROCESSID>/maps``` to get linked libraries
+- ```info proc``` in gdb or gef will also show the process ID for you
 
 ![Screenshot_20230602_113606](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/f8b7303e-dc20-496d-a182-a64ebb6ebc1b)
+
+- You can use ```ropper``` to search for ROP gadgets 
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/85ba877d-b1d3-4258-a690-8bd6fc782afe)
+
+- When ROPPing, the best thing to do is planning what you want to do and actualizing the plan in bullet points.
+
+- Keep in mind that our ROP chain consists of addresses to instructions, and not the instructions themselves. So we will overwrite the return address with the first gadget of the ROP chain, and when it returns it will keep on going down the chain until we get our shell
+
+- ROPgadget is also a good tool to use to look for ROP gadgets, probably better than ropper
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/2935489c-62b7-4665-8ee4-9a7649539ee1)
 
