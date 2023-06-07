@@ -170,3 +170,59 @@ Segmentation fault (core dumped)
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/b8cabd95-5ae7-46a9-9628-e24a5d6fc877)
 
+- Now we talking about the HEAP!
+- Heap is a pool of memory used for dynamic allocations at runtime
+- ```malloc()``` grabs memory on the heap
+- ```free()``` releases memory on the heap
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/1449241f-e42e-4510-91cb-bc1a71dea64b)
+
+- Heap is slower, and manual, whereas the Stack is faster, done by the compiler, 
+
+- Bytes on the heap are fucking ***weird***
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/9869c424-8e25-48d4-8f7e-337a701e69fd)
+
+- Heap grows DOWN to higher memory, Stack grows UP to lower memory
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/c6542cac-027b-499a-8c8b-a7da9715d31c)
+
+- Heap overflows are basically the same as Stack overflows
+- Heap Canaries/Cookies do not exist
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/761103e6-fa3c-47a5-951a-6ee0d63be1f9)
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/b65e6f40-5121-4f09-987a-582fd426000f)
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/fcf4372f-78ab-4e1e-b8cc-f3fb6ea259ba)
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/7c4193a4-b32d-4066-a2b2-1ea1407b28d5)
+
+- Dangling pointers are left over pointers in code which reference to free'd data and is prone to being re-used.
+- Since the memory it was pointing at was free'd there is no guarantees on what data is there now.  
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/cc1bf2eb-986f-4236-84b9-571a1c549c26)
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/15a069fa-83f6-4cd6-a66d-57261e0f57da)
+
+- Memory corruption not required to exploit UAF, it is simply an implementation issue
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/1a8e2c38-4d1f-4a08-9e53-d3905893bf7b)
+
+-  UAF only exists through certain states of execution
+
+-  Usually only found through crashes
+
+- Heap Spraying, a technique used to increase exploit reliability, by filling the heap with large chunks of data relevant to the exploit you are trying to do
+
+- Heap Spraying can help bypass ASLR
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/7bd348aa-0028-40f8-baba-a1a78c51dc06)
+
+- Heap Spraying on 64bit can't really be used to bypass ASLR
+
+- Metadata Corruption exploits involve corrupting heap metadata in a way that allows you to use the allocator's internal functions to cause a controlled write of some sort
+
+- This generally involes faking chunks and abusing different its different coalesent or unlinking processes
+
+- Metadata exploits are hard to pull off due to heaps being fairly hardened on modern OS's
