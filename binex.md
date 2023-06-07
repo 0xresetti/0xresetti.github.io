@@ -90,6 +90,7 @@ For more information on Stack Canary bruteforcing, [go here.](https://ctf101.org
 - A Format String attack is an alternate form of exploiting programming that doesn't necessarily require smashing the stack. Instead, it leverages the format characters in a format string to generate excessive data, read from arbitrary memory, or write to arbitrary memory
 
 Example:
+
 ```user@si485H-base:demo$ ./format_error "Hello World"
 Hello World
 user@si485H-base:demo$ ./format_error "Go Navy"
