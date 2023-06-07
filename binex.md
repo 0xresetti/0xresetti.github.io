@@ -226,3 +226,16 @@ Segmentation fault (core dumped)
 - This generally involes faking chunks and abusing different its different coalesent or unlinking processes
 
 - Metadata exploits are hard to pull off due to heaps being fairly hardened on modern OS's
+
+- Quick note, see below, the registers area in gdb can be used to check if inputs or values in registers are within the Heap or not (see the ```$rsi``` address highlighted in green, it is ```0x00005555556036b0```
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/82bd2127-cf8c-4253-94b7-53aa5b150df1)
+
+- Then below, after running ```vmmap```, we can see that the Heap starts at ```0x0000555555603000``` and ends at ```0x0000555555624000```
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/ee182c46-a189-4fc3-8b05-daced47ae997)
+
+- Because ```0x00005555556036b0``` is between the start and end addresses of the heap, we know that the value in the ```$rsi``` register is within the heap
+
+- Malloc will reuse previously freed chunks if they are the right size for performance reasons
+
