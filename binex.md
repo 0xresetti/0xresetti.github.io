@@ -2,6 +2,24 @@
 
 **Just a bunch of notes for me to remember when learning Binary Exploitation, in no particular order, I just write as I go**
 
+**Before we get started, here are some super sick GDB commands you gonna want to remember:**
+- ```x``` means *examine*, this shit needs 2 arguments to work, the location in memory to examine and how to display that memory
+- ```o``` Display in octal. = ```x/o```
+- ```x``` Display in hexadecimal. = ```x/x```
+- ```u``` Display in unsigned, standard base-10 decimal. = ```x/u```
+- ```t``` Display in binary. = ```x/t```
+- ```f``` Display in float. = ```x/f```
+- ```a``` Display in address. = ```x/a```
+- ```c``` Display in char. = ```x/c```
+- ```s``` Display in string. = ```x/s```
+
+- Example (below displays the EIP register in hexadecimal):
+
+```
+(gdb) x/x $eip
+0x8048384 <main+16>: 0x00fc45c7
+```
+
 - Sometimes, the ```0x``` address you see in the decompiled code will not be the same as the assembly code
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/f87cb7a5-0dc6-4940-b6d7-e9b4be90f00c)
