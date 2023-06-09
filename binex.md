@@ -68,6 +68,25 @@
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/f9eb4d1c-fe51-4e41-acbf-d85c509a8997)
 
+- Grabbing output is important when writing exploits, like this line below:
+
+```
+for i in range(9):
+    try:
+        inp = str(p.recvline()[19:].strip())[2:].strip("'") # Get the address from the leak
+    except:
+        log.info("")
+
+print("leak is:", inp)
+```
+- The above will start the process, and use ```for i in range(9)``` to travel down to the bottom of the input, then it will use ```inp = str(p.recvline()[19:]``` to travel along to the right of the input, in this case, the leaked mem address is 19 characters along, ```.strip())[2:]``` will strip the start of the input down by 2 characters (not sure why but it exists if you need it), and ```.strip("'")``` removes any extra stuff at the end 
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/70301b8c-448d-45f6-bcf1-e2c22047ee30)
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/bc1d0575-ae89-4b23-9ead-14e7d2d5fd61)
+
+***real.***
+
 - I believe char arrays move up in the stack, therefore calculating offsets for the below stack frame would be as follows: ```0x31 - 0x1d = 0x14 bytes``` and ```0x1d - 0x9 = 0x14.``` Both offets are ```0x14```
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/54636ee7-0579-46e0-a753-0519d4f0c7fc)
