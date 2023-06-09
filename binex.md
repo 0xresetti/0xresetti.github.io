@@ -206,7 +206,7 @@ Segmentation fault (core dumped)
 
 - Heap is slower, and manual, whereas the Stack is faster, done by the compiler, 
 
-- Bytes on the heap are fucking ***weird***
+- Bytes on the heap are fucking ***weird***, but ```malloc(8)``` is still an 8 byte buffer
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/9869c424-8e25-48d4-8f7e-337a701e69fd)
 
