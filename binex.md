@@ -2,7 +2,7 @@
 
 **Just a bunch of notes for me to remember when learning Binary Exploitation, in no particular order, I just write as I go**
 
-**Before we get started, here are some super sick GDB commands you gonna want to remember:**
+**Before we get started, here are some super sick GDB/GEF commands you gonna want to remember:**
 - ```x``` means *examine*, this shit needs 2 arguments to work, the location in memory to examine and how to display that memory
 - ```o``` Display in octal. = ```x/o```
 - ```x``` Display in hexadecimal. = ```x/x```
@@ -59,6 +59,10 @@
 - I solved this by changing the exploit code to use ```0x04005ba```, which is 4 bytes away from ```*give_shell+0```.
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/c66b5cd4-980c-4762-9455-91bc43f80d4e)
+
+- You should write exploits when trying to do shit, really i got stuck on this easy ass CTF because i refused to write a simple exploit with it, use one as a base for a simple buffer overflow:
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/aca7646e-1db1-4e80-8969-f16771dc8804)
 
 - Sometimes when overwriting return addresses in exploits, you will need to jump to the memory address BEFORE the call you want to jump to, for example here i jumped to the memory adddress that was just before the ```system``` call:
 
