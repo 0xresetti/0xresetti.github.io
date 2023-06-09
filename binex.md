@@ -60,6 +60,10 @@
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/c66b5cd4-980c-4762-9455-91bc43f80d4e)
 
+- Sometimes when overwriting return addresses in exploits, you will need to jump to the memory address BEFORE the call you want to jump to, for example here i jumped to the memory adddress that was just before the ```system``` call:
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/f9eb4d1c-fe51-4e41-acbf-d85c509a8997)
+
 - I believe char arrays move up in the stack, therefore calculating offsets for the below stack frame would be as follows: ```0x31 - 0x1d = 0x14 bytes``` and ```0x1d - 0x9 = 0x14.``` Both offets are ```0x14```
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/54636ee7-0579-46e0-a753-0519d4f0c7fc)
