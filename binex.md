@@ -95,6 +95,19 @@ print("leak is:", inp)
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/4364542f-f061-4550-af6d-63b7ecf1ca15)
 
+- Payload building can be done within pwntools also:
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/b87b5251-1212-419d-97f3-117abe8d41bb)
+
+- Running said payload can be done in gef/gdb using ```r < payload```
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/5438b79a-1815-439a-9042-c8160e833f7c)
+
+- This payload specificallyoverwrote the return address with the address of the ```easy``` function, making us win:
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/751ecc45-2526-48c9-af7b-15ed36d10715)
+
+
 - **A quick few notes on Mitigations**
 - NX aka DEP - The No eXecute or the NX bit (also known as Data Execution Prevention or DEP) marks certain areas of the program as not executable, meaning that stored input or data cannot be executed as code. This is significant because it prevents attackers from being able to jump to custom shellcode that they've stored on the stack or in a global variable.
 - ASLR - This is the randomization of the place in memory where the program, shared libraries, the stack, and the heap are. This makes can make it harder for an attacker to exploit a service, as knowledge about where the stack, heap, or libc can't be re-used between program launches. This is a partially effective way of preventing an attacker from jumping to, for example, libc without a leak. [Click here to learn more and how to bypass ASLR](https://github.com/hoppersroppers/nightmare/blob/master/modules/04-Overflows/5.1-mitigation_aslr_pie/readme.md)
