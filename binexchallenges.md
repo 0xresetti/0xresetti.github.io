@@ -108,3 +108,11 @@ The ```lose``` function just prints "you suck!" however the ```win``` function p
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/d78187c1-0a9c-44d3-a95c-373f72f98e7d)
 
 So, how can we call the ```win``` function before the ```lose``` function is called?
+
+Simple, by overwriting the **return address**...
+
+What I mean by that is, when a function is called and it completes (for example, the ```lose``` function), the ```return()``` function is called at the end, which contains a memory address which either calls back to the ```main```function memory address, another function memory address (if we were in a loop for example) or exits entirely.
+
+***REMEMBER: The ```eip``` register (```rip``` on 64-bit binaries) is the Instruction Pointer, if the next process in the code flow is to return back to another function for example, the ```eip``` register would have the memory address of the function to return to inside it***
+
+Lets take a look at the way this would be exploited in GEF debugger before writing anything, just so you understand
