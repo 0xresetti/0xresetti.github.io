@@ -182,9 +182,9 @@ And when we run the exploit:
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/c3e4e45c-3b65-4ae4-93b3-e013aede6f30)
 
-We successfully overwrote the ```eip``` register with the ```win``` function memory address and popped a shell
+We successfully overwrote the ```eip``` register with the ```win``` function memory address, called the ```win``` function which printed "you win!", and popped a shell.
 
-Now, you're probably wondering what the whole ```f = open``` and ```f.write(payload)``` business is about. That is just the script outputting the payload to a file called "payload", you can use these files with GDB-like debuggers to input the payload straight into the run of the binary, like below, you can see inside the "payload" file is all 64 bytes of A's to fill up the buffer until we get to the return address, then the final ```��^D^H```, is actually the ```win``` functions memory address in 32-bit endianness.
+Now, you're probably wondering what the whole ```f = open``` and ```f.write(payload)``` business is about. That is just the script outputting the payload to a file called "payload", you can use these files with GDB-like debuggers to input the payload straight into the execution of the binary, like below, you can see inside the "payload" file is all 64 bytes of A's to fill up the buffer until we get to the return address, then the final ```��^D^H```, is actually the ```win``` functions memory address in 32-bit endianness.
 
 This payload can be ran within GEF and other debuggers like this:
 
@@ -192,4 +192,4 @@ This payload can be ran within GEF and other debuggers like this:
 
 As you can see above, I used ```r < payload``` to run the program with the "payload" string as the input, and we got the "you win!" message.
 
-
+Finally, I wanted to demonstrate in GEF what it looks like when the ```eip``` register is overwritten with another functions memory address, so iI loaded up the binary again and set a breakpoint at the 
