@@ -125,7 +125,7 @@ I'm going to debug it in GEF:
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/7eb5b68e-d449-423d-a6ec-0ec378572fea)
 
-As you can see, there is a line at ```main+36``` which reads ```0x08048518 <+36>:	call   0x80483a0 <__isoc99_scanf@plt>```, this is where our input is scanned into the binary, I'm going to set a breakpoint at the instruction just after this one (```main+41``` or ```0x0804851d```) using ```b *0x0804851d```
+As you can see, there is a line at ```main+36``` which reads ```0x08048518 <+36>:	call   0x80483a0 <__isoc99_scanf@plt>```, this is where our input is scanned into the binary, I'm going to set a breakpoint at the instruction just after this one at ```main+41``` or ```0x0804851d``` using ```b *0x0804851d```
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/b3c8d8b8-09ec-4e94-bb86-4aae4d272b74)
 
@@ -192,4 +192,3 @@ This payload can be ran within GEF and other debuggers like this:
 
 As you can see above, I used ```r < payload``` to run the program with the "payload" string as the input, and we got the "you win!" message.
 
-Finally, I wanted to demonstrate in GEF what it looks like when the ```eip``` register is overwritten with another functions memory address, so iI loaded up the binary again and set a breakpoint at the 
