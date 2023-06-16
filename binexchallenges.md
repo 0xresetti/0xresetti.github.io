@@ -95,7 +95,7 @@ Lets dive into Ghidra to see whats going on in the background:
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/815b9ceb-468c-415e-85a2-d46e2135aa58)
 
-In the ```main``` function, we can see that we have a ```local_14``` variable which calls the ```lose`` function, then we have our input scanned in, which again has a 64 byte buffer, then finally, the ```local_14``` variable is called which in turn calls the ```lose``` function.
+In the ```main``` function, we can see that we have a ```local_14``` variable which calls the ```lose``` function, then we have our input scanned in, which again has a 64 byte buffer, then finally, the ```local_14``` variable is called which in turn calls the ```lose``` function.
 
 In the list of functions, we can see the ```lose``` function, and another hidden function which isnt called anywhere else named ```win```
 
