@@ -115,7 +115,7 @@ In this case, the memory address of the ```win``` function is ```0x080484ab``` w
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/704d1642-2cdd-4966-946f-eb18747f38da)
 
-What I mean by **overwriting the return address** is, when a function is called and it completes (for example, the ```lose``` function), the ```return()``` function is called at the end, which contains a memory address which either calls back to the ```main```function memory address, another function memory address (if we were in a loop for example) or exits entirely.
+What I mean by **overwriting the return address** is, when a function is called and it completes (for example, the ```lose``` function), the ```return()``` function is called at the end, which contains a memory address which either calls back to the ```main``` function memory address, another function memory address (if we were in a loop for example) or exits entirely.
 
 ***REMEMBER: The ```eip``` register (```rip``` on 64-bit binaries) is the Instruction Pointer, if the next process in the code flow is to return back to another function for example, the ```eip``` register would have the memory address of the function to return to inside it***
 
