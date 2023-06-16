@@ -84,3 +84,27 @@ Lets see if it worked:
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/271dd0ce-d76a-4ed3-b63b-7feb7cdb809c)
 
 As you can see, it worked perfectly and we popped a shell!
+
+### Challenge 3: BOF3
+
+The next binary is the exact same as the last two binaries, we load it up, input something, and it tells us we suck. It also has the same protections
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/0a5969f8-709d-4ebb-b2f5-27de67d7ab5a)
+
+Lets dive into Ghidra to see whats going on in the background:
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/815b9ceb-468c-415e-85a2-d46e2135aa58)
+
+In the ```main``` function, we can see that we have a ```local_14``` variable which calls the ```lose`` function, then we have our input scanned in, which again has a 64 byte buffer, then finally, the ```local_14``` variable is called which in turn calls the ```lose``` function.
+
+In the list of functions, we can see the ```lose``` function, and another hidden function which isnt called anywhere else named ```win```
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/e558a2ae-8da7-4e98-a565-8aee94e2e755)
+
+The ```lose``` function just prints "you suck!" however the ```win``` function prints "you win!" and gives us a shell:
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/1dfa2cf8-e65b-4b82-aa0e-f34bf1cc4d3d)
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/d78187c1-0a9c-44d3-a95c-373f72f98e7d)
+
+So, how can we call the ```win``` function before the ```lose``` function is called?
