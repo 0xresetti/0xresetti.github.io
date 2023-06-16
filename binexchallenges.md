@@ -109,10 +109,28 @@ The ```lose``` function just prints "you suck!" however the ```win``` function p
 
 So, how can we call the ```win``` function before the ```lose``` function is called?
 
-Simple, by overwriting the **return address**...
+Simple, by overwriting the **return address** with the memory address of the ```win``` function...
 
-What I mean by that is, when a function is called and it completes (for example, the ```lose``` function), the ```return()``` function is called at the end, which contains a memory address which either calls back to the ```main```function memory address, another function memory address (if we were in a loop for example) or exits entirely.
+In this case, the memory address of the ```win``` function is ```0x080484ab``` which you can see highlighted in green below:
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/704d1642-2cdd-4966-946f-eb18747f38da)
+
+What I mean by **overwriting the return address** is, when a function is called and it completes (for example, the ```lose``` function), the ```return()``` function is called at the end, which contains a memory address which either calls back to the ```main```function memory address, another function memory address (if we were in a loop for example) or exits entirely.
 
 ***REMEMBER: The ```eip``` register (```rip``` on 64-bit binaries) is the Instruction Pointer, if the next process in the code flow is to return back to another function for example, the ```eip``` register would have the memory address of the function to return to inside it***
 
-Lets take a look at the way this would be exploited in GEF debugger before writing anything, just so you understand
+Lets take a look at the way this would be exploited in GEF debugger before writing anything. (Feel free to use your favorite debugger, aka plain old GDB, pwndbg, r2 or PEDA):
+
+I'm going to debug it in GEF:
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/7eb5b68e-d449-423d-a6ec-0ec378572fea)
+
+As you can see, there is a line at ```main+36``` which reads ```0x08048518 <+36>:	call   0x80483a0 <__isoc99_scanf@plt>```, this is where our input is scanned into the binary, I'm going to set a breakpoint at the instruction just after this one (```main+41``` or ```0x0804851d```) using ```b *0x0804851d```
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/b3c8d8b8-09ec-4e94-bb86-4aae4d272b74)
+
+Once this breakpoint is set, I can run the program, and it will ask me for my input, since we know the buffer of the ```input``` variable is 64 from Ghidra and I am doing a demonstration, I'm going to use [this buffer overflow pattern generator](https://wiremask.eu/tools/buffer-overflow-pattern-generator/?) to generate a 64 character long pattern:
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/ff01ec56-8ef2-45f3-bd5a-1efb5b6e2057)
+
+Once I run the program and paste this 64 character long pattern, anything AFTER those 64 characters should go into the ```eip``` register, to prove this, I'm going to do whats called ***The "B" Test***
