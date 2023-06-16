@@ -149,7 +149,9 @@ As you can see, we hit our breakpoint, but the ```eip``` register has not been f
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/8b9cceba-813d-4198-b5e4-c47cfa17591b)
 
-**And after a third ```ni```, boom! We can see the program crashed and the eip register has been filled with "BBBB":** 
+**And after a third ```ni```, boom! We can see the program crashed and is no longer running, and the eip register has been filled with "BBBB":** 
 
-![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/a1c64c49-803e-4cad-836e-ea051d5cf58f)
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/51407f3a-5714-49ae-b679-3466d658af51)
+
+Perfect! So, now all we have to do to exploit the program and call the ```win``` function is to replace the "BBBB"'s we filled the ```eip``` register up with, with the memory address of the ```win```function, lets write an exploit for this with pwntools!
 
