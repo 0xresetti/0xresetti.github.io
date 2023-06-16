@@ -133,4 +133,23 @@ Once this breakpoint is set, I can run the program, and it will ask me for my in
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/ff01ec56-8ef2-45f3-bd5a-1efb5b6e2057)
 
-Once I run the program and paste this 64 character long pattern, anything AFTER those 64 characters should go into the ```eip``` register, to prove this, I'm going to do whats called ***The "B" Test***
+Once I run the program and paste this 64 character long pattern, anything AFTER those 64 characters should go into the ```eip``` register, to prove this, I'm going to add 4 B's to the end of this 64 character pattern, making it a total of 68 characters, overflowing the buffer by 4 characters.
+
+If everything goes correctly, the ```eip``` register will be filled with ```BBBB```
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/6dd84aab-0d27-42a4-950f-890dc9d126b1)
+
+As you can see, we hit our breakpoint, but the ```eip``` register has not been filled up yet, that is because we need to continue through some more instructions before until we see the **return address** being called... You can use the ```ni``` command in most GDB-based debuggers to do this:
+
+**After one ```ni```, you can see the stack being filled up, but the ```eip``` register still hasnt changed yet:**
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/ec88dca6-87fc-41b6-b91d-f378ff53db51)
+
+**After two ```ni```, we can see the ```eax``` register has been filled with "BBBB", this is a good sign:**
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/8b9cceba-813d-4198-b5e4-c47cfa17591b)
+
+**And after a third ```ni```, boom! We can see the program crashed and the eip register has been filled with "BBBB":** 
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/a1c64c49-803e-4cad-836e-ea051d5cf58f)
+
