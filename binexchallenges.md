@@ -218,4 +218,19 @@ So, what do we need to do in order to exploit this?
 
 - We need to overflow the buffer with 64 bytes
 - We need to complete the ```deadbeef``` check in the ```func``` function
-- We need to fill up the rest of the buffer with padding that will 
+- We need to fill up the rest of the buffer with padding that will reach the eip (return address) register
+- We need to overwrite the eip (return address) register with the memory address of the ```win``` function
+
+Since we have done the first ```deadbeef``` check before in one of the previous challenges, we know how that is going to work in the exploit:
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/d78aca1c-ccc9-48f3-aff8-c999acab9ae8)
+
+But what about overwriting the return address? 
+
+Well, first off we need to find the offset , which can be found in Ghidra or GEF
+
+***In Ghidra:***
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/e340ffd7-cfa5-40e7-8569-0aa04fe7666e)
+
+The ```[-0x50]``` is the offset between the ```input``` (start of our scanned in input) and the ```eip``` register (return address)
