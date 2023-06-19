@@ -253,5 +253,18 @@ If you go into any hex calculator or just use Python, you can figure out the off
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/8a854395-1b43-4d63-b6f2-97f2b09248ec)
 
-As you can see, we get the same offset from Ghidra, which is ```0x50```
+As you can see, we get the same offset from Ghidra, which is ```0x50```, or ```80``` in decimal (this will become important soon)
 
+So, we have the first check done by filling up the input buffer with 64 bytes and adding ```0xdeadbeef``` to the end of it, but if we just run that, we dont actually win, we just don't get the "you suck!" message
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/1546c558-1157-4fc8-91a5-47473178c841)
+
+We still need to overwrite the return address with the address of the ```win``` function. Now, we know that the offset is ```0x50``` which is ```80``` bytes (0x50 in decimal is 80), and we have already filled up 68 bytes of the stack. **The reason i say 68 bytes instead of 64 is because we filled up the initial buffer with 64 A's, then added the final ```0xdeadbeef``` onto the end which allowed us to complete the inital check, and since ```deadbeef``` is 4 bytes (```de```, ```ad```, ```be```, ```ef```) (each 2 letters is 1 byte), we get a total of 68 bytes filled up because ```64 + 4 = 68```**.
+
+So, we have already filled up 68 bytes of the stack, and we need to pad the rest in order to get to the ```eip``` register so we can overwrite it, so lets do ```80 - 64 = 12```, so we need to pad ```12``` more bytes in order to reach the ```eip``` register (return address)
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/7a6571f7-f462-4158-a26c-92a338a8584a)
+
+(For less confusion, the initial A's are for the first 64 byte overflow, and the B's are for the padding to the ```eip`` register)
+
+After we have done that, we are now at the ```eip``` register (return address) and we should now be able to add the address of the ```win``` function to the end of our payload, and that should overwrite the return address with the address of the ````win``` func
