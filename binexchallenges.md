@@ -4,6 +4,8 @@
 
 Recently, I've been learning Binary Exploitation and Exploit Development, I have been putting my notes into my [Binary Exploitation Notes](./binex.html) page, and after a few weeks of learning, I'm starting to get the hang of some Buffer Overflow concepts, so I thought I would do some writeups on some challenges I have been doing.
 
+### Buffer Overflows.
+
 ### Challenge 1: BOF1
 
 The first challenge we have is BOF1, which is a 32-bit executable, with no RELRO, no canary, no PIE/ASLR, however NX is enabled, which means we cannot jump to custom shellcode for example.
@@ -191,4 +193,24 @@ This payload can be ran within GEF and other debuggers like this:
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/6ecf7988-1043-4e9a-ba23-cb428bc742b5)
 
 As you can see above, I used ```r < payload``` to run the program with the "payload" string as the input, and we got the "you win!" message.
+
+### ROP
+
+### Challenge 1: ROP1
+
+The first ROP challenge fried my head a bit, but I managed to figure it out. The file is a 32-bit executable, with no RELRO, no canary, no PIE/ASLR, but it does have the NX bit enabled:
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/37c66346-8885-4860-93cb-d33b07e33dfa)
+
+Opening the file in Ghidra, the ```main``` function just calls the ```func``` function.
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/2a5ced7f-92b4-4f75-a664-8bde6adcbac6)
+
+Inside the ```func``` function, we have a check that is similar to the previous BOF2 challenge, however, no ```win``` function is called after the check is complete, the program just exits:
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/95cef4c4-fa8b-4f64-bc02-4b8144b90efa)
+
+On the other hand, we do have a ```win``` function, at memory address ```0x80484ab```
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/b5250d4b-e4d0-4c7f-a5cf-cc303188af1a)
 
