@@ -206,7 +206,7 @@ Opening the file in Ghidra, the ```main``` function just calls the ```func``` fu
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/2a5ced7f-92b4-4f75-a664-8bde6adcbac6)
 
-Inside the ```func``` function, we have a check that is similar to the previous BOF2 challenge, however, no ```win``` function is called after the check is complete, the program just exits:
+Inside the ```func``` function, the porgram scans in our input into a 64 byte buffer and we have a check that is similar to the previous BOF2 challenge, however, no ```win``` function is called after the check is complete, the program just exits:
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/95cef4c4-fa8b-4f64-bc02-4b8144b90efa)
 
@@ -214,3 +214,8 @@ On the other hand, we do have a ```win``` function, at memory address ```0x80484
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/b5250d4b-e4d0-4c7f-a5cf-cc303188af1a)
 
+So, what do we need to do in order to exploit this?
+
+- We need to overflow the buffer with 64 bytes
+- We need to complete the ```deadbeef``` check in the ```func``` function
+- We need to fill up the rest of the buffer with padding that will 
