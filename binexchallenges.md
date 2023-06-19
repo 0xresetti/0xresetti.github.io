@@ -243,11 +243,11 @@ First off, set a breakpoint for just after the input is entered:
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/3692ecfc-05cb-483a-b7b7-1f61810808dc)
 
-Second, run the binary and input something, I inputted ```33012002```, and use the ```search-pattern``` and ```i f (shortened version of "info frame")``` commands to get the addresses of the start of our input, and the stack frame information
+Second, run the binary and input something, I inputted ```33012002```, and use the ```search-pattern``` and ```i f (shortened version of "info frame")``` commands to get the addresses of the start of our input, and the ```eip``` register
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/a71c45e5-2e6c-48c6-afe5-bdd7182529f7)
 
-As seen above, the start of my input is at ```0xffffd0dc```, and as you can see near the bottom, the ```eip`` is at ```0xffffd12c```
+As seen above, the start of my input is at ```0xffffd0dc```, and as you can see near the bottom, the ```eip``` at ```0xffffd12c```
 
 If you go into any hex calculator or just use Python, you can figure out the offset by subtracting the value of the start of the input with the ```eip``` register, like this:
 
