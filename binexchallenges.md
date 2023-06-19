@@ -261,7 +261,7 @@ So, we have the first check done by filling up the input buffer with 64 bytes an
 
 We still need to overwrite the return address with the address of the ```win``` function. Now, we know that the offset is ```0x50``` which is ```80``` bytes (0x50 in decimal is 80), and we have already filled up 68 bytes of the stack. **The reason i say 68 bytes instead of 64 is because we filled up the initial buffer with 64 A's, then added the final ```0xdeadbeef``` onto the end which allowed us to complete the inital check, and since ```deadbeef``` is 4 bytes (```de```, ```ad```, ```be```, ```ef```) (each 2 letters is 1 byte), we get a total of 68 bytes filled up because ```64 + 4 = 68```**.
 
-So, we have already filled up 68 bytes of the stack, and we need to pad the rest in order to get to the ```eip``` register so we can overwrite it, so lets do ```80 - 64 = 12```, so we need to pad ```12``` more bytes in order to reach the ```eip``` register (return address)
+So, we have already filled up 68 bytes of the stack, and we need to pad the rest in order to get to the ```eip``` register so we can overwrite it, so lets do ```80 - 68 = 12```, so we need to pad ```12``` more bytes in order to reach the ```eip``` register (return address)
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/7a6571f7-f462-4158-a26c-92a338a8584a)
 
