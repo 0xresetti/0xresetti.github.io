@@ -227,10 +227,31 @@ Since we have done the first ```deadbeef``` check before in one of the previous 
 
 But what about overwriting the return address? 
 
-Well, first off we need to find the offset , which can be found in Ghidra or GEF
+Well, first off we need to find the offset between our scanned in input, and the ```eip``` register (return address), which can be found in Ghidra or GEF
 
 ***In Ghidra:***
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/e340ffd7-cfa5-40e7-8569-0aa04fe7666e)
 
 The ```[-0x50]``` is the offset between the ```input``` (start of our scanned in input) and the ```eip``` register (return address)
+
+***In GEF:***
+
+This is a bit more complex, but will give 100% accurate results, as sometimes, Ghidra doesnt figure out the offsets, or something, idk i heard it somewhere. Either way its good to know both methods
+
+First off, set a breakpoint for just after the input is entered:
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/3692ecfc-05cb-483a-b7b7-1f61810808dc)
+
+Second, run the binary and input something, I inputted ```33012002```, and use the ```search-pattern``` and ```i f (shortened version of "info frame")``` commands to get the addresses of the start of our input, and the stack frame information
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/a71c45e5-2e6c-48c6-afe5-bdd7182529f7)
+
+As seen above, the start of my input is at ```0xffffd0dc```, and as you can see near the bottom, the ```eip`` is at ```0xffffd12c```
+
+If you go into any hex calculator or just use Python, you can figure out the offset by subtracting the value of the start of the input with the ```eip``` register, like this:
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/8a854395-1b43-4d63-b6f2-97f2b09248ec)
+
+As you can see, we get the same offset from Ghidra, which is ```0x50```
+
