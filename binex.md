@@ -60,6 +60,12 @@
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/c66b5cd4-980c-4762-9455-91bc43f80d4e)
 
+- Sometimes libc versions and linkers wont match the program/challenge you are exploiting, you can use ```pwninit``` and ```patchelf``` to fix this:
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/4d9ca704-3910-4607-8a60-7fd015aabd77)
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/56ed1833-10d5-4513-94b4-8f510d507a24)
+
 - You should write exploits when trying to do shit, really i got stuck on this easy ass CTF because i refused to write a simple exploit with it, use one as a base for a simple buffer overflow:
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/aca7646e-1db1-4e80-8969-f16771dc8804)
