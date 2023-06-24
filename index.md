@@ -34,3 +34,7 @@ This is just a page of notes and important things to me to remember while learni
 # [Binary Exploitation Challenge Writeups](./binexchallenges.html)
 
 This is just a page of writeups I have done for Binary Exploitation Challenges
+
+# [WhiteSnake Stealer Analysis](./whitesnake.html)
+
+I analysed WhiteSnake Stealer while drunk, here is the blog lol
