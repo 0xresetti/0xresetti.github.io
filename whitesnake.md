@@ -54,6 +54,8 @@ See how the ```1Mxm1dRnMr``` is similar to the ```Process.Start``` strings? I ca
 
 The malware also downloads TOR for some reason? I messaged the WhiteSnake developer himself and i asked if it uses TOR, and he confirmed it does! What a nice threat actor. I assume TOR is used for uploading the data:
 
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/35792550-4d47-43cc-b762-9ccac1f14529)
+
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/0027fee7-506f-4bb1-b384-59cf5f385734)
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/eb161d95-7510-4a40-9708-b928346fff22)
