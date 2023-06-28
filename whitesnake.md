@@ -1,6 +1,6 @@
 # WhiteSnake Stealer Analysis
 
-### I'm drunk and this is my analysis on WhiteSnake Stealer. My friend Eliyax wouldn't stop bothering me to analyse it with him so here it is.
+### I'm drunk and this is my analysis on WhiteSnake Stealer. My friend Elitex wouldn't stop bothering me to analyse it with him so here it is.
 
 ### Shoutout to my cat Vince for giving me the emotional support while reversing this shit
 
@@ -207,4 +207,4 @@ Channel ID: 5668321496
 Token API: 5805920195:AAHrkiYfOXg55Cncdj5wUj0Ov4rUYjQg7iU
 ```
 
-Overall, a fun 3 hour reversing session, thanks to Eliyax for the laughs and enjoyment while reversing this shit.
+Overall, a fun 3 hour reversing session, thanks to Elitex for the laughs and enjoyment while reversing this shit.
