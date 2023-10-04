@@ -2,6 +2,12 @@
 
 **This is just a page of notes and important things to me to remember while learning Assembly**
 
+# Constants, Registers, Memory
+
+"12" means decimal 12; "```0xF0```" is hex.  "some_function" is the address of the first instruction of the function.  Memory access (use register as pointer): "```[rax]```".  Same as C "```*rax```".
+Memory access with offset (use register + offset as pointer): "```[rax+4]```".  Same as C "```*(rax+4)```".
+Memory access with scaled index (register + another register * scale): "```[rax+rbx*4]```".  Same as C "```*(rax+rbx*4)```".
+
 # Endianness
 Little Endian Example:
 ```0x12345678``` = ```0x78, 0x56, 0x34, 0x12```
