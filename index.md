@@ -2,18 +2,16 @@
 layout: default
 ---
 
-# /root
+# /root@wyvnzwriteupz:~$
 
--- [ wyvnzwriteupz ] --
-
-# whoami?
+# /root@wyvnzwriteupz:~$ whoami
 
 hello.
 my name is wyvn (pronounced why-vn), i love hacking, and i love to exploit shit. 
 
 im a simple guy. and you should follow me on twitter: [@0xwyvn](https://twitter.com/0xwyvn)
 
-# what is this?
+# /root@wyvnzwriteupz:~$ whereami
 
 this is my blog dedicated to writeups and notes, whether that be reverse engineering an iot camera, or debuting my new c2 agent, ill be writing all about it here. stay tuned for more.
 
