@@ -2,7 +2,7 @@
 layout: default
 ---
 
-## get in contact with me here:
+## contact:
 
 twitter - [@0xwyvn](https://twitter.com/0xwyvn)
 
