@@ -54,6 +54,12 @@ Lower part of Hierarchy is large, slow, non volatile storage.
 - RBP - Stack frame **B**ase **P**ointer
 - RIP - Pointer to next instruction to execute (**I**nstruction **P**ointer)
 
+**Registers are also called general purpose registers and their capacity is 32 bits: 4 bytes (4 sets of 8 bits).**
+
+**The Program Status and Control Register is EFLAGS, which is a collection of 1-bit flags.**
+
+**The Flags aint important, apart from the Trap Flag which basically allows debuggers to single-step through instructions.**
+
 # My First Instruction: NOP
 - No-Operation! No registers, no values.
 - Just there to pad/align bytes, or to delay time.
