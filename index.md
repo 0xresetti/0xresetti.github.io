@@ -5,7 +5,7 @@ layout: default
 # root@wyvnzwriteupz:~$
 
 hello.
-my name is wyvn (pronounced why-vn), i love hacking, and i love to exploit shit. 
+my name is wyvn (pronounced wyvern), i love hacking, and i love to exploit shit. 
 
 im a simple guy. and you should follow me on twitter: [@0xwyvn](https://twitter.com/0xwyvn)
 
