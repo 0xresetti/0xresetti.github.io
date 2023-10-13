@@ -87,3 +87,65 @@ Here we have a regular program that is looking for a valid input, we can see at 
 
 Above that we can see ```TEST EAX,EAX``` which checks the value of ```EAX``` to see if it is zero or not, if it is NOT then the conditional jump that follows will redirect the execution to the "invalid" message. Otherwise the execution will continue with the good message.
 
+To bypass this, we can change the ```JNZ``` instruction to ```JZ``` using the "Assemble" command 
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/cf696601-2de8-4476-800d-e2dd790829b7)
+
+After we edit this and run the program, we can input any key and it becomes valid
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/d2f7cbf3-f8b7-4950-a037-586dea0c7fa9)
+
+We can also do the same thing by changing the address of the jump condition to jump to the "valid" memory address ```(0x402E78)``` instead of the invalid one ```(0x402E97```
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/1dda65f7-109e-409c-9803-1f961544817b)
+
+### Finding Byte Offset
+
+I want to patch the byte located at VA ```0x00402E77```
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/dfb796cf-5260-490f-a400-32003a38b912)
+
+Use ALT+M to get to the memory map and find the first section which is at ```0x00401000```
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/d050869f-9ba3-4d80-8e18-d2ac9221dbde)
+
+Right click the PE Header ```(0x00400000)``` and click Dump in CPU
+
+The bottom part of the interface will now be filled with human-readable information
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/31e9ed7d-7fad-4f60-bce0-40df002af553)
+
+Scroll down a bit more and you'll find the first section of the PE Header, the .text section.
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/cbc98583-68e4-4d66-98e1-cbe562e340aa)
+
+The comments squared in red are the ones we will need to find the byte offset
+
+- **VirtualSize:** The size of the section in memory.
+- **VirtualAddress:** The RVA of the section in memory, not the VA.
+- **SizeOfRawData:** Size of the section in the file.
+- **PointerToRawData:** Starting offset of the section in the file.
+
+The below is the formula to calculate the information
+
+```Byte_Offset = Byte_VA - (Image_Base + Section_RVA) + PointerToRawData```
+
+So it would be:
+
+```0x00402E77 - (0x400000 + 0x1000) + 0x600 = 0x2477```
+
+Putting the binary in **HxD** and scrolling down to ```0x2477`` brings us to the same hex values we saw in Ollydbg!
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/73e3f828-7b69-4352-ad94-3a64fa81c763)
+
+And at the bottom left we can see the offset is ```0x2477```
+
+Changing the Hex values to ```75 00``` and saving the file means we have fully patched the binary!
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/60598fe0-b265-4877-8978-c0917f3db0d7)
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/76cbd9ac-0372-4a02-8f6c-ea8dd06db4cd)
+
+And we win!
+
+### Next section loading...
