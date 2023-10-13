@@ -60,4 +60,30 @@
 
 ### VA/RVA/Offset
 
-- **
+- **Applications do not directly access physical memory, only virtual memory. Memory addresses referenced by an application are virtual addresses (VAs).**
+
+- **A relative virtual address (RVA) is the difference between two VAs and refers to the highest one.**
+
+### How to calculate offsets:
+```
+VA_1 = 0x00400000
+VA_2 = 0x00401000
+RVA of VA_2 = VA_2 - VA_1 = 0x00001000
+```
+
+- **On the other hand, offsets are usually refered to as either physical memory, a physical file on the disk, or in other general cases where we treat data as raw data, without worrying about any differences in the internal alignment of this data on memory against the one on the disk.**
+
+- **The offset is the difference between the locations of 2 bytes, for example inside a file, usually starting from the beginning of the file. You can find this in tools like Ghidra which show the offset of certain functions and instructions.**
+
+- **If we want to bypass a anti-reversing function or trick, we can use information like offsets of the bytes you want to modify on the disk and patching code in memory as a testing solution.**
+
+- **Opcodes are important btw, for example ```JNZ```'s opcode would be 0x75.**
+
+### Patching Lab #1
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/ca14c83d-ffb7-46a9-a106-83261034816b)
+
+Here we have a regular program that is looking for a valid input, we can see at address ```0x402E76``` there is a ```JNZ``` (jump if not zero) instruction where a decision is taken regarding an output.
+
+Above that we can see ```TEST EAX,EAX``` which checks the value of ```EAX``` to see if it is zero or not, if it is NOT then the conditional jump that follows will redirect the execution to the "invalid" message. Otherwise the execution will continue with the good message.
+
