@@ -32,7 +32,7 @@
 
 - **```THREAD_ENVIRONMENT_BLOCK (TEB)```. This structure stores information such as the addresses of the top and bottom of the current thread's stack, the thread identifier, the identifier of the process the thread belongs to, the code of the last error that occurred during the thread execution, the address of the ```Thread Local Storage (TLS)```, and the address of the ```PROCESS_ENVIRONMENT_BLOCK (PEB)```**
 
-- **```PROCESS_ENVIRONMENT_BLOCK (PEB)```. The PEB structure is also very important to understand. Some of the information stored in the PEB is: the image base of the process, the address of the loader data structure (```PEB_LDR_DATA``` - which contains pointers to lists regarding the modules loaded by the process). The ```NtGlobalFlag``` value, the major and minor versions of the Windows OS, the number of processors available, the ```BeingDebugged``` flag, and much more
+- **```PROCESS_ENVIRONMENT_BLOCK (PEB)```. The PEB structure is also very important to understand. Some of the information stored in the PEB is: the image base of the process, the address of the loader data structure (```PEB_LDR_DATA``` - which contains pointers to lists regarding the modules loaded by the process). The ```NtGlobalFlag``` value, the major and minor versions of the Windows OS, the number of processors available, the ```BeingDebugged``` flag, and much more**
 
 - **Some of the information stored inside PEB can be used for debugger detection, such as the ```NtGlobalFlag``` or ```BeingDebugged```.**
 
