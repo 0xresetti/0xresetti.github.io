@@ -148,4 +148,31 @@ Changing the Hex values to ```75 00``` and saving the file means we have fully p
 
 And we win!
 
-### Next section loading...
+### Exploring the Stack with Lab #2
+
+Because strings this time are XOR encrypted and we can't just search for string references, we must use the stack while the program is running to see data being passed through it when it has been decrypted.
+
+Using F12 or the Pause icon at the top toolbar of Ollydbg, means we can pause execution of the program and analyse the stack at runtime. After triggering a "This code is invalid!!!" I searched through the stack for this string, once i found it, i ensured this was the correct string since there were many different "This code is invalid!!!" strings on the stack, i confirmed this was my target by seeing the ```CALL``` that is made to the ```MessageBoxW``` WinAPI function.
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/50bcf678-d9d9-4ef7-afd2-f828a4464f38)
+
+Right click on the function in the stack you want to go to in CPU, and click "Follow in Disassembler". I can also use CTRL+G to go straight to the memory address location of the function in CPU.
+
+- **NOTE: Some Windows API names have an appended "A" or "W" in the end in order to indicate their ANSI or Unicode name respectively. For example, in case ```MessageBoxA``` call is used when we need to use ASCII character strings, otherwise, we use ```MessageBoxW``` for Unicode character strings.**
+
+Scrolling up a bit further we can see some JMP conditional calls and more MessageBox's. This is probably where most of the decision making is happening:
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/90138792-9778-4afe-8262-6a1fa09cd125)
+
+I can set a breakpoint just before the comparison is made to check if the right string has been inputted:
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/eb18231c-d90a-44b9-acb2-52ba39524d32)
+
+After running the program with F9 we should hit the breakpoint and have some information in the stack:
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/3c9be26f-a5ca-4894-ab2d-5f5de353483d)
+
+As you can see, since the code to decrypt the string has been ran, we can see the correct password for the program in the stack clearly!
+
+
+
