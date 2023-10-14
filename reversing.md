@@ -170,6 +170,7 @@ I can set a breakpoint just before the comparison is made to check if the right 
 
 After running the program with F9 we should hit the breakpoint and have some information in the stack:
 
+This is the password to the program, which if we input into it
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/3c9be26f-a5ca-4894-ab2d-5f5de353483d)
 
 As you can see, since the code to decrypt the string has been ran, we can see the correct password for the program in the stack clearly!
