@@ -180,6 +180,15 @@ Using this code we can check and see that we get the win
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/d14aa4f1-f2d7-4da1-a2fb-e4d270452da1)
 
+I also used HxD to permanently patch this program, I used the Byte Offset calculation formula to get the location of the hex values that needed to be edited
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/f500ecfa-9b4c-4670-a0a2-bf13259769b4)
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/a36f10f8-03cf-44dc-93a1-a3201ad8f3af)
+
+After this, I saved it separately as a way to track my efforts and skills:
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/437ed4c8-5095-41d7-9bce-a6eeda054442)
 
 
 
