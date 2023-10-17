@@ -1,4 +1,4 @@
-# Reverse Engineering Notes
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/09f15446-f614-450d-98d4-d9c5f0596f50)# Reverse Engineering Notes
 
 **This is just a page of notes and important things to me to remember while learning Reverse Engineering**
 
@@ -190,5 +190,7 @@ After this, I saved it separately as a way to track my efforts and skills:
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/437ed4c8-5095-41d7-9bce-a6eeda054442)
 
+### Anti-Reversing Tricks #1
 
+For example, if an application is being debugged, then the *BeingDebugged* member of the PEB structure will be equal to 1, if not, it will be 0.
 
