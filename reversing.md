@@ -79,6 +79,10 @@ RVA of VA_2 = VA_2 - VA_1 = 0x00001000
 
 - **Opcodes are important btw, for example ```JNZ```'s opcode would be 0x75.**
 
+- **Top tip btw, when clicking on the beginning of a function (```PUSH EBP```), you can view the functions that call this function under the CPU box:
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/f37f14e8-c934-4cdb-91f4-6c21977a7b28)
+
 ### Patching Lab #1
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/ca14c83d-ffb7-46a9-a106-83261034816b)
