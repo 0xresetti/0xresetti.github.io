@@ -228,4 +228,52 @@ This Windows API can be used to detect if the calling process is being debugged 
 
 This API is actually a wrapper around the native API ```ZwQueryInformationProcess```
 
+The following lines of code demonstrate how a call to CheckRemoteDebuggerPresent API is normally performed, which then will also call the ```ZwQueryInformationProcess``` native API
+
+```
+push pbDebuggerPresent_address        <- push the address of a 32-bit variable
+push Process_handle                   <- push the handle to a process (-1 for the calling process)
+call CheckRemoteDebuggerPresent       <- call the API
+mov eax, [pbDebuggerPresent_address]  <- check the returned result in the variable
+test eax,eax
+jne_debuggerfound                     <- if not zero, debugger was found
+```
+
+### 2) Indirect Debugger Detection
+
+**A).** OutputDebugString API
+
+This is used to send a string to the debugger itself
+
+If the process is not being debugged the return value in ```EAX``` will be 1 in Windows XP and 0 in Windows Vista and above, because of the changes made to Windows Internals.
+
+**3 ways to detect a debugger:**
+
+- Check the returned value in EAX, depending on the Windows version as described above
+- GetLastError in Windows XP. If no Ring3 debugger is present, then calling this API after the OutputDebugString will reveal an error code. If EAX == 0 then a debugger has been detected.
+- Through SEH -> Works in all windows versions from XP and above, not tested in Windows 8.
+
+**B).** OpenProcess API
+
+Some debuggers enable the ```SeDebugPrivilege``` in their access token. The child process inherits the same privilege level as the parent process, and in this case, we refer to the debugee (the process that is being debugged).
+
+Normally, unless specified by the author, an application will not have that privilege enabled, which means that an attempt to obtain a valid handle by using the ```OpenProcess``` API to a system process such as ```services.exe``` will fail.
+
+On the other hand, if it succeeds, then we know that some other process escalated its privileges and we can assume that it was a debugger.
+
+### 3) Windows Debugger Detection
+
+The most commonly used API for obtaining a handle to the top-level window of a running application, through either its title or its class name, is the ```FindWindow``` API.
+
+Example:
+
+```
+push 0              <- push NULL as title, we want to detect via class name
+push "OLLYDBG"      <- push class name, basically pushing the string address
+call FindWindow
+test eax,eax
+jnz_Olly_Detected   <- if eax!=0 Olly is running.
+```
+
+Sometimes though, the ```EnumWindows``` API is used, in order to enumerate all top-level windows on the screen and compare each one against a list of well-known application window names beloning to debuggers and or reversing tools.
 
