@@ -79,9 +79,23 @@ RVA of VA_2 = VA_2 - VA_1 = 0x00001000
 
 - **Opcodes are important btw, for example ```JNZ```'s opcode would be 0x75.**
 
-- **Top tip btw, when clicking on the beginning of a function (```PUSH EBP```), you can view the functions that call this function under the CPU box:
+### Top Tips
+
+- **Top tip btw, when clicking on the beginning of a function (```PUSH EBP```), you can view the functions that call this function under the CPU box:**
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/f37f14e8-c934-4cdb-91f4-6c21977a7b28)
+
+- **Another top tip, if you're stuck in a loop, set a breakpoint just underneath it and continue running with F9 instead of spamming F8 to step over**
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/58f5d686-b1cf-4bd4-9c3e-18b1c4964b49)
+
+- **This fucking C means CPU, click it if you get lost in execution or mem addresses on the left change to like 775B29FA**
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/4f9ef5fb-15a1-4554-8b1f-3491c93a0b08)
+
+- **You can right click and click "New origin here" and the process will start at that instruction**
+
+
 
 ### Patching Lab #1
 
