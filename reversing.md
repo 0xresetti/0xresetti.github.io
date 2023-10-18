@@ -277,3 +277,52 @@ jnz_Olly_Detected   <- if eax!=0 Olly is running.
 
 Sometimes though, the ```EnumWindows``` API is used, in order to enumerate all top-level windows on the screen and compare each one against a list of well-known application window names beloning to debuggers and or reversing tools.
 
+### Anti-Reversing Tricks #2
+
+### 1) Process Debugger Detection
+
+This trick is used to verify that no known debugger, disassembler or reversing tool is running at the same time with our application, by retrieving a list of all running processes and evaluating their names.
+
+Usually the following Windows APIs are involved:
+
+```CreateToolhelp32Snapshot```
+- Obtains a snapshot of all running processes, by using the ```TH32CS_SNAPPROCESS``` flag.
+
+```Process32First```
+- Obtains information about the first process in the snapshot by filling the ```PROCESSENTRY32``` structure.
+
+### 2) Parent Process Detection
+
+A process can detect if it's being debugged by checking the name of its parent process. Usually the check is done and expecting "explorer.exe" which is commonly the parent process of a process started by the user.
+
+The same technique is used as in the previous case, but this time we target the parent process of the process we are interested in.
+
+The usual method involves obtaining the PID (Process IDentifier) of our process, enumerating through the processes snapshot list, locating our process and retrieving the PPID (Parent Process Identifier), and finally going once more through the processes snapshot list to see which process the PID belongs to.
+
+A piece of malware could, for example, only accept "explorer.exe" as a legitimate parent process and act differently if it detects a different parent process.
+
+### 3) Module Debugger Detection
+
+This has the same goal as above (identifying debuggers), but in this case it does so by retrieving a list of all running processes and then a list of all the loaded modules of every process, such as DLLs, which are commonly used as plugins to add extra functionality to many reversing tools.
+
+Usually the following WIndows APIs are involved:
+
+Once again.. ```CreateToolhelp32Snapshot```
+- Obtains a snapshot of all running processes, by using the ```TH32CS_SNAPPROCESS``` flag.
+
+```Module32First```
+- Obtains information about the first module in the snapshot by filling in the ```MODULEENTRY32``` structure.
+
+```Module32Next```
+- This is used to go through the loaded modules as listed after the snapshot is taken.
+
+### 4) Code Execution Time Detection
+
+This is an efficient and easily implemented anti-reversing technique.
+
+It's purpose is to evaluate the time elapsed for the execution of the instructions in a specific block of code.
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/dfcd04b4-7b10-458d-8650-50e1c08e5834)
+
+Other Windows APIs can be used to get time related information and to achieve the same goals. Some examples are the ```timeGetTime``` and ```QueryPerformaceCounter``` APIs
+
