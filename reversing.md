@@ -209,10 +209,10 @@ The check is commonly used with WinAPIs, in order to "directly" detect if the ap
 However, someone can instead implement that type of call in his own code instead of calling it, which makes it more difficult to spot. This is actaully the code executed by Windows when you call that API:
 
 ```
-mox eax, dword ptr fs:[18h] <-- Get address of TEB structure
-mov eax, dword pty ds:[eax+30h] <-- Get address of PEB structure
-movzx eax, byte ptr ds:[eax+2] <-- Get value of PEB.BeingDebuggec
-test eax, eax <-- if not zero, a debugger has been detected
+mox eax, dword ptr fs:[18h]      <-- Get address of TEB structure
+mov eax, dword pty ds:[eax+30h]  <-- Get address of PEB structure
+movzx eax, byte ptr ds:[eax+2]   <-- Get value of PEB.BeingDebuggec
+test eax, eax                    <-- if not zero, a debugger has been detected
 jne_debugger_detected()
 ```
 
