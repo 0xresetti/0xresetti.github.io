@@ -1,4 +1,4 @@
-![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/09f15446-f614-450d-98d4-d9c5f0596f50)# Reverse Engineering Notes
+# Reverse Engineering Notes
 
 **This is just a page of notes and important things to me to remember while learning Reverse Engineering**
 
@@ -193,4 +193,39 @@ After this, I saved it separately as a way to track my efforts and skills:
 ### Anti-Reversing Tricks #1
 
 For example, if an application is being debugged, then the *BeingDebugged* member of the PEB structure will be equal to 1, if not, it will be 0.
+
+Most Anti-RE tricks are only effective against Ring3 (Userland) debuggers, unless stated otherwise, or they are related to code execution time-elapsed calculation.
+
+### 1) Direct Debugger Detection
+
+**A).** Check -> PEB.BeingDebugged
+
+The figure below demonstrates the layout of the PEB structure:
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/7dc7b66c-21ae-4d54-a0e2-132c6f4cde68)
+
+The check is commonly used with WinAPIs, in order to "directly" detect if the application is being debugged. For example, a call to the ```IsDebuggerPresent``` API which checks the PEB.BeingDebugged member would detect this.
+
+However, someone can instead implement that type of call in his own code instead of calling it, which makes it more difficult to spot. This is actaully the code executed by Windows when you call that API:
+
+```
+mox eax, dword ptr fs:[18h] <-- Get address of TEB structure
+mov eax, dword pty ds:[eax+30h] <-- Get address of PEB structure
+movzx eax, byte ptr ds:[eax+2] <-- Get value of PEB.BeingDebuggec
+test eax, eax <-- if not zero, a debugger has been detected
+jne_debugger_detected()
+```
+
+**B).** Check -> PEB.NtGlobalFlag
+
+This has the same concept as the previous one, but this time we check another member of the PEB structure. THis member is not documented in the figure above, but we know that it is localed at ```PEB_Start + 68h```
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/b092101d-6c18-46dc-867a-c9a30ea0a90b)
+
+**C).** CheckRemoteDebuggerPresent API
+
+This Windows API can be used to detect if the calling process is being debugged through a Ring3 debugger, but also if another process is being debugged.
+
+This API is actually a wrapper around the native API ```ZwQueryInformationProcess```
+
 
