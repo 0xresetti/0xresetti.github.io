@@ -15,21 +15,26 @@ this is my blog dedicated to writeups and notes, whether that be reverse enginee
 
 [contact](./contact.md).
 
-# [First writeup: Reversing a "Game Cheat" ;)](./reversinggamecheat.html)
+# [Reverse Engineering the D-Link DWR-921 Router](./reversing-dlink-dwr-921.html)
 
-One day I was chilling on Telegram, when someone who shared a group with me decided to mass spread some leaked game cheats & other tools! Lets take a look and see if they are what they say they are... 
+Recently with me learning reverse engineering and also getting my hands on lots of IoT Exploitation and Hardware Hacking courses, I wanted to go out and buy some shitty router for $30 and see what I could find inside.
 
-# [Architecture 1001: x86-64 Assembly Notes](./assemblynotes.html)
+# [Reverse Engineering Notes](./reversing.html)
 
-This is just a page of notes and important things to me to remember while going through the "Architecture 1001: x86-64 Assembly" Course.
+This is just a page of notes and important things to me to remember while learning Reverse Engineering
+
+# [Binary Exploitation Challenge Writeups](./binexchallenges.html)
+
+This is just a page of writeups I have done for Binary Exploitation Challenges
 
 # [Binary Exploitation Notes](./binex.html)
 
 This is just a page of notes and important things to me to remember while learning Binary Exploitation
 
-# [Reverse Engineering Notes](./reversing.html)
+# [Architecture 1001: x86-64 Assembly Notes](./assemblynotes.html)
 
-This is just a page of notes and important things to me to remember while learning Reverse Engineering
-# [Binary Exploitation Challenge Writeups](./binexchallenges.html)
+This is just a page of notes and important things to me to remember while going through the "Architecture 1001: x86-64 Assembly" Course.
 
-This is just a page of writeups I have done for Binary Exploitation Challenges
+# [First writeup: Reversing a "Game Cheat" ;)](./reversinggamecheat.html)
+
+One day I was chilling on Telegram, when someone who shared a group with me decided to mass spread some leaked game cheats & other tools! Lets take a look and see if they are what they say they are... 
