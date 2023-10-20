@@ -24,11 +24,17 @@ It was the legitimate D-Link Russian site...
 
 So i said fuck it and downloaded it to be unpacked, its going in a VM anyways.
 
-Once it was downloaded to my VM i checked with binwalk and could see that it was a ```squashfs``` filesystem:
+Once it was downloaded to my VM i checked with binwalk and could see that it was a MIPS ```squashfs``` filesystem:
+
+![Screenshot_1](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/71c69ee5-d8f7-41c8-9a8f-e591396ac62e)
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/6894e6bc-78f1-4d30-80b6-7e6d57460a8a)
 
 This is very common so nothing surprising here, lets extract it with ```binwalk -e [filename]```.
 
 At first i got an error when trying to extract it, saying ```sasquatch``` wasnt installed and it wouldnt work. Thankfully, there is this helpful post about it on Github [here](https://gist.github.com/thanoskoutr/4ea24a443879aa7fc04e075ceba6f689)
+
+After that was done, the extracting worked and i had two ```squashfs-root``` filesystems:
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/601ec8bd-05df-4e50-9d5b-667fa7433053)
 
