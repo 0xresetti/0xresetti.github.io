@@ -1,4 +1,4 @@
-# Reverse Engineering Notes
+0x2477# Reverse Engineering Notes
 
 **This is just a page of notes and important things to me to remember while learning Reverse Engineering**
 
@@ -152,7 +152,7 @@ So it would be:
 
 ```0x00402E77 - (0x400000 + 0x1000) + 0x600 = 0x2477```
 
-Putting the binary in **HxD** and scrolling down to ```0x2477`` brings us to the same hex values we saw in Ollydbg!
+Putting the binary in **HxD** and scrolling down to ```0x2477``` brings us to the same hex values we saw in Ollydbg!
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/73e3f828-7b69-4352-ad94-3a64fa81c763)
 
