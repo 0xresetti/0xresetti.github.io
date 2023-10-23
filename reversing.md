@@ -327,15 +327,15 @@ Usually the following WIndows APIs are involved:
 
 Once again.. 
 
-```CreateToolhelp32Snapshot```
+- **CreateToolhelp32Snapshot**
 
-Obtains a snapshot of all running processes, by using the ```TH32CS_SNAPPROCESS``` flag.
+Obtains a snapshot of all running processes, by using the **TH32CS_SNAPPROCESS** flag.
 
-```Module32First```
+- **Module32First**
 
-Obtains information about the first module in the snapshot by filling in the ```MODULEENTRY32``` structure.
+Obtains information about the first module in the snapshot by filling in the **MODULEENTRY32** structure.
 
-```Module32Next```
+- **Module32Next**
 
 This is used to go through the loaded modules as listed after the snapshot is taken.
 
