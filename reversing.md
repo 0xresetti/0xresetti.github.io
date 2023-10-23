@@ -304,9 +304,11 @@ This trick is used to verify that no known debugger, disassembler or reversing t
 Usually the following Windows APIs are involved:
 
 ```CreateToolhelp32Snapshot```
+
 - Obtains a snapshot of all running processes, by using the ```TH32CS_SNAPPROCESS``` flag.
 
 ```Process32First```
+
 - Obtains information about the first process in the snapshot by filling the ```PROCESSENTRY32``` structure.
 
 ### 2) Parent Process Detection
