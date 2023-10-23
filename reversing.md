@@ -117,9 +117,9 @@ We can also do the same thing by changing the address of the jump condition to j
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/1dda65f7-109e-409c-9803-1f961544817b)
 
-### Finding Byte Offset
+### Finding Byte Offset & Cracking the Program
 
-I want to patch the byte located at VA ```0x00402E77```
+I want to patch the byte located at VA ```0x00402E77```, so that the program is now permanently "cracked" and will always give a "valid" answer no matter what key is inputted.
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/dfb796cf-5260-490f-a400-32003a38b912)
 
