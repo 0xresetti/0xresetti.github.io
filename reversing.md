@@ -344,3 +344,134 @@ It's purpose is to evaluate the time elapsed for the execution of the instructio
 
 Other Windows APIs can be used to get time related information and to achieve the same goals. Some examples are the ```timeGetTime``` and ```QueryPerformaceCounter``` APIs
 
+### Anti-Reversing Tricks #3
+
+### Software vs Hardware Breakpoints
+
+A software breakpoint is placed by substituting the byte originally located at that memory address by a software interrupt - specifically the ```INT 3h``` interrupt of which the opcode is the **0xCC**
+
+When the execution hits a ```INT 3h``` instruction, a software breakpoint exception is raised (```80000003h```) and if the process is being debugged, the debugger will force the execution to stop there.
+
+Software breakpoints can only be used for code under execution and not memory access monitoring.
+
+Hardware breakpoints use the debug registers ```DR0-DR3```. They can be used for different types of memory access monitoring and not to just break the execution on a specific instruction. You can set a **Hardware Breakpoint On Access** on a specific memory area which will be triggered when the virtual address space inside the process is accessed for read/write.
+
+Hardware breakpoints dont do any code modifications in memory, this makes them very suitable to use in cases where self-modifying code is present. (Or other tricks that detect software breakpoints by calculating checksums of code blocks.)
+
+***Software Breakpoint Detection***
+
+```
+push 'kernel32.dll'
+call LoadLibrary            -> get imagebase of kernel32.dll
+push 'VirtualProtect'
+push eax
+GetProcAddress              -> get address of 'VirtualProtect' API inside exported by kernel32.dll
+cmp byte ptr ds:[eax], 0xCC -> check if there is a breakpoint set there.
+```
+
+***Hardware Breakpoint Detection***
+
+The most common way involves the use of 2 Windows APIs:
+
+**1).** OpenThread -> Get a handle to the desired thread.
+
+**2).** GetThreadContext -> Read the current thread context and locate the values of the Debug Registers used to store **HW BPs, DR0-DR3**
+
+**NOTE:** DR0-DR3 will be zero if no HW BPs are set.
+
+### Ring0 Debuggers & System Monitoring Tools Detection
+
+The most common use involves the usage of the CreateFile Windows API
+
+Such types of tools use drivers with which to communicate using their own named devices:
+
+**\\.\NTICE**  -> Softice (Windows NT)
+**\\.\FILEM**  -> FileMon (Windows NT)
+**\\.\REGSYS** -> RegMon (Windows NT)
+
+So if we manage to obtain a valid handle to a specifc device like these above, then we can actually reveal the presence of the driver belonging to that tool.
+
+### Structured Exception Handling (SEH)
+
+This is debugger detection through exception generation.
+
+This is mainly used for debugger detection but can be used for redirecting the execution flow under certain circumstances; it is a nice logic obfuscation tool.
+
+![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/9f30981f-f42b-42b2-bac4-3dcbb5fd41de)
+
+So, what basically happens in this example is that we set our own exception handler and then we attempt to execute an ```INT 3h``` instruction which is the equivalant of a software breakpoint.
+
+Depending on the debugger's settings, genrally a debugger will think that this is a software breakpoint set by the user so it will handle the generated exception itself and set the ```EIP``` to point to the next instruction ```mox eax,1```
+
+The point is, if the process is **not** being debugged, since an exception is raised, the execution should reach the exception handler from where we can set the EIP accordingly.
+
+***Basically, 1 if debugger detected, 0 if not detected.***
+
+**NOTE:** Instead of INT 3h, a call to **DebugBreak** Windows API can be used which executes an INT 3h instruction.
+
+### Unhandled Exception Filter
+
+This is another powerful anti-reversing technique that uses a specific exception handler (normally used when there are no appropriate handlers to handle an exception)
+
+In this case, if a process is being debugged, after the execution of the UnhandledExceptionFilter API, the process will exit instead of continuing execution which, in the context of anti-reversing properties, is very useful.
+
+When the UnhandledExceptionFilter API is called it will itself make a call (through a subroutine) to the ZwQueryInformationProcess API asking for ProcessDebugPort information which will return **0xFFFFFFFF** if the process is being debugged by a Ring3 debugger, and **0x0** if it is not.
+
+Basically, according to the MSDN documentation, if it returns a non zero value, the process is being debugged by a Ring3 Debugger.
+
+### VM Detection
+
+The use of virtualization environments for application testing and malware analysis is basic math at this point.
+
+Some malware authors do not want their malware being analysed in a VM with no juicy info to steal, so they have functions which detect if the malware process is running inside of a Virtual Machine, if it is, it terminates.
+
+There are many ways to achieve this, but some of them are well-known and widely used.
+
+***VMware Detection:***
+
+```
+mov eax, 'VMXh'    <- magic number
+mov ebx, 0
+mov ecx, 0Ah       <- set function number / 0Ah = get VMware version
+mov edx, 5658h     <- port number used to communicate with VMware
+in eax, dx         <- read a dword from that port
+cmp eax, ebx       <- if VMware is present EAX == EBX
+je__VMware_detected
+```
+
+This piece of code uses a logical port that is used for communication between the VM and VMware itself in order to get information about the VMware version used.
+
+The concept behind this trick is that in the ```in eax, dx``` instruction is a privileged one. We can't usually execute this instruction from usermode (Ring3)
+
+However, the virtual CPU of VMware will allow the execution of this instruction to communicate with VMware itself.
+
+This trick is always used along with an exception handler since if the application is not running inside VMware, a privileged instruction exception will be raised (```C0000096h```) and will cause the application to crash without the handler in place.
+
+***VirtualPC Detection:***
+
+```
+mov ebx, 0
+mov eax, 1
+db 0Fh, 3Fh, 7, 0Bh // VPC Call
+cmp ebx, 0
+je__VPC_detected
+```
+
+The virtual CPU in VirtualPC can decode this set of bytes ```0Fh, 3Fh, 7, 0Bh``` as special call instructions which of course dont resolve to valid instructions from a native x86 CPU.
+
+Attempting to execute this virtual instruction in a physical system will cause an illegal instruction exception (```C000001Dh```). For this reason this trick has to be used along with an associated exception handler.
+
+***VirtualBox Detection:***
+
+A very simple and easy way to detect VirtualBox is through the window class name of a tray icon that it places in the taskbar.
+
+```
+push 0
+push 'VBoxTrayToolWndclass'
+call FindWindowA
+test eax, eax
+jnz_VboxDetected ; if we managed to obtain a valid window handle, VBox was detected.
+```
+
+These aren't the only ways to detect VM environments, do some research.
+
