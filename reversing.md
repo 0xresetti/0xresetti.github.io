@@ -325,14 +325,19 @@ This has the same goal as above (identifying debuggers), but in this case it doe
 
 Usually the following WIndows APIs are involved:
 
-Once again.. ```CreateToolhelp32Snapshot```
-- Obtains a snapshot of all running processes, by using the ```TH32CS_SNAPPROCESS``` flag.
+Once again.. 
+
+```CreateToolhelp32Snapshot```
+
+Obtains a snapshot of all running processes, by using the ```TH32CS_SNAPPROCESS``` flag.
 
 ```Module32First```
-- Obtains information about the first module in the snapshot by filling in the ```MODULEENTRY32``` structure.
+
+Obtains information about the first module in the snapshot by filling in the ```MODULEENTRY32``` structure.
 
 ```Module32Next```
-- This is used to go through the loaded modules as listed after the snapshot is taken.
+
+This is used to go through the loaded modules as listed after the snapshot is taken.
 
 ### 4) Code Execution Time Detection
 
