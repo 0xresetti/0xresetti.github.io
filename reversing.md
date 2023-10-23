@@ -299,17 +299,15 @@ Sometimes though, the ```EnumWindows``` API is used, in order to enumerate all t
 
 ### 1) Process Debugger Detection
 
-This trick is used to verify that no known debugger, disassembler or reversing tool is running at the same time with our application, by retrieving a list of all running processes and evaluating their names.
-
-Usually the following Windows APIs are involved:
+This trick is used to verify that no known debugger, disassembler or reversing tool is running at the same time with our application, by retrieving a list of all running processes and evaluating their names. Usually the following Windows APIs are involved:
 
 ```CreateToolhelp32Snapshot```
 
-- Obtains a snapshot of all running processes, by using the ```TH32CS_SNAPPROCESS``` flag.
+Obtains a snapshot of all running processes, by using the ```TH32CS_SNAPPROCESS``` flag.
 
 ```Process32First```
 
-- Obtains information about the first process in the snapshot by filling the ```PROCESSENTRY32``` structure.
+Obtains information about the first process in the snapshot by filling the ```PROCESSENTRY32``` structure.
 
 ### 2) Parent Process Detection
 
