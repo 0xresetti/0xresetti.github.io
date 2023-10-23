@@ -388,7 +388,9 @@ The most common use involves the usage of the CreateFile Windows API
 Such types of tools use drivers with which to communicate using their own named devices:
 
 **\\.\NTICE**  -> Softice (Windows NT)
+
 **\\.\FILEM**  -> FileMon (Windows NT)
+
 **\\.\REGSYS** -> RegMon (Windows NT)
 
 So if we manage to obtain a valid handle to a specifc device like these above, then we can actually reveal the presence of the driver belonging to that tool.
