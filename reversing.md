@@ -482,3 +482,15 @@ jnz_VboxDetected ; if we managed to obtain a valid window handle, VBox was detec
 
 These aren't the only ways to detect VM environments, do some research.
 
+### Code Obfuscation
+
+- Junk Bytes (anti-disassembling technique)
+- Trampolines
+- Permutations
+
+### Logic Flow Obfuscation
+
+The main goal of this type of obfuscation is to make it difficult to predict and understand when program execution should reach certain conditional branches of code. These branches are the core of the logic and determine which blocks of code are executed based on whether certain conditions meet specific requirements.
+
+These are statements like 'if', 'else', 'while', 'for, etc. In assembly this would be conditional jumps like 'jne', 'je', 'jl', 'jg', etc.
+
