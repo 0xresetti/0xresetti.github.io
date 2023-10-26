@@ -23,7 +23,7 @@ Recently with me learning reverse engineering and also getting my hands on lots 
 
 This is just a page of notes and important things to me to remember while learning Reverse Engineering
 
-# [WhiteSnake Malware Analysis](./whitesnakeEWE6788432fdsfedf.html)
+# [WhiteSnake Malware Analysis](./whitesnake.html)
 
 WhiteSnake Malware Analysis
 
