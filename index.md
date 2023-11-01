@@ -15,6 +15,8 @@ this is my blog dedicated to writeups and notes, whether that be reverse enginee
 
 [contact](./contact.md).
 
+you can also find my PGP key [here](./pgp.txt) if you want to be more secure and integral.
+
 # [Reverse Engineering The D-Link DWR-921 Router](./reversing-dlink-dwr-921.html)
 
 Recently with me learning reverse engineering and also getting my hands on lots of IoT Exploitation and Hardware Hacking courses, I wanted to go out and buy some shitty router for $30 and see what I could find inside.
