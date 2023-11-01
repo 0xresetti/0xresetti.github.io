@@ -15,7 +15,7 @@ this is my blog dedicated to writeups and notes, whether that be reverse enginee
 
 [contact](./contact.md).
 
-you can also find my PGP key [here](https://raw.githubusercontent.com/0xwyvn/0xwyvn.github.io/main/pgp.txt) if you want to be more secure and integral.
+you can also find my PGP key [here](https://0xwyvn.github.io/pgp.txt) if you want to be more secure and integral.
 
 # [Reverse Engineering The D-Link DWR-921 Router](./reversing-dlink-dwr-921.html)
 
