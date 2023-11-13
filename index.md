@@ -13,8 +13,6 @@ im a simple guy. and you should follow me on twitter: [@0xwyvn](https://twitter.
 
 this is my blog dedicated to writeups and notes, whether that be reverse engineering an iot camera, or debuting my new c2 agent, ill be writing all about it here. stay tuned for more.
 
-[contact](./contact.md).
-
 you can also find my PGP key [here](https://0xwyvn.github.io/pgp.txt) if you want to be more secure and integral.
 
 # [Reverse Engineering The D-Link DWR-921 Router](./reversing-dlink-dwr-921.html)
