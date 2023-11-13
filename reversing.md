@@ -494,3 +494,13 @@ The main goal of this type of obfuscation is to make it difficult to predict and
 
 These are statements like 'if', 'else', 'while', 'for, etc. In assembly this would be conditional jumps like 'jne', 'je', 'jl', 'jg', etc.
 
+### Lil Bit of Malware Analysis Tips
+
+You can use CFF Explorer's Resource Editor to find extra binaries which might be hidden within the file:
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/541c2c7f-9f33-4b1d-9130-5f13d107007e)
+
+You can use "X" key in IDA Pro to travel to xrefs to functions
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/da50a9f5-474b-42cb-8417-ab09db36b39f)
+
