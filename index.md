@@ -2,10 +2,10 @@
 layout: default
 ---
 
-# root@wyvnzwriteupz:~$
+# root@mr-resetti:~$
 
 hello.
-my name is wyvn (pronounced wyvern), i love hacking, and i love to exploit shit. 
+my name is resetti, i love hacking, and i love to exploit shit. 
 
 im a simple guy.
 
