@@ -7,13 +7,13 @@ layout: default
 hello.
 my name is wyvn (pronounced wyvern), i love hacking, and i love to exploit shit. 
 
-im a simple guy. and you should follow me on twitter: [@0xwyvn](https://twitter.com/0xwyvn)
+im a simple guy.
 
 ### what is this?
 
 this is my blog dedicated to writeups and notes, whether that be reverse engineering an iot camera, or debuting my new c2 agent, ill be writing all about it here. stay tuned for more.
 
-you can also find my PGP key [here](https://0xwyvn.github.io/pgp.txt) if you want to be more secure and integral.
+you can also find my PGP key [here](https://0xresetti.github.io/pgp.txt) if you want to be more secure and integral.
 
 # [Reverse Engineering The D-Link DWR-921 Router](./reversing-dlink-dwr-921.html)
 
