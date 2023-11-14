@@ -504,3 +504,31 @@ You can use "X" key in IDA Pro to travel to xrefs to functions
 
 ![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/da50a9f5-474b-42cb-8417-ab09db36b39f)
 
+Using Ollydbg's command line at the bottom, you can use the ```bp CreateProcess``` command to set breakpoints at common ATT&CK functions.
+
+### 32-bit vs 64-bit
+
+32-bit CPU registers are different, for example the Base Pointer is EBP for 32-bit where 64-bit is RBP.
+
+CFF Explorer Characteristics will indicate a 32-bit binary as a "32 bit word machine" and a 64-bit binary as "App can handle >2gb address space"
+
+32-bit in Optional Headers have BaseOfData, whereas 64-bit doesnt. 32-bits image base is also 4 bits whereas 64-bits image base is 8 bits.
+
+Overall who fuckin cares it's either RIP or EIP.
+
+### Packers And How They Impact Initial Assessments
+
+Difference between a Packed 32-bit Executable file and unpacked 32-bit Executable file:
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/3dc11cf8-aef8-450d-b93e-dbfa4b92809e)
+
+You can also see Entry points + sections are different, and DetectItEasy also detects that it is packed with UPX.
+
+Furthermore, strings are completely encoded:
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/29ab70b7-8aa7-42a3-b695-81f9c66e2a3a)
+
+These types of things usually indicate a packer, even if its not being detected by CFF or the header may have been removed, the binary could always be using a custom inbuilt packer.
+
+### Visualising Malware Activity
+
