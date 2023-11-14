@@ -15,6 +15,10 @@ this is my blog dedicated to writeups and notes, whether that be reverse enginee
 
 you can also find my PGP key [here](https://0xresetti.github.io/pgp.txt) if you want to be more secure and integral.
 
+# [Uncovering a Palestinian & French Stealer Campaign](./palestine-france-stealer-campaign.html)
+
+An interesting file was dropped in a Telegram channel I was apart of with the message "i will be using my private stealer for #opisrael, message me to help it spread". This blog shows the world of Stealer-as-a-Service markets, and political hacktivism within Telegram against Israel, and a very noisy piece of malware!
+
 # [Reverse Engineering The D-Link DWR-921 Router](./reversing-dlink-dwr-921.html)
 
 Recently with me learning reverse engineering and also getting my hands on lots of IoT Exploitation and Hardware Hacking courses, I wanted to go out and buy some shitty router for $30 and see what I could find inside.
