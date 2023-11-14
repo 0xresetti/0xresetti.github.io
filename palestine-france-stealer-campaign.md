@@ -18,7 +18,7 @@ Shariff, the one who sent the file, is a TikTok *"Threat Actor"* (heavy emphasis
 
 He has a Yemen flag in his TikTok bio, so I believe he resides in Yemen and is supporting Palestine through the Israel v Palestine conflic by spreading malware to any Israeli citizens.
 
-### Regarding the file, named ```321chat.exe``` has the following characteristics:
+### Regarding The File, named ```321chat.exe``` has the following characteristics:
 
 - **32-bit Executable**
 - **MD5 Hash:** ```4AEC2A150E4135F61DFF2E55DE07B9E9```
