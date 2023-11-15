@@ -172,7 +172,7 @@ After reading the Microsoft Edge Web+Login data files. The malware switches targ
 
 It then compiles all of this data into the Downloads.txt file, History.txt file, etc etc.
 
-Once the malware is done compiling all stolen information into its Temporary randomly generated folder, it starts to pack it all into ```GB_NOVA_<YOUR-COMPUTER-NAME>.zip```. Below is a GIF of the process:
+Once the malware is done compiling all stolen information into its Temporary randomly generated folder, it uses ```Child TIDs: 7068, 9708, 2984, and 7952``` to pack it all into ```GB_NOVA_<YOUR-COMPUTER-NAME>.zip```. Below is a GIF of the process:
 
 ![90c6d2bd05efbf90788adef0ae433a07](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/e0cb21bd-a617-47e0-b768-db28a48c63d3)
 
