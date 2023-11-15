@@ -71,7 +71,7 @@ As you can see, they have a Telegram: [https://t.me/Sordeal](https://t.me/Sordea
 
 ![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/3a8fd3b8-259c-42c6-9c75-cd2d0dacd5ad)
 
-Looks like this one specifically is "Hawkish Grabber" considering the ```webhook_url``` variable.
+Looks like this one specifically is "Hawkish Grabber" considering the ```webhook_url``` variable. A French stealer.
 
 The other folder, ```C:\ProgramData\ChromeExtensionsNova\extension-cookies``` is a folder specifically targeting Roblox accounts and cookies, it then sends the data to the C2:
 
