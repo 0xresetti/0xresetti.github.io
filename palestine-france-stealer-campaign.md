@@ -124,12 +124,11 @@ Inbetween that, TID ```6184``` also writes some data to the ```System Info.txt``
 
 ![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/e571d0a5-4bca-4e7b-8c0e-2bfa45b4a9e4)
 
-NOTE, just incase you're confused with all the different TIDs being thrown around, TID ```6184``` is the main TID has been used for creating persistent registry keys, writing the stolen data to ```C:\Users\Analysis\AppData\Local\Temp\fMYoQic11EKsYaZdyub7``` (the ```fMYoQic11EKsYaZdyub7``` folder is randomly generated, and PID ```4320``` is the Parent Process that has created the Thread ID ```6184```, and finally, The ```Child TIDs: 7068, 9708, 2984, and 7952``` of which their Parent TID is 6184, were being used to download a zip file called ```"extensions.zip"```. But they will soon be used to write all of the stolen information inside ```C:\Users\Analysis\AppData\Local\Temp\fMYoQic11EKsYaZdyub7``` into a ZIP file called ```GB_NOVA_Analysis.zip``` (My computer name is Analysis, so it would be ```GB_NOVA_<YOUR-COMPUTER-NAME>.zip```)
+NOTE, just incase you're confused with all the different TIDs being thrown around, TID ```6184``` is the main TID has been used for creating persistent registry keys, writing the stolen data to ```C:\Users\Analysis\AppData\Local\Temp\fMYoQic11EKsYaZdyub7``` (the ```fMYoQic11EKsYaZdyub7``` folder is randomly generated), and PID ```4320``` is the Parent Process that has created the Thread ID ```6184```. Finally, the ```Child TIDs: 7068, 9708, 2984, and 7952``` of which their Parent TID is ```6184```, were being used to download a zip file called ```"extensions.zip"```. But they will soon be used to write all of the stolen information inside ```C:\Users\Analysis\AppData\Local\Temp\fMYoQic11EKsYaZdyub7``` into a ZIP file called ```GB_NOVA_Analysis.zip``` (My computer name is Analysis, so it would be ```GB_NOVA_<YOUR-COMPUTER-NAME>.zip```)
 
 Here is the Process Hierarchy:
 
 - ```PID 4320``` = Main stealer process 
 - ```TID 6184 "TID Daddy"``` = Main thread created by stealer process to manage persistence and steal information
 - ```Child TIDs: 7068, 9708, 2984, and 7952``` = Child Threads created by "TID Daddy" used to download + setup the web injector that steals Discord Tokens & Roblox Cookies, and finally pack all stolen data into the ```GB_NOVA_Analysis.zip``` ZIP file.
-
 
