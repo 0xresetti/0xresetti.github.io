@@ -158,3 +158,25 @@ It also steals system information, lists what applications are installed, and ta
 
 ![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/1f7a1119-4ac8-4d1e-a66d-71e1e2fb8317)
 
+The malware also uses the child TIDs to enumerate web data (downloads, history, cookies, etc) and login data from the installed browsers: 
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/26580ef5-3670-4063-b676-a1cdc1d4d46d)
+
+Here it is commanding TID ```7068``` to read the Web data file:
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/66508c0e-6755-478c-8010-0080c03790dc)
+
+After reading the Microsoft Edge Web+Login data files. The malware switches targets to Firefox, since its the only other browser installed.
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/c41a286a-2dcf-4240-9648-07d0065ce3a2)
+
+It then compiles all of this data into the Downloads.txt file, History.txt file, etc etc.
+
+Once the malware is done compiling all stolen information into its Temporary randomly generated folder, it starts to pack it all into ```GB_NOVA_<YOUR-COMPUTER-NAME>.zip```. Below is a GIF of the process:
+
+![0d6edb75af6de1978da9f2187b1b9f80](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/2a1b4614-8cae-43fc-bbba-86c93c1fd56a)
+
+The main stealer process PID ```4320``` then sends the data to ```163.5.121.96, 31.14.70.243, and 51.178.66.33``` these are probably Telegram API's or Discord webhooks. Below is another GIF of the process:
+
+![349055b5ab3b84cd1ef91fe6bbb02df7](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/1be9a61c-c2ec-4564-bbb2-8d79f5b624c0)
+
