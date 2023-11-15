@@ -57,9 +57,11 @@ Using ProcDot, we can actually target specific child processes and see what they
 
 After this specific TID is created, we can see some DLLs being loaded, some communications being made to some servers, one of them specifically stood out to me, ```185.199.117.133:443```. The ```Child TIDs: 7068, 9708, 2984, and 7952``` were being used to download a zip file called ```"extensions.zip"```. Eventually, ```TIDs: 7068 and 7952``` both start reading data from the ZIP file then start writing data to the following folders:
 
-```C:\ProgramData\ChromeExtensionsNova\extension-cookies```
+```
+C:\ProgramData\ChromeExtensionsNova\extension-cookies
 
-```C:\ProgramData\ChromeExtensionsNova\extension-tokens```
+C:\ProgramData\ChromeExtensionsNova\extension-tokens
+```
 
 These folders both contain .js files which are used to enumerate Discord account values and steal tokens and information:
 
