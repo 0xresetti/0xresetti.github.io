@@ -20,12 +20,17 @@ He has a Yemen flag in his TikTok bio, so I believe he resides in Yemen and is s
 
 He also has a few other friends that post in the same Telegram channel and they like to post the same type of stuff, in case you wanted some more entertainment: [https://www.tiktok.com/@ii.clappz/video/7300147463090998535](https://www.tiktok.com/@ii.clappz/video/7300147463090998535) & [https://www.tiktok.com/@yoozy_1337/video/7295312479641505030](https://www.tiktok.com/@yoozy_1337/video/7295312479641505030)
 
-My point I'm trying to prove is we are not dealing with an APT here (maybe if you replaced the A with Amateur). But I personally think it is interesting to see what these foreign "hacktivists" are up to, what malware they are using, and who they are working with.
+My point I'm trying to prove is we are not dealing with an APT here. But I personally think it is interesting to see what these foreign "hacktivists" are up to, what malware they are using, and who they are working with.
 
 ### Regarding The File, named ```321chat.exe``` has the following characteristics:
 
 - **32-bit Executable**
-- **MD5 Hash:** ```4AEC2A150E4135F61DFF2E55DE07B9E9```
+- **MD5 Hash:** ```4aec2a150e4135f61dff2e55de07b9e9```
 - **File Description: "Usefull Application"** (??? I thought this was funny)
 - **File is a Nullsoft Scriptable Install System (NSIS) type file**
 
+I don't really know where to start with this malware, it is a stealer malware first of all, but not one that I have seen before. The hash has never been uploaded to VirusTotal and it is Fully Undetected: https://www.virustotal.com/gui/file/c7b11a2b9719590183eb1985f61b7b5b11b8bdead56003c65279d9a7c47b728a
+
+Some new, unique malware! Just asking to be analysed. Let's get started.
+
+I used ProcDot to visualize the malware layout and how it executes, 
