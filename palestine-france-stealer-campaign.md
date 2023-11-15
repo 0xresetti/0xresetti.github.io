@@ -180,6 +180,12 @@ The main stealer process PID ```4320``` then sends the data to ```163.5.121.96, 
 
 ![349055b5ab3b84cd1ef91fe6bbb02df7](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/1be9a61c-c2ec-4564-bbb2-8d79f5b624c0)
 
+The malware also creates a file called ```(random characters)_temp.ps1```
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/c1e13171-c31f-47d4-9dc7-4ded5f343d91)
+
+Which creates a image file which is a screenshot of whatever is on the screen at the time, and the computer name along with date, this file is also packed into  ```C:\Users\Analysis\AppData\Local\Temp\fMYoQic11EKsYaZdyub7\System```
+
 Thats pretty much it
 
 After i finished analysing the malware, i woke up the next day to some posts in the chat, which included my virtual machines stolen information lmao
