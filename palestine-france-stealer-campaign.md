@@ -33,4 +33,49 @@ I don't really know where to start with this malware, it is a stealer malware fi
 
 Some new, unique malware! Just asking to be analysed. Let's get started.
 
-I used ProcDot to visualize the malware layout and how it executes, 
+I used ProcDot to visualize the malware layout and how it executes, and from my analysis, the file executes multiple child processes of itself, the most interesting one being ```PID: 4320```
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/3ea431b5-8be5-4df3-9def-7d147368fd1b)
+
+This ```PID: 4320``` directly creates a thread with ```ID: 6184```, this thread is used for creating the persistence registry keys, and creating other threads that are used for stealing the users information and creating the final ZIP file which is eventually sent to the C2.
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/680da865-b93d-46fc-9572-2c7e441204b3)
+
+^^^ ```TID: 6184``` creating a persistent registry key ^^^
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/cc2eaa4c-aae0-48d4-95f6-b6c7979801cb)
+
+^^^ ```TID: 6184``` creating 4 separate threads ready for writing the stolen information into a ZIP file that will be sent to the C2 ^^^
+
+Using ProcDot, we can actually target specific child processes and see what they were doing, since we are focusing on the stealer malware, I will change the render configuration to only show threads and processes created by ```PID: 4320```
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/4f51a841-ca9e-45c8-88a4-b1627767cea3)
+
+After loading this specific PID, we can see some DLLs being loaded, some communications being made to some servers, one of them specifically stood out to me, ```185.199.117.133:443```. The ```TIDs: 7068, 9708, 2984, and 7952``` were being used to download a zip file called ```"extensions.zip"```. Eventually, ```TIDs: 7068 and 7952``` both start reading data from the ZIP file then start writing data to the following folders:
+
+```C:\ProgramData\ChromeExtensionsNova\extension-cookies```
+
+```C:\ProgramData\ChromeExtensionsNova\extension-tokens```
+
+These folders both contain .js files which are used to steal Discord tokens and information:
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/bf171b43-d4ff-4826-a578-e3d87403a07e)
+
+^^^ ```background.js``` script found inside ```C:\ProgramData\ChromeExtensionsNova\extension-tokens\js\``` ^^^
+
+The script also shows some information about the type of stealer that is being used:
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/7a4c33f5-f22f-4073-ae29-28072983e74f)
+
+As you can see, they have a Telegram: [https://t.me/Sordeal](https://t.me/Sordeal)
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/3a8fd3b8-259c-42c6-9c75-cd2d0dacd5ad)
+
+Looks like this one specifically is "Hawkish Grabber" considering the ```webhook_url``` variable.
+
+The other folder, ```C:\ProgramData\ChromeExtensionsNova\extension-cookies``` is a folder specifically targeting Roblox accounts and cookies, it then sends the data to the C2:
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/76a298ee-25cd-4f7d-9a04-61c75b61f391)
+
+^^^ ```background.js``` script found inside ```C:\ProgramData\ChromeExtensionsNova\extension-cookies\scripts\``` ^^^
+
