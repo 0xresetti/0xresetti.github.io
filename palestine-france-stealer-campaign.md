@@ -22,7 +22,7 @@ He also has a few other friends that post in the same Telegram channel and they 
 
 My point I'm trying to prove is we are not dealing with an APT here. But I personally think it is interesting to see what these foreign "hacktivists" are up to, what malware they are using, and who they are working with.
 
-### Regarding The File, named ```321chat.exe``` has the following characteristics:
+### The File, named ```321chat.exe```:
 
 - **32-bit Executable**
 - **MD5 Hash:** ```4aec2a150e4135f61dff2e55de07b9e9```
@@ -32,6 +32,8 @@ My point I'm trying to prove is we are not dealing with an APT here. But I perso
 I don't really know where to start with this malware, it is a stealer malware first of all, but not one that I have seen before. The hash has never been uploaded to VirusTotal and it is Fully Undetected: https://www.virustotal.com/gui/file/c7b11a2b9719590183eb1985f61b7b5b11b8bdead56003c65279d9a7c47b728a
 
 Some new, unique malware! Just asking to be analysed. Let's get started.
+
+### ProcDot Analysis:
 
 I used ProcDot to visualize the malware layout and how it executes, and from my analysis, the file executes multiple child processes of itself, the most interesting one being ```PID: 4320```
 
@@ -51,13 +53,15 @@ Using ProcDot, we can actually target specific child processes and see what they
 
 ![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/4f51a841-ca9e-45c8-88a4-b1627767cea3)
 
+### PID-4320, AKA Hawkish Grabber
+
 After loading this specific PID, we can see some DLLs being loaded, some communications being made to some servers, one of them specifically stood out to me, ```185.199.117.133:443```. The ```TIDs: 7068, 9708, 2984, and 7952``` were being used to download a zip file called ```"extensions.zip"```. Eventually, ```TIDs: 7068 and 7952``` both start reading data from the ZIP file then start writing data to the following folders:
 
 ```C:\ProgramData\ChromeExtensionsNova\extension-cookies```
 
 ```C:\ProgramData\ChromeExtensionsNova\extension-tokens```
 
-These folders both contain .js files which are used to steal Discord tokens and information:
+These folders both contain .js files which are used to enumerate Discord account values and steal tokens and information:
 
 ![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/bf171b43-d4ff-4826-a578-e3d87403a07e)
 
@@ -71,7 +75,15 @@ As you can see, they have a Telegram: [https://t.me/Sordeal](https://t.me/Sordea
 
 ![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/3a8fd3b8-259c-42c6-9c75-cd2d0dacd5ad)
 
-Looks like this one specifically is "Hawkish Grabber" considering the ```webhook_url``` variable. A French stealer.
+They also have a Discord server where they sell access to the stealer for anywhere from $5 for 1 month access to $70 for 24 months access
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/2eaa2566-f1f8-452c-a123-ac5df1688f45)
+
+Furthermore they have a Sellix page where you can again buy the stealer, although the Sellix site is a lot cheaper lol:
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/efe46598-624e-44b6-99c0-98c69749851b)
+
+Anyways it looks like this one specifically is "Hawkish Grabber" considering the ```webhook_url``` variable seen above. Not sure if "Nova Sentinel" and "Hawkish Grabber" are the same thing, or if they are different, but this piece of the malware is definitely grabbing user information/cookies/tokens.
 
 The other folder, ```C:\ProgramData\ChromeExtensionsNova\extension-cookies``` is a folder specifically targeting Roblox accounts and cookies, it then sends the data to the C2:
 
