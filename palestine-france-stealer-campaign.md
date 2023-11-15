@@ -174,7 +174,7 @@ It then compiles all of this data into the Downloads.txt file, History.txt file,
 
 Once the malware is done compiling all stolen information into its Temporary randomly generated folder, it starts to pack it all into ```GB_NOVA_<YOUR-COMPUTER-NAME>.zip```. Below is a GIF of the process:
 
-![0d6edb75af6de1978da9f2187b1b9f80](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/2a1b4614-8cae-43fc-bbba-86c93c1fd56a)
+![0d6edb75af6de1978da9f2187b1b9f80](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/4260f487-99f0-4e2e-983d-90539d52ef44)
 
 The main stealer process PID ```4320``` then sends the data to ```163.5.121.96, 31.14.70.243, and 51.178.66.33``` these are probably Telegram API's or Discord webhooks. Below is another GIF of the process:
 
