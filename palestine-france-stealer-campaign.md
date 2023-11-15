@@ -156,7 +156,7 @@ To get a look at some of the logs, here is my stolen history information lol
 
 It also steals system information, lists what applications are installed, and takes a screenshot of whatever is on the screen (will come back to this screenshotting function later). Along with this, it also steals Wi-Fi passwords because that is useful when you live nowhere near the victim. :)
 
-![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/1f7a1119-4ac8-4d1e-a66d-71e1e2fb8317)
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/a9149d44-2049-4bb2-a55b-f0cdaf2ce7a0)
 
 The malware also uses the child TIDs to enumerate web data (downloads, history, cookies, etc) and login data from the installed browsers: 
 
@@ -180,3 +180,14 @@ The main stealer process PID ```4320``` then sends the data to ```163.5.121.96, 
 
 ![349055b5ab3b84cd1ef91fe6bbb02df7](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/1be9a61c-c2ec-4564-bbb2-8d79f5b624c0)
 
+Thats pretty much it
+
+After i finished analysing the malware, i woke up the next day to some posts in the chat, which included my virtual machines stolen information lmao
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/72f8834f-695d-4671-945e-da83fb890240)
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/001e6f5a-e0df-43e6-a53c-de510bf45703)
+
+![566](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/e59aef3f-358d-4622-b4dd-b7e4077aeee5)
+
+Thats a wrap folks, if you want the malware, tough, its 70MB and Github only lets me upload 25MB max.
