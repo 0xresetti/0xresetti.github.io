@@ -132,3 +132,29 @@ Here is the Process Hierarchy:
 - ```TID 6184 "TID Daddy"``` = Main thread created by stealer process to manage persistence and steal information
 - ```Child TIDs: 7068, 9708, 2984, and 7952``` = Child Threads created by "TID Daddy" used to download + setup the web injector that steals Discord Tokens & Roblox Cookies, and finally pack all stolen data into the ```GB_NOVA_Analysis.zip``` ZIP file.
 
+After the persistence registry keys have been added, the stealer starts to enumerate the machine and write stolen information into the randomly generated folder in Temp ```(C:\Users\Analysis\AppData\Local\Temp\fMYoQic11EKsYaZdyub7)```, for example here below it is writing the stolen Discord information:
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/a3348c78-c6ed-4b1b-becb-2fa8fe36ddfd)
+
+Though I dont have Discord on the VM, so it doesn't log anything:
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/54104f08-1adf-4c69-9f8e-e6baa36254af)
+
+I managed to rip the folder from the Temp folder before it was Zipped up and sent to the C2 and deleted, this was the folder list:
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/e442efae-3764-4cdc-9fbe-67d41ac3a447)
+
+It stole some information, nothing special, just a list of downloads and some dead cookies, but these txt files go to show that if i had any Credit Cards saved then they would be logged also:
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/e6da752e-3c02-4d64-9281-aaf3c2003f8a)
+
+To get a look at some of the logs, here is my stolen history information lol
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/fa645265-fe5d-4afd-ae41-4266d9212f36)
+
+(Yes, i was using Edge to download Firefox, what else do you use it for?)
+
+It also steals system information, lists what applications are installed, and takes a screenshot of whatever is on the screen (will come back to this screenshotting function later). Along with this, it also steals Wi-Fi passwords because that is useful when you live nowhere near the victim. :)
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/1f7a1119-4ac8-4d1e-a66d-71e1e2fb8317)
+
