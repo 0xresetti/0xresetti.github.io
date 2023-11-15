@@ -12,11 +12,15 @@ In this case, it was in the "ℭ0𝔡3𝔅𝔯34𝔨3𝔯𝔰 ANONYMOUS" channel
 
 ### The *"Threat Actor"*
 
-Shariff, the one who sent the file, is a TikTok *"Threat Actor"* (heavy emphasis on the quotes) who posts videos related to hacking and the "life" of being a hacker (I think, idk figure it out yourself lol: [https://www.tiktok.com/@s.a.m.i.r_012](https://www.tiktok.com/@s.a.m.i.r_012))
+Shariff, the one who sent the file, is a TikTok *"Threat Actor"* (heavy emphasis on the quotes) who posts videos related to hacking and the "life" of being a hacker (I think, idk figure it out yourself lol: [https://www.tiktok.com/@s.a.m.i.r_012](https://www.tiktok.com/@s.a.m.i.r_012) & Second account [https://www.tiktok.com/@s.a.m.i.r_01](https://www.tiktok.com/@s.a.m.i.r_01))
 
 ![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/b5f83306-d6fe-428e-bef8-b2aba20eb85f)
 
 He has a Yemen flag in his TikTok bio, so I believe he resides in Yemen and is supporting Palestine through the Israel v Palestine conflic by spreading malware to any Israeli citizens.
+
+He also has a few other friends that post in the same Telegram channel and they like to post the same type of stuff, in case you wanted some more entertainment: [https://www.tiktok.com/@ii.clappz/video/7300147463090998535](https://www.tiktok.com/@ii.clappz/video/7300147463090998535) & [https://www.tiktok.com/@yoozy_1337/video/7295312479641505030](https://www.tiktok.com/@yoozy_1337/video/7295312479641505030)
+
+My point I'm trying to prove is we are not dealing with an APT here (maybe if you replaced the A with Amateur). But I personally think it is interesting to see what these foreign "hacktivists" are up to, what malware they are using, and who they are working with.
 
 ### Regarding The File, named ```321chat.exe``` has the following characteristics:
 
