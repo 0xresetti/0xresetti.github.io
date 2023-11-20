@@ -530,5 +530,33 @@ Furthermore, strings are completely encoded:
 
 These types of things usually indicate a packer, even if its not being detected by CFF or the header may have been removed, the binary could always be using a custom inbuilt packer.
 
-### Visualising Malware Activity
+### Monitoring Malicious API Usage with API Monitor
+
+You can use API Monitor to monitor different WinAPI usage that programs are using
+
+These API functions can be found in CFF Explorer
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/594f4889-661e-4ae1-a341-5a45ab4ba07b)
+
+When these are used in malware, they are usually used for process injection techniques.
+
+Hit CTRL+F to set checkmarks on common WinAPI functions and they will be monitored in the right window
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/a0d70aa3-a0f4-4e00-a712-aa5b65c28e7a)
+
+You can also set breakpoints when a certain function is called
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/8a28b6c9-2862-470e-a1b4-f7eb3e636a94)
+
+Here is an example of monitoring process hollowing
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/be47f06a-00ac-446f-a076-fa8d37a44f9a)
+
+As you can see the `notepad.exe` process is created using ```CreateProcessA``` and we can see that in the screenshot, this process is going to be used for the process hollowing technique. You can also see the `WriteProcessMemory` calls which write the sections into the process.
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/fed23a35-d1ea-4fbf-8ea5-3a70a6bde5cf)
+
+You can also see the injected strings of the process that was injected when the notepad process is running with any task manager or process hacker
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/5dc3b343-593e-412c-9e8a-138cc2f59d49)
 
