@@ -522,7 +522,9 @@ Difference between a Packed 32-bit Executable file and unpacked 32-bit Executabl
 
 ![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/3dc11cf8-aef8-450d-b93e-dbfa4b92809e)
 
-You can also see Entry points + sections are different, and DetectItEasy also detects that it is packed with UPX.
+You can also see Entry points + sections are different, and DetectItEasy also detects that it is packed with UPX. WinAPI calls will also be hidden/there will be less of them (6 when packed vs 80 when unpacked):
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/4e70af14-a5f6-48db-b9eb-a87c9f49e02e)
 
 Furthermore, strings are completely encoded:
 
