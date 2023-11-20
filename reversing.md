@@ -530,7 +530,7 @@ Furthermore, strings are completely encoded:
 
 These types of things usually indicate a packer, even if its not being detected by CFF or the header may have been removed, the binary could always be using a custom inbuilt packer.
 
-### Monitoring Malicious API Usage with API Monitor
+### Monitoring Malicious API Usage with API Monitor (32bit)
 
 You can use API Monitor to monitor different WinAPI usage that programs are using
 
@@ -559,4 +559,30 @@ As you can see the `notepad.exe` process is created using ```CreateProcessA``` a
 You can also see the injected strings of the process that was injected when the notepad process is running with any task manager or process hacker
 
 ![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/5dc3b343-593e-412c-9e8a-138cc2f59d49)
+
+### 64bit version
+
+How Process Hollowing works (+ Visualizing it):
+
+- The malware will call CreateProcess API
+- It will pass the creation flag in `CREATE_SUSPENDED` mode
+- It will then switch to the other process which it wants to load, and there are multiple different ways of loading, but in this case, it will switch to the other executable process which it wants to load, hollow out the original image and replace it with the malicious one using calls like `WriteProcessMemory`, then use `SuspendThread` and `ResumeThread` to pause and resume the thread while loading.
+
+Here we can see the "victim.exe" process getting loaded by the Process Hollowing executable
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/a009c49a-540f-402c-9e8b-0e0076b67cb7)
+
+And this would be the flags for the `VirtualAllocEx` call that ultimately starts the process hollowing:
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/ec41fec2-0004-447e-9788-8b9c26ebf976)
+
+And here we can see the malicious process being loaded:
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/c14400a2-cc6d-4abd-84e4-806e9bfbc3f7)
+
+After loading, the new entry point address for the new loaded process is set with `SetThreadContext`
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/71155500-487e-4f35-a03f-41a6416169b8)
+
+The process and thread is then resumed with `ResumeThread`
 
