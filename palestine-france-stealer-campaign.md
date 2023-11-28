@@ -85,6 +85,26 @@ Furthermore they have a Sellix page where you can again buy the stealer, althoug
 
 ![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/efe46598-624e-44b6-99c0-98c69749851b)
 
+These guys are French, and are what makes the title of this blog, the "threat actors" like Clappz, Yoozy, and Samir, are all either from Yemen or support Palestine and want to attack Israel, and the French lads are the developers/owners of Nova Sentinel.
+
+To prove this, since "YooZy" got a bit mad at me in Discord for this blog and first tried to claim that the Stealer wasnt Nova Sentinel, which he later backtracked on. He then tried to claim that nobody was French, and the "real" (whatever that means) Nova dev/owner isnt even in his own Discord/Telegram channels and also isnt French
+
+So, I went and re-joined the Nova Discord server after leaving, and could see a couple videos posted by the "Owner":
+
+![Screenshot_20](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/3af960da-1744-4412-9a09-5bb54b8dc03f)
+
+As you can see, he has the "Owner" role:
+
+![Screenshot_21](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/f1623c3f-fa51-4bcd-a073-68a1b7027a2d)
+
+And lo and behold, we click on the Tutorial videos and can clearly see the Owner/person who recorded this video is indeed French
+
+![Screenshot_19](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/66fe98f5-ed91-4dee-8a0a-1c5d4bf4da83)
+
+Furthermore, in their public Telegram channel where they post all the latest updates, they openly post in English and French, if this isnt enough proof to say "The creators or Nova Sentinel are French" then idk what is
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/fc678edd-7762-452e-8d4b-2d79e96b9703)
+
 Anyways it looks like this one specifically is "Hawkish Grabber" considering the ```webhook_url``` variable seen above. Not sure if "Nova Sentinel" and "Hawkish Grabber" are the same thing, or if they are different, but this piece of the malware is definitely grabbing user information/cookies/tokens.
 
 The other folder, ```C:\ProgramData\ChromeExtensionsNova\extension-cookies``` is a folder specifically targeting Roblox accounts and cookies, it then sends the data to the C2:
