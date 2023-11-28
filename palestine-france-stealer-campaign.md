@@ -85,6 +85,12 @@ Furthermore they have a Sellix page where you can again buy the stealer, althoug
 
 ![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/efe46598-624e-44b6-99c0-98c69749851b)
 
+**28/11/2023 UPDATE**
+
+The selling page has changed to a Sellpass shop:
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/79016ead-3400-477a-ad1c-fe7d0f3ba7e9)
+
 These guys are French, and are what makes the title of this blog, the "threat actors" like Clappz, Yoozy, and Samir, are all either from Yemen or support Palestine and want to attack Israel, and the French lads are the developers/owners of Nova Sentinel.
 
 To prove this, since "YooZy" got a bit mad at me in Discord for this blog and first tried to claim that the Stealer wasnt Nova Sentinel, which he later backtracked on. He then tried to claim that nobody was French, and the "real" (whatever that means) Nova dev/owner isnt even in his own Discord/Telegram channels and also isnt French
@@ -101,7 +107,7 @@ And lo and behold, we click on the Tutorial videos and can clearly see the Owner
 
 ![Screenshot_19](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/66fe98f5-ed91-4dee-8a0a-1c5d4bf4da83)
 
-Furthermore, in their public Telegram channel where they post all the latest updates, they openly post in English and French, if this isnt enough proof to say "The creators or Nova Sentinel are French" then idk what is
+Furthermore, in their public Telegram channel where they post all the latest updates, they openly post in English and French, if this isnt enough proof to say "The creators or Nova Sentinel are French" then idk what is, they also charge everyone in Euros, the currency of France so yeah idk what YooZy's talking about lol.
 
 ![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/fc678edd-7762-452e-8d4b-2d79e96b9703)
 
