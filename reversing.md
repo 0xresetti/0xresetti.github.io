@@ -574,6 +574,8 @@ You can use CFF Explorer's Resource Editor to find extra binaries which might be
 
 You can use "X" key in IDA to travel to xrefs to functions
 
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/da50a9f5-474b-42cb-8417-ab09db36b39f)
+
 You can use "G" key in IDA to travel to memory addresses
 
 You can use "Shift+;" in IDA to add comments
@@ -595,8 +597,6 @@ This thing is a reference label, you can click on it and press X to go to the re
 And we are taken to where the string is referenced:
 
 ![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/711516d1-ba5a-49af-9eab-16a9878056ef)
-
-![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/da50a9f5-474b-42cb-8417-ab09db36b39f)
 
 Using Ollydbg's command line at the bottom, you can use the ```bp CreateProcess``` command to set breakpoints at common ATT&CK functions.
 
