@@ -54,6 +54,16 @@ Lower part of Hierarchy is large, slow, non volatile storage.
 - RBP - Stack frame **B**ase **P**ointer
 - RIP - Pointer to next instruction to execute (**I**nstruction **P**ointer)
 
+**These all start with E instead of R in x32 programs**
+
+**Segment Registers**
+- SS, Stack Segment, Pointer to the stack
+- CS, Code Segment, Pointer to the code
+- DS, Data Segment, Pointer to the data
+- ES, Extra Segment, Pointer to extra data
+- FS, F Segment, Pointer to even more extra data
+- GD, G Segment, Pointer to EVEN MORE extra extra data
+
 **Registers are also called general purpose registers and their capacity is 32 bits: 4 bytes (4 sets of 8 bits).**
 
 **The Program Status and Control Register is EFLAGS, which is a collection of 1-bit flags.**
