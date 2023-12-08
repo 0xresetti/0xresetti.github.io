@@ -724,3 +724,38 @@ After loading, the new entry point address for the new loaded process is set wit
 
 The process and thread is then resumed with `ResumeThread`
 
+### Manipulating Control Flow
+
+In this exe i have "stage2.exe", there is a buffer check, which is an area of memory being checked for a particular condition.
+
+When the buffer checks are made (with the ```jne``` instructions), we can manipulate the ZF Flag (Zero Flag) by stepping into the ```jne``` calls.
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/76501187-7947-4167-8abd-c7657d432fcb)
+
+**NOTE:** In x86 assembly language, the Zero Flag (ZF) is a status flag that is set if the result of an operation is zero. For example if we failed the buffer check, this flag would be 0, same if we failed to supply a valid license key or something.
+
+![2a6e5f4d3cefe899](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/a0e9618d-9492-46c2-8fce-f20c2419095f)
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/bc816b31-cfb5-4ae3-a14d-12e5185e9c64)
+
+Popped the flag for this one!
+
+### Analysing Different Files, Borland Delphi
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/8efa3ac0-680c-4f7b-bb93-acf366abd32d)
+
+Here I have an obvious malicious binary which is impersonating Malwarebytes, you can see the file size is 2.14MB which is quite small for legitimate setup files, usually smaller payloads are used when a loader is incorporated into the malware. However, the reason for the large file size can still be the following reasons:
+
+- It has many resources
+- It is compiled in Borland Delphi ```(BobSoft Mini Delphi -> BoB / BobSoft)```
+
+Why does it matter how the sample was compiled? Because it will determine how the disassembly will be structured.
+
+### Imports
+
+Looking at the Imported DLL files, like ```kernel32.dll```, we can see interesting imported functions like ```VirtualAlloc``` which as we know is commonly used for code injection.
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/317ee0ca-6919-415f-8789-6cc0fb4f5b78)
+
+We can also see imports of possible resource manipulation techniques (i.e. ```FindResourceA```, ```SizeofResource```), and possible Anti-Analysis tricks (i.e. ```Sleep```, ```GetTickCount```). With the imports from ```Advapi32.dll```, we can tell it is going to access registry keys (i.e. ```RegOpenKeyExA```). 
+
