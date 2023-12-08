@@ -109,6 +109,34 @@ RVA of VA_2 = VA_2 - VA_1 = 0x00001000
 
 - **Opcodes are important btw, for example ```JNZ```'s opcode would be 0x75.**
 
+### Opcodes and Instructions
+
+- **Each Instruction represents opcodes (hex code) that tell the machine what to do next.**
+
+**There are 3 categories of instructions:**
+
+- Data Movement / Access
+- Arithmetic / Logic
+- Control-Flow
+
+**Common Instructions**
+
+    mov, lea (data movement, data access)
+    add, sub (arithmetic)
+    or, and, xor (Logic)
+    shr, shl (Logic)
+    ror, rol (Logic)
+    jmp, jne, jnz, jnb (Control Flow)
+    push, pop, call, leave, enter, ret (Control Flow)
+
+- **Example below is moving value at ``0xaaaaaaaa`` into ``ecx``.**
+
+```
+Instruction                Opcode
+
+mov ecx,[0xaaaaaaaa];      8B 0D AA AA AA AA
+```
+
 ### Top Tips
 
 - **Top tip btw, when clicking on the beginning of a function (```PUSH EBP```), you can view the functions that call this function under the CPU box:**
