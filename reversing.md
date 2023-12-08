@@ -44,6 +44,14 @@
 
 - **The program in execution needs to "remember" the return address each time the execution flow enters a function and that function needs to have its own memory area where it can store return addresses, local variables, etc. This is done by splitting the memory assigned for the stack into stack frames, each frame holds the information just mentioned for each function.**
 
+### Calling a function
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/b6c4ca0a-1ca9-470a-abc2-a7b79fe76b3b)
+
+### Local variables on the Stack
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/b19c727c-9f54-4667-8a6f-36b2528999f1)
+
 ### Heaps, Handles, and Exceptions.
 
 - **Heaps are memory areas dynamically allocated at runtime, used to store data that doesn't have a fixed size or data that can't fit inside the stack.**
@@ -542,9 +550,15 @@ These aren't the only ways to detect VM environments, do some research.
 
 ### Code Obfuscation
 
+- Deliberate act of creating obfuscated code that is difficult for humans to understand
+- Plain text strings will appear as base64 or Xor
+- Control-Flow Flattening
+- String Encryption
 - Junk Bytes (anti-disassembling technique)
 - Trampolines
 - Permutations
+
+
 
 ### Logic Flow Obfuscation
 
@@ -558,11 +572,58 @@ You can use CFF Explorer's Resource Editor to find extra binaries which might be
 
 ![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/541c2c7f-9f33-4b1d-9130-5f13d107007e)
 
-You can use "X" key in IDA Pro to travel to xrefs to functions
+You can use "X" key in IDA to travel to xrefs to functions
+
+You can use "G" key in IDA to travel to memory addresses
+
+You can use "Shift+;" in IDA to add comments
+
+You can use "F5" key in IDA Pro (only) to bring up the decompiled Pseudo-C code of a function
+
+You can use "Space in IDA to change the views from graph view to text view
+
+You can right/left click on pushed hex values and select "R" for the Readable string option, you can also just press R after clicking the value
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/418b955c-df7a-40f0-a632-e03b05f0a95c)
+
+This thing is a reference label, you can click on it and press X to go to the referenced function as mentioned before
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/9a55a2c3-8417-4e89-ab4a-d58ec50ccedd)
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/0ec52034-19c5-4eb3-9a7d-0f63b1361247)
+
+And we are taken to where the string is referenced:
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/711516d1-ba5a-49af-9eab-16a9878056ef)
 
 ![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/da50a9f5-474b-42cb-8417-ab09db36b39f)
 
 Using Ollydbg's command line at the bottom, you can use the ```bp CreateProcess``` command to set breakpoints at common ATT&CK functions.
+
+**x64dbg - Common Commands**
+
+- Enter Comment = ;
+- Breakpoint = F2
+- Step Into = F7
+- Step Over = F8
+- Run = F9
+- Edit Instruction = Space
+
+### What to do when you find a malware sample?
+
+Things to do:
+
+- Determine the file type with tools like DetectItEasy or ```file``` in Linux
+- Verify the file header with a hex editor like HxD
+- Determine what resources, DLLs, and libraries are being used. (Example: if you see Ws2_32.dll it might be setting up a network connection because it's used for setting up sockets)
+- Get the hash of the file and look it up to see if its been reported on already
+- Use sites like hybrid-analysis.com or malwr.com to get information about behaviour quickly
+- If you can't do this then you will need to dynamically debug the malware
+
+Function calls like ```LoadResource``` & ```FindResourceA``` from ```KERNEL32.dll``` and ```CreateProcessA``` could indicate that the malware is extracting something from the resources and is creating a new process with it
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/e2b7b369-2963-446c-b921-31473bf9742e)
+
 
 ### 32-bit vs 64-bit
 
