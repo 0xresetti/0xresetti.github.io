@@ -598,6 +598,23 @@ And we are taken to where the string is referenced:
 
 ![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/711516d1-ba5a-49af-9eab-16a9878056ef)
 
+Interesting functions that should be monitored:
+
+    Opening a file from the resource section
+    FindResource
+    SizeofResource
+    LoadResource
+    LockResource
+    Creating a file
+    GetEnvironmentVariable
+    CreateFile
+    WriteFile
+    CloseHandle
+    Sleep
+    Starting a new process
+    CreateProcess
+
+
 Using Ollydbg's command line at the bottom, you can use the ```bp CreateProcess``` command to set breakpoints at common ATT&CK functions.
 
 **x64dbg - Common Commands**
