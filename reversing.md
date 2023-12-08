@@ -2,6 +2,36 @@
 
 **This is just a page of notes and important things to me to remember while learning Reverse Engineering**
 
+### PE Structure
+
+- **Typical windows programs are in the Portable Executable (PE) Format. It's portable because it contains information, resources, and references to dynamic-linked libraries (DLL) that allows windows to load and execute the machine code.**
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/8611271b-0345-4025-87ce-42f000dbd561)
+
+### Windows Architecture
+
+![a49e773f13968e92-1](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/c062a7f4-c0b4-4dab-9c45-152037e2c738)
+
+- **In user-mode, an application starts a user-mode process which comes with its own private virtual address space and handle table**
+
+- **In kernel mode, applications share virtual address space**
+
+### PE Header
+
+= **The PE header provides information to the operating system on how to map the file into memory. The executable code has designated regions that require a different memory protection (RWX)**
+
+![faff0917056c4dc6](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/15851073-4706-4b98-8965-725eb15af7d7)
+
+### PE Header Example
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/28310468-52b1-4f15-959f-5f95dedc255e)
+
+### The Stack
+
+![12ddbf0c041574ca](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/413fa72d-e8f3-4678-94e4-36199006f072)
+
+- **EBP is the Base Pointer register that is used to store memory addresses or pointers that point to specific locations within the stack frame**
+
 ### Threads, Functions and Stacks
 
 - **Each thread executing inside a process has its own stack. // 5 Threads = 5 Stacks**
