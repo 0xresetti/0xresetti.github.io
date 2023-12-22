@@ -7,7 +7,7 @@ layout: default
 hello.
 my name is resetti, i love hacking, and i love to exploit shit. 
 
-im a simple guy.
+im a simple guy. feel free to buymeacoffee [here](https://www.buymeacoffee.com/resetti)
 
 ### what is this?
 
