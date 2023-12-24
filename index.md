@@ -7,7 +7,7 @@ layout: default
 # root@mr-resetti:~$
 
 hello.
-my name is resetti, i love hacking, and i love to exploit shit. 
+my name is resetti, i love hacking, i love to exploit shit, and i love threat intelligence. 
 
 im a simple guy. feel free to buymeacoffee [here](https://www.buymeacoffee.com/resetti)
 
