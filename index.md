@@ -9,7 +9,9 @@ layout: default
 hello.
 my name is resetti, i love hacking, i love to exploit shit, and i love threat intelligence. 
 
-im a simple guy. feel free to buymeacoffee [here](https://www.buymeacoffee.com/resetti)
+im a simple guy. and you should follow me on [twitter](https://twitter.com/fuckaslr) 
+
+also, feel free to buy me a coffee [here](https://www.buymeacoffee.com/resetti)
 
 ### what is this?
 
