@@ -617,7 +617,11 @@ Interesting functions that should be monitored:
 
 Using Ollydbg's command line at the bottom, you can use the ```bp CreateProcess``` command to set breakpoints at common ATT&CK functions.
 
-Utilize ```wireshark &```, ```fakedns``` and ```httpd start``` commands on a separate Linux VM to intercept web requests to C2's, or use HTTP Toolkit if it wants to play fair.
+Utilize ```wireshark &```, ```fakedns``` and ```httpd start``` commands on a separate Linux VM to intercept web requests to Domain C2's, or use HTTP Toolkit if it wants to play fair.
+
+When doing this, make sure to configure the IPv4 and DNS to point to the other Linux VM on the Control Panel
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/d7a25f6e-4b91-4dc6-9a81-6843020090a7)
 
 When monitoring API calls like ```ReadFile```, always check the function Syntax on the MSDN website, for ```ReadFile```, it is:
 
