@@ -619,9 +619,9 @@ Using Ollydbg's command line at the bottom, you can use the ```bp CreateProcess`
 
 Utilize ```wireshark &```, ```fakedns``` and ```httpd start``` commands on a separate Linux VM to intercept web requests to Domain C2's, or use HTTP Toolkit if it wants to play fair.
 
-When doing this, make sure to configure the IPv4 and DNS to point to the other Linux VM on the Control Panel
+When doing this, make sure to configure the IPv4, Gateway, and DNS to point to the other Linux VM on the Control Panel
 
-![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/d7a25f6e-4b91-4dc6-9a81-6843020090a7)
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/50812615-0050-406f-a404-dfe4618727da)
 
 When monitoring API calls like ```ReadFile```, always check the function Syntax on the MSDN website, for ```ReadFile```, it is:
 
@@ -652,6 +652,10 @@ Call Stack is useful, you can check where the execution path is for a specific f
 Using "Run to User code" is also very useful, as if we set a breakpoint on a function like `ReadFile`, we can use "Run to User code" to get to the code that calls that function, also, now we have ran to the START of the user code, AKA "where the `ReadFile` function will RETURN to", we can see the addresses match
 
 ![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/aa45eabb-8e8a-4020-b764-20b2819dbbf0)
+
+You can use `accept-all-ips start` and `netcat` to intercept requests sent directly to IPv4 C2's. `3127` is the port number to listen on.
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/6e772d9a-f5bf-41fb-97d7-2ca5f1d2bc2a)
 
 
 
