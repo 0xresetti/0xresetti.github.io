@@ -617,6 +617,8 @@ Interesting functions that should be monitored:
 
 Using Ollydbg's command line at the bottom, you can use the ```bp CreateProcess``` command to set breakpoints at common ATT&CK functions.
 
+Utilize ```wireshark &```, ```fakedns``` and ```httpd start``` commands on a separate Linux VM to intercept web requests to C2's, or use HTTP Toolkit if it wants to play fair.
+
 **x64dbg - Common Commands**
 
 - Enter Comment = ;
