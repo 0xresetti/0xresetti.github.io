@@ -641,6 +641,16 @@ Going into the "Handles" section in x64dbg, hitting refresh and searching for `1
 
 ![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/6d12bc53-0cab-4928-80b7-f943346893f3)
 
+Call Stack is useful, you can check where the execution path is for a specific function, the `To` address ending in `2E3F` shows where the `ReadFile` function will return to, the `From` is where we are presently paused
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/3faf3877-afb6-49ba-b817-7c841fdfc567)
+
+Using "Run to User code" is also very useful, as if we set a breakpoint on a function like `ReadFile`, we can use "Run to User code" to get to the code that calls that function, also, now we have ran to the START of the user code, AKA "where the `ReadFile` function will RETURN to", we can see the addresses match
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/aa45eabb-8e8a-4020-b764-20b2819dbbf0)
+
+
+
 **x64dbg - Common Commands**
 
 - Enter Comment = ;
