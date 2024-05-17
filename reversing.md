@@ -619,6 +619,28 @@ Using Ollydbg's command line at the bottom, you can use the ```bp CreateProcess`
 
 Utilize ```wireshark &```, ```fakedns``` and ```httpd start``` commands on a separate Linux VM to intercept web requests to C2's, or use HTTP Toolkit if it wants to play fair.
 
+When monitoring API calls like ```ReadFile```, always check the function Syntax on the MSDN website, for ```ReadFile```, it is:
+
+```
+BOOL ReadFile(
+  [in]                HANDLE       hFile,
+  [out]               LPVOID       lpBuffer,
+  [in]                DWORD        nNumberOfBytesToRead,
+  [out, optional]     LPDWORD      lpNumberOfBytesRead,
+  [in, out, optional] LPOVERLAPPED lpOverlapped
+);
+```
+
+Looking at the CPU registers in memory, we can see after this ReadFile breakpoint is hit, we get the value `10C` in the `rcx` register
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/3ec6bb8c-6c0c-40ea-9423-e1e35ef98cbf)
+
+So the HANDLE = `10C`
+
+Going into the "Handles" section in x64dbg, hitting refresh and searching for `10C` in the handles section, brings us the file path it is trying to read!
+
+![image](https://github.com/0xresetti/0xresetti.github.io/assets/114181159/6d12bc53-0cab-4928-80b7-f943346893f3)
+
 **x64dbg - Common Commands**
 
 - Enter Comment = ;
