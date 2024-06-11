@@ -17,8 +17,6 @@ also, feel free to buy me a coffee [here](https://www.buymeacoffee.com/resetti)
 
 this is my blog dedicated to writeups and notes, whether that be reverse engineering an iot camera, or debuting my new c2 agent, ill be writing all about it here. stay tuned for more.
 
-you can also find my PGP key [here](https://0xresetti.github.io/pgp.txt) if you want to be more secure and integral.
-
 # [Uncovering a Palestinian & French Stealer Campaign](./palestine-france-stealer-campaign.html)
 
 An interesting file was dropped in a Telegram channel I was apart of with the message "i will be using my private stealer for #opisrael, message me to help it spread". This blog shows the world of Stealer-as-a-Service markets, and political hacktivism within Telegram against Israel, and a very noisy piece of malware!
