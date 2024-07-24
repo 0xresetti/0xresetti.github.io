@@ -1,4 +1,4 @@
-# ATMSpitter Undocumented Sample Analysis
+# ATMWizX Undocumented Sample Analysis
 
 ### While gathering new ATM Malware resources for some study time, I came across an undocumented sample of ATMWizX which I got from the [Global ATM Malware Wall](https://atm.cybercrime-tracker.net/index.php?x=stats). Shoutout those guys, they got some real exotic shit.
 
