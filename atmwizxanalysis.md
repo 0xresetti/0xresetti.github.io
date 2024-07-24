@@ -28,4 +28,34 @@ Overall, I tried both options, and we can load it using a simple DLL loader whic
 
 Absolutely insane hacks. Just as a note, yes, all we can see is "No driver found!", which is unforunate, I'd love to showcase the binary acting how it would if connected to an actual ATM, however 1. I spent a good couple hours trying to do that before writing this blog, and didn't really get far, and 2. I will still talk about those functions and strings in the code later on.
 
+This `DialogBoxParamA` function is an API call that creates a dialog box from a template resource, here is the syntax:
+
+```
+INT_PTR DialogBoxParamA(
+  [in, optional] HINSTANCE hInstance,
+  [in]           LPCSTR    lpTemplateName,
+  [in, optional] HWND      hWndParent,
+  [in, optional] DLGPROC   lpDialogFunc,
+  [in]           LPARAM    dwInitParam
+);
+```
+
+In this case, we are interested in the `lpDialogFunc/DLGPROC` parameter, we can use APIMonitor to monitor the `DialogBoxParamA` call and see what it is doing.
+
+First off, I set the target process to my dllLoader which loads the ATMWizX DLL sample:
+
+![image](https://github.com/user-attachments/assets/10b263ed-7f5e-4959-83bd-89cc71bbba39)
+
+After clicking "Ok", we see the `DialogBoxParamA` call is monitored, and we can see the `lpDialogFunc` has been filled with memory address `0x624c1bd2` :
+
+![image](https://github.com/user-attachments/assets/ac9014cf-2994-47b8-bfec-e0fcda6884d5)
+
+Using "G" in IDA Pro or "CTRL+G" in x32dbg/64dbg, we can jump to this memory addresses code and see what it is doing:
+
+![image](https://github.com/user-attachments/assets/9b696007-3210-472a-8503-a981afd60579)
+
+Looks like some sauce! Specifically these function boxes, which clearly enumerate the ATM's current money cassettes and banknotes found:
+
+![image](https://github.com/user-attachments/assets/4afb7785-9bc8-4a26-802e-5c946dbe0a68)
+
 
