@@ -68,7 +68,7 @@ The difference between the two deobfuscated files seems to be in the resources, 
 
 The Relative Virtual Address (RVA) for both of the deobfuscated binaries also differ, with the one for .NETReactorSlayer being ```0x000151F8```, and de4dot being ```0x0000F470```
 
-I'm not 100% sure why this might be, however I think im going to look at the de4dot binary first, since that seems to have more resources, and from looking over both binaries initially in DNSpy, I can see that both binaries have pretty much the same code. Though I could be wrong regarding the resources, perhaps de4dot thinks there are more resources than there actually are, I'm sure I'll find out soon.
+I'm not 100% sure why this might be, however I think im going to look at the de4dot binary in DNSpy first, since that seems to have more resources, and from looking over both binaries initially in DNSpy, I can see that both binaries have pretty much the same code. Though I could be wrong regarding the resources, perhaps de4dot thinks there are more resources than there actually are, I'm sure I'll find out soon.
 
 ![image](https://github.com/user-attachments/assets/69dcdd32-b111-4b66-9ec3-b2e79150a6b2)
 
