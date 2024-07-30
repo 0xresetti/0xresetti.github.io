@@ -16,7 +16,11 @@ I was also unfortunately unable to find any archived version of this PDF:
 
 However, that is where I come in!
 
-Since the only information I could find about this malware was from a [Malwarebytes Report](https://www.malwarebytes.com/blog/news/2019/08/atm-attacks-and-fraud-part-2) talking about ATM malware, which was "Daniel Regalado, principal security researcher for Zingbox, noted in a (lost) blog post that a modified Ploutus variant called Piolin was used in the first ATM jackpotting crimes in the North America, and that the actors behind these attacks are not the same actors behind the jackpotting incidents in Latin America". I decided to take it upon myself to document this malware publicly, so that more people/companies can understand it.
+Since the only information I could find about this malware was from a [Malwarebytes Report](https://www.malwarebytes.com/blog/news/2019/08/atm-attacks-and-fraud-part-2) talking about ATM malware, which was "Daniel Regalado, principal security researcher for Zingbox, noted in a (lost) blog post that a modified Ploutus variant called Piolin was used in the first ATM jackpotting crimes in the North America, and that the actors behind these attacks are **not** (!!) the same actors behind the jackpotting incidents in Latin America". 
+
+**The key sentence here is: "the actors behind these attacks are not the same actors behind the jackpotting incidents in Latin America"**
+
+So, I decided to take it upon myself to document this malware publicly, so that more people/companies can understand it.
 
 ### With that, let's get started.
 
