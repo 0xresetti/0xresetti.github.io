@@ -2,7 +2,7 @@ remote_theme: pages-themes/hacker@v0.2.0
 plugins:
 - jekyll-remote-theme # add this line to the plugins list if you already have one
 title: 0xresetti
-description: a place for me to post shit
+description: making blog posts and memes about malware
 header_pages:
 - index.md
 - contact.md
