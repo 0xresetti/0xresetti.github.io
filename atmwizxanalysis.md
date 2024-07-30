@@ -58,4 +58,5 @@ Looks like some sauce! Specifically these function boxes, which clearly enumerat
 
 ![image](https://github.com/user-attachments/assets/4afb7785-9bc8-4a26-802e-5c946dbe0a68)
 
+P.S. Yes, i know i could have found this function from searching for these strings, however I wanted to be more raw with it, since not every malware sample will have plaintext strings, plus, I'm trying to teach you guys new things!
 
