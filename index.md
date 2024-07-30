@@ -17,6 +17,10 @@ also, feel free to buy me a coffee [here](https://www.buymeacoffee.com/resetti)
 
 this is my blog dedicated to writeups and notes, whether that be reverse engineering an iot camera, or debuting my new c2 agent, ill be writing all about it here. stay tuned for more.
 
+# [Analysing Piolin, a modified version of Ploutus, and (kind-of) undocumented ATM Malware Sample](./piolinanalysis.html)
+
+Once again, while gathering new ATM Malware resources for some study time, I came across a (kind-of) undocumented sample of Piolin which I got from the Global ATM Malware Wall. So once again, let's document it!
+
 # [Analysing ATMWizX, an undocumented ATM Malware Sample](./atmwizxanalysis.html)
 
 While gathering new ATM Malware resources for some study time, I came across an undocumented sample of ATMWizX which I got from the Global ATM Malware Wall. Let's document it!
