@@ -1,3 +1,5 @@
+![Alt Text](https://c.tenor.com/cJRcMyUAiMcAAAAd/tenor.gif)
+
 # Piolin ATM Malware Analysis
 
 ### Once again, while gathering new ATM Malware resources for some study time, I came across a (kind-of) undocumented sample of Piolin, which I once again got from the [Global ATM Malware Wall](https://atm.cybercrime-tracker.net/index.php?x=stats). (file hash: `5f4215368817570e7a390c9f6e265a7db343c9664d22008d5971dac707751524`)
