@@ -81,3 +81,44 @@ Anyways, enough about conspiracy theories, let's move on.
 Now, there are two things I could do from here on out, I could load the deobfuscated binary into DNSpy and start looking at the code, or I could have a look at the original executable in a Virtual Machine.
 
 The VM sounds more fun for now, so let's boot up FlareVM.
+
+Booting into FlareVM and running the original binary sample prompts an error about a missing library, ```Interop.CASHDISPENSER3Lib```:
+
+![image](https://github.com/user-attachments/assets/6f80d2f1-680b-4f25-b920-e7a71aa7c257)
+
+I attempted to create a fake version of this library however I ran into an error stating the library was compiled for a different .NET runtime version, the malware uses version 2.0, I installed this, but it still didn't work.
+
+Not to worry though, it's in .NET so we can just read the decompiled code in DNSpy.
+
+Since I saw that there was multiple resources in the executable, and the file is .NET, we can use ExtremeDumper to dump the embedded assemblies.
+
+![image](https://github.com/user-attachments/assets/4c852155-b7bb-4372-86b3-356d625edaca)
+
+The embedded assemblies are the following:
+
+![image](https://github.com/user-attachments/assets/47d5b547-1344-457d-9620-3833243aa5c1)
+
+```
+- "_.dll"
+- "anub3tlf.dll"
+- "CalcAgilis.exe"
+```
+
+(The "anub3tlf.dll" filename seems to be randomly generated, since when I did this initially I got a different filename being "ruhbxcrx.dll")
+
+We can safely assume that the CalcAgilis.exe is the malware, but what are the other two DLLs? I took a quick look in DNSpy since they were both .NET assemblies.
+
+The "anub3tlf.dll" looks to be for reading and writing data to and from the MandeB.bin file, since the ```ConfigPlus``` reference is a class in the deobfuscated sample
+
+![image](https://github.com/user-attachments/assets/92b1d893-c96e-4f03-a28b-804c23f46e2f)
+
+![image](https://github.com/user-attachments/assets/6b2987ab-069a-4c17-a11a-ada1d70efaaa)
+
+![image](https://github.com/user-attachments/assets/0244e426-0eb5-47ec-9935-ea89a4e32069)
+
+The "_.dll" assembly simply has the "CalcAgilis.exe" malware embedded in the resources, which it reads, loads, and executes. The resource name is ```"_"```
+
+![image](https://github.com/user-attachments/assets/78787429-170e-4f51-9263-7346a9de5c32)
+
+Now we know what both of these DLLs do, let's look at the actual malware itself.
+
