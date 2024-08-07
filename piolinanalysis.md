@@ -126,7 +126,50 @@ Initial looks at the references shows the library we saw in the error before and
 
 ![image](https://github.com/user-attachments/assets/d1cd7e52-4cf0-43a3-b65a-7d862ccdeb22)
 
-We can also see some interesting Type References used, from "Dispense" on the CashDispenser type reference, to "ReadData(PINReadData)" on the PinPad type reference, there are also some other interesting ones for getting information such as the status of the ATM and other information in the list.
+We can also see some interesting Type References used, from "Dispense" on the CashDispenser type reference, to "ReadData(PINReadData)" on the PinPad type reference, this is probably for controlling the ATM instead of actually stealing PINs, there are also some other interesting ones for getting information such as the status of the ATM and other information in the list.
 
 ![image](https://github.com/user-attachments/assets/97fb7c37-246c-491e-bb44-3b773a5b0fed)
 
+Moving onto the actual code, first up we got ```B77Dw5684tb4mZjTIr.YAMXsbHMSTujjYPE1P```, which seems to be used for loading some sort of fake "Diebold.gif" image inside a WinForm, then bringing it to the front and controlling it, using ```base.Visible``` to make it visible and invisible when required. The "Diebold.gif" is not in the samples resources (unless it is in some encrypted resource, more on that later), however it could be on all Diebold Nixdorf ATMs by default, though that is too niche of a question to find the answer on Google lol.
+
+![image](https://github.com/user-attachments/assets/4ce5d07f-836f-46f4-a602-f95a5e6a4194)
+
+```Class0``` seems to be empty, not sure if this is an issue with the deobfuscation by de4dot or NETReactorSlayer, but both of the binaries' ```Class0``` are empty:
+
+![image](https://github.com/user-attachments/assets/b914a2c5-bee7-49a2-ade0-5befb58d7951)
+
+```Class1``` is where it gets a bit more interesting, it looks like this is where the malware is using the WinAPI functions called ```CreateDC``` and ```ReleaseDC``` for seemingly creating a Device Context (DC) for drawing and writing information on the ATM's screen.
+
+Information about ```CreateDC``` from MSDN here: [https://learn.microsoft.com/en-us/previous-versions/ms959931(v=msdn.10)](https://learn.microsoft.com/en-us/previous-versions/ms959931(v=msdn.10))
+
+![image](https://github.com/user-attachments/assets/9622a940-70e9-4f75-9f39-90c6d48e7eb7)
+
+These ```DrawString``` calls for the "C1", "C2" and "C3" status information continue up to "C18" (after some research, I think the "C" stands for "Counter", like a cassette counter or cash dispensing counter), after that, the following code is executed:
+
+![image](https://github.com/user-attachments/assets/bd4d156f-f755-44db-81c4-3de9e9e8bda1)
+
+Which writes the ATM information on the screen, specifically:
+
+- HWID
+- ATMID
+- Counter Information
+- Total number of Cassettes
+- "Codigo" (meaning "Code" in Portuguese) for **something???**
+- Code1 (again, for **something???**)
+- Code2 (again, for **something???**)
+
+The other letters in the list, being the "S:", "D:" and "CV:" I don't know what they are, CV could mean "Current Value" of a specific cassette, but I'm not 100% sure, their string reference values/variables are empty and are probably filled at runtime
+
+![image](https://github.com/user-attachments/assets/b7ecba06-060e-4756-bf75-a959dfc0701b)
+
+Once finished, the final block of code looks to get the Device Context information using ```GetDC```, create a graphics object from that Device Context, clear the previously displayed information on the screen with a black rectangle, then write ```string_0``` (whatever that may be) to the screen and then clear it again with a black rectangle. It then finally uses ```ReleaseDC``` to release the Device Context.
+
+![image](https://github.com/user-attachments/assets/33c733a2-5f3a-4511-9db8-b677524f8304)
+
+That seems to be all regarding ```Class1```.
+
+Moving on to ```Class2``` this primarily checks the current OS version, then check to see if the letter "P" is present as an input parameter, and if it is, it prints ```[APP]Modo Test``` and seemingly puts the malware into some sort of "Test Mode". It also prints out ```[XFS]Windows 7 Detected.``` if Windows 7 is detected. 
+
+Finally, at the end it executes ```RocHkU0iSSGhso0QcG.ef1ZVbjbWw1MAC5lYX```, which seems to be the actual "cash dispensing" and "PinPad reading" part (which as I mentioned before, is probably actually for controlling the ATM via the PinPad, instead of stealing PINs from victims)
+
+![image](https://github.com/user-attachments/assets/17561040-3728-43f5-853f-cb0a57c3bdcb)
