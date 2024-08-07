@@ -122,3 +122,11 @@ The "_.dll" assembly simply has the "CalcAgilis.exe" malware embedded in the res
 
 Now we know what both of these DLLs do, let's look at the actual malware itself.
 
+Initial looks at the references shows the library we saw in the error before and another one seemingly for interacting with the ATM Pin Pad
+
+![image](https://github.com/user-attachments/assets/d1cd7e52-4cf0-43a3-b65a-7d862ccdeb22)
+
+We can also see some interesting Type References used, from "Dispense" on the CashDispenser type reference, to "ReadData(PINReadData)" on the PinPad type reference, there are also some other interesting ones for getting information such as the status of the ATM and other information in the list.
+
+![image](https://github.com/user-attachments/assets/97fb7c37-246c-491e-bb44-3b773a5b0fed)
+
