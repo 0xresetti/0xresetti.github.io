@@ -144,7 +144,7 @@ Information about ```CreateDC``` from MSDN here: [https://learn.microsoft.com/en
 
 ![image](https://github.com/user-attachments/assets/9622a940-70e9-4f75-9f39-90c6d48e7eb7)
 
-These ```DrawString``` calls for the "C1", "C2" and "C3" status information continue up to "C18" (after some research, I think the "C" stands for "Counter", like a cassette counter or cash dispensing counter), after that, the following code is executed:
+These ```DrawString``` calls for the "C1", "C2" and "C3" status information continue up to "C18" (I think the "C" stands for "Cassette", since the later code for selecting cassettes only goes up to 18), after that, the following code is executed:
 
 ![image](https://github.com/user-attachments/assets/bd4d156f-f755-44db-81c4-3de9e9e8bda1)
 
@@ -168,8 +168,72 @@ Once finished, the final block of code looks to get the Device Context informati
 
 That seems to be all regarding ```Class1```.
 
-Moving on to ```Class2``` this primarily checks the current OS version, then check to see if the letter "P" is present as an input parameter, and if it is, it prints ```[APP]Modo Test``` and seemingly puts the malware into some sort of "Test Mode". It also prints out ```[XFS]Windows 7 Detected.``` if Windows 7 is detected. 
+Moving on to ```Class2``` this primarily checks the current OS version, then check to see if the letter "P" is present as an input parameter, and if it is, it logs ```[APP]Modo Test``` and seemingly puts the malware into some sort of "Test Mode". It also logs ```[XFS]Windows 7 Detected.``` if Windows 7 is detected. 
 
 Finally, at the end it executes ```RocHkU0iSSGhso0QcG.ef1ZVbjbWw1MAC5lYX```, which seems to be the actual "cash dispensing" and "PinPad reading" part (which as I mentioned before, is probably actually for controlling the ATM via the PinPad, instead of stealing PINs from victims)
 
 ![image](https://github.com/user-attachments/assets/17561040-3728-43f5-853f-cb0a57c3bdcb)
+
+Lets take a look at ```RocHkU0iSSGhso0QcG.ef1ZVbjbWw1MAC5lYX```, before I get fully started though, since this part of the code has a lot of logging output, I thought I would mention about ```Class5```, which has a function that I renamed to "LogThis" (it was previously called ```viDavtxfHg``` as seen in the "Test mode" logs), and it does what it says on the tin. It is called whenever there is text or data that needs to be logged to a file, it is called "Log.txt" and is created on execution of the malware
+
+![image](https://github.com/user-attachments/assets/f4b409c8-86cc-42d8-ad39-c78eae62f94c)
+
+```string_0``` is defined as "Log.txt", seen below
+
+![image](https://github.com/user-attachments/assets/8f801302-8907-4ab5-ae5c-d878d77c4bcf)
+
+So whenever you see something like ```"Class5.LogThis("Hello this is a thing to log");``` you now know that "Hello this is a thing to log" is being logged to the Log.txt file.
+
+Now, back to ```RocHkU0iSSGhso0QcG.ef1ZVbjbWw1MAC5lYX```, the first bit of code just looks to be initializing the PinPad input
+
+![image](https://github.com/user-attachments/assets/ccbd0a33-0205-46f5-9abc-6bd01ef6c274)
+
+The next main bit is where the malware seems to initially start and create controls for the ```axAXFS3Pinpad``` and ```axAXFS3CashDispenser1``` ActiveX controls.
+
+![image](https://github.com/user-attachments/assets/e503fd50-5d98-49f3-bff7-c79c263168b9)
+
+It also seems like the malware is utilizing time a lot, probably for checking if the status of the current license is active or not, I've not heard anything about this malware being sold to other criminals, its fairly old, so I doubt it, but still, that seems to be what the code is doing, it then as i said before, starts to create controls and logs "Inicializando..." (Initialising...) to the Log.txt file.
+
+![Screenshot_45](https://github.com/user-attachments/assets/e2daa4de-3378-4f24-9501-1ce8c7837a34)
+
+After that, it begins to setup various event handlers from the ```axAXFS3CashDispenser1``` component.
+
+![image](https://github.com/user-attachments/assets/69e7add5-b805-4721-8b8c-ccc4976c375b)
+
+And the same for the ```axAXFS3Pinpad``` component, however it also sets the logical service name to ```DBD_EPP4```, and initialises it after it sets up the handlers, logging "Inicializacion PinPad Completada" (PinPad Initialisation Complete) when done.
+
+![image](https://github.com/user-attachments/assets/fb3cf6b3-af43-41f0-b30b-6bbc2e898781)
+
+Just below that as well we can see the code to initialise the cash dispenser, this code sets the name of the device to ```DBD_AdvFuncDisp``` this time, which if you didn't know, is the logical service name for DieBold ATMs, I learnt this info from [this tweet](https://x.com/r3c0nst/status/1234494497486233607), shoutout that guy. Finally it logs "Inicializacion Dispenser Completada" when done.
+
+![image](https://github.com/user-attachments/assets/5397516c-2601-43df-ab96-a8fa6c5c26f7)
+
+Towards the end, you can see two new threads are created and started, running the two methods ```method_7``` and ```method_8```, further down in this massive function, or by just clicking on either one of them, we can see they are just executing the "OpenSession" function from the ```axAXFS3CashDispenser1``` and ```axAXFS3Pinpad``` components.
+
+![image](https://github.com/user-attachments/assets/94f734e4-2de3-464a-9123-bbc75c79dee8)
+
+Next up in the code seems to just be a bunch of functions for information logging, getting device statuses, and error logging.
+
+![image](https://github.com/user-attachments/assets/d8dadb8e-6f17-48bc-a062-1f07a6c1cf3d)
+
+After that, we see a bunch of what looks like code to handle the keypresses on the PinPad itself, for example, if a certain key on the PinPad is pressed, that key will corrospond to a function key like F1 or F2
+
+![image](https://github.com/user-attachments/assets/5417aa9e-fe2d-4da3-82a5-ca5b1e4db003)
+
+These function keys are fed into ```method_6``` further down in the code, which manages what each function key should actually do
+
+![Screenshot_48](https://github.com/user-attachments/assets/6d07257c-eb88-4ee9-aca5-7491cd454595)
+
+For example, if the key that corrosponds to "F2" is pressed, then the code will feed that into ```method_6``` and log "Pinpad:Activate Receive" to the Log.txt file, then call ```Class6.smethod_0``` with the "2" integer, you can see the code for ```Class6.smethod_0``` below:
+
+![image](https://github.com/user-attachments/assets/71c80e49-7576-471a-9c34-5ba2ea83335b)
+
+This code activates the ATM, I assume to get it "ready" for cash to be dispensed. Since the code just below it is for if "F3" was pressed, which instead feeds the "3" integer into ```Class6.smethod_0```, which is the code to actually dispense money from the ATM
+
+![image](https://github.com/user-attachments/assets/3ff4e6bf-88eb-46c5-9b9a-b325da8fe4e2)
+
+
+
+```
+F1 = Not available
+F2 = 
