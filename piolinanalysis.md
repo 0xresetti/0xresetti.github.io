@@ -234,14 +234,13 @@ This code activates the ATM, I assume to get it "ready" for cash to be dispensed
 
 ![image](https://github.com/user-attachments/assets/977c7673-9561-4c1f-bbb1-c7953956ff62)
 
-The image above, with the one line of code squared in red is the final call to ```Class2.method_2``` after the criminal has finished selecting the cassette to dispense from and how much to dispense. Below is the code of ```Class2.method_2```, which as you can see, finally calls ```axAXFS3CashDispenser1.Dispense``` to dispense cash.
+The image above, with the one line of code squared in red is the final call to ```Class2.method_2```, after the criminal has finished selecting the cassette to dispense from and how much to dispense... This function is called, below is the code of ```Class2.method_2```, which as you can see, finally calls ```axAXFS3CashDispenser1.Dispense``` to dispense cash.
 
 ![image](https://github.com/user-attachments/assets/d3641572-4263-42d0-8db0-a0a03bd08520)
 
-
+List of valid function keys that actually do stuff (so far):
 
 ```
-F1 = Not available
 F2 = Activate ATM
 F3 = Dispense Cash
 F4 = Change some values (not sure what)
