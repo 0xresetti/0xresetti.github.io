@@ -1,4 +1,4 @@
-remote_theme: 0xresetti/hackerv2
+remote_theme: 0xresetti/hackerv2@master
 plugins:
 - jekyll-remote-theme # add this line to the plugins list if you already have one
 title: 0xresetti
