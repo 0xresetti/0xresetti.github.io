@@ -1,8 +1,8 @@
-remote_theme: pages-themes/hacker@v0.2.0
+remote_theme: 0xresetti/hackerv2
 plugins:
 - jekyll-remote-theme # add this line to the plugins list if you already have one
 title: 0xresetti
-description: making blog posts and memes about malware
+description: making blog posts about malware
 header_pages:
 - index.md
 style: dark
