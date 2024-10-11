@@ -13,7 +13,7 @@ also, feel free to buy me a coffee [here](https://www.buymeacoffee.com/resetti)
 
 ### what is this?
 
-this is my blog dedicated to writeups and notes, whether that be reverse engineering an iot camera, or debuting my new c2 agent, ill be writing all about it here. stay tuned for more.
+this is my blog dedicated to writeups and notes, whether that be reverse engineering an iot camera, or analysing some new malware, ill be writing all about it here. stay tuned for more.
 
 # [Analysing Piolin, a modified version of Ploutus, and (kind-of) undocumented ATM Malware Sample](./piolinanalysis.html)
 
