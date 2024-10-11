@@ -4,8 +4,6 @@ layout: default
 
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 
-# root@mr-resetti:~$
-
 hello.
 my name is resetti, i love hacking, i love to exploit shit, and i love threat intelligence. 
 
