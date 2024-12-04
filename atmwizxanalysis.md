@@ -60,3 +60,5 @@ Looks like some sauce! Specifically these function boxes, which clearly enumerat
 
 P.S. Yes, i know i could have found this function from searching for these strings, however I wanted to be more raw with it, since not every malware sample will have plaintext strings, plus, I'm trying to teach you guys new things!
 
+(This post is unfinished, stay tuned for more!)
+
