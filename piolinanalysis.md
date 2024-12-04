@@ -245,3 +245,5 @@ F2 = Activate ATM
 F3 = Dispense Cash
 F4 = Change some values (not sure what)
 ```
+
+(This post is unfinished, stay tuned for more!)
