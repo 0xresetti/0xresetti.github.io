@@ -5,7 +5,7 @@ layout: default
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 
 hello.
-my name is resetti, i love hacking, i love to exploit shit, and i love threat intelligence. 
+my name is resetti, i love hacking, i love to exploit shit, i love malware analysis, and i love threat intelligence. 
 
 im a simple guy. and you should follow me on [twitter](https://twitter.com/fuckaslr) 
 
