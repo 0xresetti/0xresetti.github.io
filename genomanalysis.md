@@ -66,3 +66,26 @@ However, if we go back to the original Discord server screenshot seen above at t
 ### Analysing Genom.exe
 
 Now for the fun part.
+
+After getting the file and throwing it into DiE, I got this output:
+
+![image](https://github.com/user-attachments/assets/fea72f76-7c3b-4f2a-9889-f01cfc46ce89)
+
+Since the file is a **Nullsoft Scriptable Install System** file, we can use Universal Extractor to extract the files within.
+
+Once extracted, we can see 4 folders with some strange names:
+
+![image](https://github.com/user-attachments/assets/62088ba8-5c9d-448a-8171-44780c06b261)
+
+3 out of 4 of these folders include some useless stuff, mainly random DLLs and an uninstall.exe for the legitimate software this malware pretends to, but one of the folders, specifically `_ﾕ`, contains another folder called `_ﾚ`, which contains "app-64.7z"
+
+Inside this 7z archive is a couple files and folders:
+
+![image](https://github.com/user-attachments/assets/98c49756-95ad-4149-86a6-ddea8d221b3b)
+
+Now, from my research, the "SmartUpdateHelper.exe" seems to be legitimate, and the malware is actually inside of the "resources" folder. Here we have the following two files:
+
+![image](https://github.com/user-attachments/assets/08427570-4f33-4a56-b63f-3488dd3ee78f)
+
+Regarding "app.asar", my Electron nerds will know about that and we'll get into it in a moment. However, if you don't know about "elevate.exe", this is a third-party tool commonly used by malware to execute other processes such as CMD with administrator privileges. Basic stuff, overall, we are interested in the "app.asar" file.
+
