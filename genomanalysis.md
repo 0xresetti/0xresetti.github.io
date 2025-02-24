@@ -16,4 +16,4 @@ For more information on these types of teams that work within this area of crypt
 
 ### Analysis of the file itself
 
-After messaging the victim ("_why_so_serious__"), he sent me the link to the file he downloaded, which was a file called "Genom.exe", this file could also be downloaded from the Discord server that he joined for  
+After messaging the victim ("___why_so_serious___"), he sent me the link to the file he downloaded, which was a file called "Genom.exe", this file could also be downloaded from the Discord server that he joined for  
