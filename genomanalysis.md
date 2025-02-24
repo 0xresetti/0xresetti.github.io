@@ -16,9 +16,11 @@ For more information on these types of teams that work within this area of crypt
 
 ### How did this happen?
 
-After I messaged the victim ("_why_so_serious___"), he sent me the link to the "Genom.exe" file he downloaded, this file could also be downloaded from the Discord server that he joined for a supposed "job interview"
+After I messaged the victim ("_why_so_serious___"), he sent me the link to the "Genom.exe" file he downloaded, this file could also be downloaded from the Discord server that he joined for a supposed "job interview". The websites landing page the traffers were hosting was inside the "#links" channel on the Discord server ("genomgame.com")
 
 ![genomdiscord](https://github.com/user-attachments/assets/2ddf518c-2a68-4e94-a9c1-069081089566)
+
+![Screenshot_8](https://github.com/user-attachments/assets/9051d7f2-743b-4b12-89bb-f01945f50e7c)
 
 It's worthy to note that he was "interviewed" for this job as a "beta tester/moderation job"
 
@@ -50,7 +52,7 @@ However, if we go back to the original Discord server screenshot seen above at t
 
 ![image](https://github.com/user-attachments/assets/1b4b7af3-e879-4786-9686-8a3287aaa10c)
 
-Overall, the current chain of events is the following:
+### Overall, the current chain of events is the following:
 
 - The victim was looking for a job, and unfortunately found a fake crypto NFT collection that was advertising job listings for "beta tester/moderation job" roles.
 - The victim was interviewed in a seemingly "legitimate" interview for the job position. *(After all, who would do a "legitimate" job interview just to steal crypto?)*.. ***sarcasm***
