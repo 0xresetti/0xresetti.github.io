@@ -63,3 +63,6 @@ However, if we go back to the original Discord server screenshot seen above at t
 
 ***(Yes, I know Dropbox link in the screenshot downloads a file called "genom.exe" with no capital "G", this is because the traffers have updated the file since I analysed it)***
 
+### Analysing Genom.exe
+
+Now for the fun part.
