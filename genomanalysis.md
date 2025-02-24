@@ -16,4 +16,16 @@ For more information on these types of teams that work within this area of crypt
 
 ### Analysis of the file itself
 
-After messaging the victim ("_why_so_serious___"), he sent me the link to the file he downloaded, which was a file called "Genom.exe", this file could also be downloaded from the Discord server that he joined for  
+After messaging the victim ("_why_so_serious___"), he sent me the link to the "Genom.exe" file he downloaded, this file could also be downloaded from the Discord server that he joined for a supposed "job interview"
+
+![genomdiscord](https://github.com/user-attachments/assets/2ddf518c-2a68-4e94-a9c1-069081089566)
+
+It's worthy to note that he was "interviewed" for this job as a "beta tester/moderation job"
+
+![joboffer](https://github.com/user-attachments/assets/93d66661-f9c8-4e34-b244-b7560043de0a)
+
+This adds up with the key takeaways from @gonjxa's article, mentioning the use of "job listings" to entice crypto users into downloading malware.
+
+![image](https://github.com/user-attachments/assets/a60ca456-a5a3-411a-9bff-658e6c587d57)
+
+
