@@ -10,7 +10,7 @@
 
 Before we start, we have to understand the type of actors we are dealing with here, they are known as "traffers":
 
-- "Traffer" - refers to an individual who specializes in trafficking, managing and monetizing malicious online traffic, often involving stealer malware, crypto drainers, and more. Primarily for financial gain.
+- *"Traffer" - refers to an individual who specializes in trafficking, managing and monetizing malicious online traffic, often involving stealer malware, crypto drainers, and more. Primarily for financial gain.*
 
 For more information on these types of teams that work within this area of crypto fraud, see this great article from [@g0njxa on Twitter.](https://trac-labs.com/hearts-stolen-wallets-emptied-insights-into-cryptolove-traffers-team-3f65e84ccebe)
 
