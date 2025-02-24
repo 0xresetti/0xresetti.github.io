@@ -42,7 +42,7 @@ Their website @ "genom2.com" is offline, their GitBook has been suspended, their
 
 ![image](https://github.com/user-attachments/assets/a14cbfae-a04e-4e6f-8772-140e821f5192)
 
-However, if we go back to the original Discord server screenshot seen above at the start of this article, you will see a different Twitter account ("@genomthegame"), a different website ("genomgame.com"), and a different GitBook page ("genom-1.gitbook.io/genom" - which has been suspended with the message: "This content has been detected as spam and suspended", I'm not sure of the difference between this message and the legitimate Genom GitBook being suspended with the message "The organization has been suspended", but one of them was suspended, and the other, ***the fake one*** was suspended for spam. **¯\\_(ツ)_/¯**)
+However, if we go back to the original Discord server screenshot seen above at the start of this article, you will see a different Twitter account ("@genomthegame"), a different website ("genomgame.com"), and a different GitBook page ("genom-1.gitbook.io/genom" - which has been suspended with the message: "This content has been detected as spam and suspended", I'm not sure of the difference between this message and the legitimate Genom GitBook being suspended with the message "The organization has been suspended", but one of them was suspended, and the other, ***the fake one*** was suspended for spam. **¯\\__(ツ)__/¯**)
 
 ![image](https://github.com/user-attachments/assets/f9313e97-bd89-46d2-86f6-e17cc7574783)
 
