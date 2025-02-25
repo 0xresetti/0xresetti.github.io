@@ -67,6 +67,12 @@ However, if we go back to the original Discord server screenshot seen above at t
 
 Now for the fun part.
 
+Based on my analysis, Genom.exe initiates a multi-stage infection chain that leverages a legitimate-looking update process to deploy its payload. It extracts "SmartUpdateHelper.exe" alongside a malicious Electron app.asar file, which triggers a GET request to an external server to download and execute additional malware. The infection proceeds by dropping DLLs, memory injection, and syscall manipulation, ultimately injecting code into the legitimate explorer.exe process to establish communication with a C2 server. The final payload is likely REMCOS and/or a stealer malware such as LummaC2 or Rhadamanthys, enabling remote access and data exfiltration.
+
+![flow](https://github.com/user-attachments/assets/5451e6dc-2a25-45be-bc69-19e575bbfde2)
+
+<p align="center"><strong>Genom.exe Infection Chain</strong></p>
+
 After getting the file and throwing it into DiE, I got this output:
 
 ![image](https://github.com/user-attachments/assets/fea72f76-7c3b-4f2a-9889-f01cfc46ce89)
