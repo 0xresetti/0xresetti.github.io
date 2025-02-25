@@ -73,6 +73,7 @@ Based on my analysis, Genom.exe initiates a multi-stage infection chain that lev
 
 <p align="center"><strong>Genom.exe Infection Chain</strong></p>
 
+
 After getting the file and throwing it into DiE, I got this output:
 
 ![image](https://github.com/user-attachments/assets/fea72f76-7c3b-4f2a-9889-f01cfc46ce89)
