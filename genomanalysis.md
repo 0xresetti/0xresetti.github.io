@@ -97,3 +97,18 @@ Now, from my research, the "SmartUpdateHelper.exe" seems to be legitimate, and t
 
 Regarding "app.asar", my Electron nerds will know about that and we'll get into it in a moment. However, if you don't know about "elevate.exe", this is a third-party tool commonly used by malware to execute other processes such as CMD with administrator privileges. Basic stuff, overall, we are interested in the "app.asar" file.
 
+Extracting this "app.asar" file gives us a few JS files of interest, one of them specifically is named `main.js`, looking into this file we can see a simple download and execution script:
+
+![image](https://github.com/user-attachments/assets/013576b3-7ce6-4d49-8118-0e164b040169)
+
+The script also brings up a fake Cloudflare captcha page, most likely used as a distraction:
+
+![image](https://github.com/user-attachments/assets/f984a40f-daef-4641-9666-a20e816866d2)
+
+After sending a GET request to the `https://smartcloudnetwork.com/request` link, we get a downloaded file called `calc.exe`.
+
+### Analysing calc.exe
+
+![image](https://github.com/user-attachments/assets/1a25503f-933f-4367-a3ba-9918684abd46)
+
+This is the DetectItEasy report for `calc.exe` 
