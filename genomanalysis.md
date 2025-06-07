@@ -111,4 +111,23 @@ After sending a GET request to the `https://smartcloudnetwork.com/request` link,
 
 ![image](https://github.com/user-attachments/assets/1a25503f-933f-4367-a3ba-9918684abd46)
 
-This is the DetectItEasy report for `calc.exe` 
+This is the DetectItEasy report for `calc.exe`, clearly it is an MSI installer file, therefore, using [lessmsi](https://lessmsi.activescott.com/) we can analyse and extract the files within th installer:
+
+![image](https://github.com/user-attachments/assets/532df752-fdaf-4d53-9470-7d1b2755726d)
+
+Here we can see multiple files, including one "ISDbg.exe" which is particularly interesting. There are also a few DLLs here that were also dropped, primarily `ISUIServices.dll` and `MSIMG32.dll`
+
+Both of these DLLs are malware, but are used later in the chain. For now, the "ISDbg.exe"/"calc.exe" injects itself into the `explorer.exe` process, and communicates with a new C2.
+
+```C2 = cloudhostcdn.net (IP: 185.193.126.198)```
+
+**Previous fingerprints have indicated this IP address has been associated with other stealer campaigns such as Lumma Stealer, PureLog Stealer, DBatLoader, Masslogger RAT and Raccoon Stealer**
+
+![image](https://github.com/user-attachments/assets/b49def14-8ed4-418b-bf47-bab9bc5f5bbf)
+
+Futhermore, dropped files previously indicate that Remcos RAT was used in this campaign or a previous campaign:
+
+
+
+![image](https://github.com/user-attachments/assets/7a1046b8-39a0-4256-8e76-5956dc97af39)
+
