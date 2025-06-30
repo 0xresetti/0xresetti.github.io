@@ -129,7 +129,7 @@ Futhermore, dropped files previously indicate that Remcos RAT was used in this c
 
 ![image](https://github.com/user-attachments/assets/7a1046b8-39a0-4256-8e76-5956dc97af39)
 
-After executing, the malware establishes admin permissions by using a CMSTPLUA COM exploit: [POC & more information here](https://gist.github.com/api0cradle/d4aaef39db0d845627d819b2b6b30512) [and here](https://g3tsyst3m.github.io/privilege%20escalation/Creative-UAC-Bypass-Methods-for-the-Modern-Era/)
+After executing, the malware establishes admin permissions by using a CMSTPLUA COM exploit: [POC & more information here](https://gist.github.com/api0cradle/d4aaef39db0d845627d819b2b6b30512) & [here](https://g3tsyst3m.github.io/privilege%20escalation/Creative-UAC-Bypass-Methods-for-the-Modern-Era/)
 
 
 
