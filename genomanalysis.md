@@ -69,7 +69,7 @@ Now for the fun part.
 
 Based on my analysis, Genom.exe initiates a multi-stage infection chain that leverages a legitimate-looking update process to deploy its payload. It extracts "SmartUpdateHelper.exe" alongside a malicious Electron app.asar file, which triggers a GET request to an external server to download and execute additional malware. The infection proceeds by dropping DLLs, memory injection, and syscall manipulation, ultimately injecting code into the legitimate explorer.exe process to establish communication with a C2 server. The final payload is likely REMCOS and/or a stealer malware such as LummaC2 or Rhadamanthys, enabling remote access and data exfiltration.
 
-![flow](https://github.com/user-attachments/assets/5451e6dc-2a25-45be-bc69-19e575bbfde2)
+![flow](https://github.com/user-attachments/assets/5c12fa03-18c8-455b-87f7-6613dda04df6)
 
 <p align="center"><strong>Genom.exe Infection Chain</strong></p>
 
@@ -127,7 +127,9 @@ Both of these DLLs are malware, but are used later in the chain. For now, the "I
 
 Futhermore, dropped files previously indicate that Remcos RAT was used in this campaign or a previous campaign:
 
-
-
 ![image](https://github.com/user-attachments/assets/7a1046b8-39a0-4256-8e76-5956dc97af39)
+
+After executing, the malware establishes admin permissions by using a CMSTPLUA COM exploit: [POC & more information here](https://gist.github.com/api0cradle/d4aaef39db0d845627d819b2b6b30512) [and here](https://g3tsyst3m.github.io/privilege%20escalation/Creative-UAC-Bypass-Methods-for-the-Modern-Era/)
+
+
 
