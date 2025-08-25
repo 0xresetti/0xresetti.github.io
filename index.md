@@ -13,6 +13,10 @@ im a simple guy. and you should follow me on [twitter](https://twitter.com/fucka
 
 this is my blog dedicated to writeups and notes, whether that be reverse engineering an iot camera, or analysing some new malware, ill be writing all about it here. stay tuned for more.
 
+# [Setting up & Configuring GhidraMCP - Using AI for quick Malware Analysis](./ghidramcp.html)
+
+A while back, I came across an awesome video by LaurieWired which was talking about GhidraMCP, which is essentially an MCP (Model Context Protocol) designed for use with Ghidra. In this blog I will walk through the setup and use of this program
+
 # [Analysing Piolin, a modified version of Ploutus, and (kind-of) undocumented ATM Malware Sample](./piolinanalysis.html)
 
 Once again, while gathering new ATM Malware resources for some study time, I came across a (kind-of) undocumented sample of Piolin which I got from the Global ATM Malware Wall. So once again, let's document it!
