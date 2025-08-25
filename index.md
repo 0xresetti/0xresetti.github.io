@@ -15,7 +15,7 @@ this is my blog dedicated to writeups and notes, whether that be reverse enginee
 
 # [Setting up & Configuring GhidraMCP - Using AI for quick Malware Analysis](./ghidramcp.html)
 
-A while back, I came across an awesome video by LaurieWired which was talking about GhidraMCP, which is essentially an MCP (Model Context Protocol) designed for use with Ghidra. In this blog I will walk through the setup and use of this program
+A while back, I came across an awesome video by LaurieWired which was talking about GhidraMCP, which is essentially an MCP (Model Context Protocol) designed for use with Ghidra. In this blog I will walk through the setup and use of this program!
 
 # [Analysing Piolin, a modified version of Ploutus, and (kind-of) undocumented ATM Malware Sample](./piolinanalysis.html)
 
