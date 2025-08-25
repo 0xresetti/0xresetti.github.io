@@ -32,7 +32,7 @@ Finally, if you don't already have Ghidra installed and setup, then I don't even
 
 After installing Claude and that specific version of Ghidra, you should have everything downloaded and installed and be ready to set it all up.
 
-### Installation
+### Installation & Configuration
 
 Open up Ghidra, and go to `File` > `Install Extensions`, you should see the box below
 
@@ -91,4 +91,52 @@ You should use my config as a guide for what your config should look like.
 
 Once you have edited that config, save it, and close out Claude completely, this includes closing Claude from Task Manager or the little up arrow task bar thing on Windows I have no idea what its called lol.
 
-Then, you should re
+Then, you should re-open Claude and see that the `ghidra` plugin has been enabled and is there:
+
+<img width="561" height="372" alt="image" src="https://github.com/user-attachments/assets/a4ee2cbe-a8ca-4e91-b372-4465ce5e5340" />
+
+If there are any errors, Claude should let you know about that when you open it. You can view the logs and figure it out from there.
+
+### Usage
+
+**(I should make it known at this point that it is common for Claude to say "you have used all of your time with Claude for today" after doing initial analysis on a binary unless you have a higher paid plan with Claude. Also, it is very hard for Claude and GhidraMCP to analyse large files, Claude will commonly stop before it finishes analysis. In this example with the DispCashBR malware, the binary was 44kb, so fairly small, and it completed its analysis with renaming variables etc, overall, it was able to give a lot of information provide a solid overview of the malware. Just keep those two other things in mind when using this tooling.)**
+
+Once you see the plugin has been enabled and is there, you should be able to load up any binary in Ghidra and ask Claude to perform a specific task regarding analysing the binary, for example, I got a [DispCashBR ATM malware sample](https://bazaar.abuse.ch/sample/432f732a4ecbb86cb3dedbfa881f2733d20cbcc5958ead52823bf0967c133175/) and loaded it into Ghidra, selected "Yes" for the auto-analysis, then fed this prompt into Claude.
+
+`"rename the functions/variables/DATs inside this binary to what their functionality is, this is an ATM malware known as DispCashBR"`
+
+(Some prompts may be better than others, though this is what I use for an initial overview, feel free to get creative with it!)
+
+After I pressed enter, Claude will ask for permission to use the tools provided by GhidraMCP, select "Allow always". (This may pop up a few times for different functions)
+
+<img width="1857" height="1109" alt="image" src="https://github.com/user-attachments/assets/0786f4a9-6ba6-4275-9e35-b7f02b88625c" />
+
+Here we can see what the tool is actually doing when we allow it, as you can see it is renaming a variable from `local_24a` to `cdm_service_handle`, this is a LOT more useful for me to understand the binary and what it is doing.
+
+<img width="616" height="683" alt="image" src="https://github.com/user-attachments/assets/68212693-69c3-46cc-90ac-87227f413700" />
+
+We can also see Claude talking about its process through analysing the binary, as you can see it has already detected that the binary is using the WFS (Windows Financial Services) API, which is commonly used by ATMs to communicate with ATM hardware:
+
+<img width="902" height="561" alt="image" src="https://github.com/user-attachments/assets/bbf87692-1746-4eac-bd0c-7c444ad7399a" />
+
+Once Claude has finished it's analysis, it will give you a final document that explains its findings regarding the functionality of the binary, what variables/functions/etc it renamed
+
+<img width="772" height="484" alt="image" src="https://github.com/user-attachments/assets/b5bca9c8-6a1f-459d-b75b-20da6009773d" />
+
+Here we can see all of Claude's hard work in it's glory:
+
+<img width="1518" height="945" alt="image" src="https://github.com/user-attachments/assets/87fc7e2e-2d38-41d2-97b2-d2e143dc2f36" />
+
+We can also see in Ghidra, that the functions AND variables have been renamed to better names to help us understand the binary!
+
+<img width="274" height="226" alt="image" src="https://github.com/user-attachments/assets/3312df1e-dd69-461d-8a18-03e9b62c602f" />
+
+<img width="832" height="697" alt="image" src="https://github.com/user-attachments/assets/c42c8f69-7cf8-4a23-b5f6-34ec4233a999" />
+
+Keep in mind, not ALL of the variables for example will be renamed, this is not an all-in-one analysis solution for analysing malicious binaries, this specific malware was not packed or obfuscated at ALL, therefore it makes analysis a lot easier for Claude.
+
+Overall, I use this tool quite frequently to get a solid overview of the binary and to highlight what functions I should start looking at first when it comes to analysis with Ghidra
+
+I hope this tutorial/showcase was interesting and helpful, if you have any questions feel free to message me on [Twitter/X](https://x.com/fuckaslr)
+
+Thanks for reading.
