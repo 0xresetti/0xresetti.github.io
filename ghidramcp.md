@@ -42,6 +42,17 @@ Select the big green plus sign in the top right and browse to where you saved th
 
 <img width="813" height="139" alt="image" src="https://github.com/user-attachments/assets/5762f73b-0d5d-4345-8858-d9be397e059f" />
 
+Then restart Ghidra for extensions changes to take effect.
+
+When you have restarted Ghidra, put a random binary into it, don't bother doing the initial auto-analysis, just click No, then go to `File` > `Configure` > (Make sure `Developer` is checked) then click `Configure` underneath `Developer` > Make sure `GhidraMCPPlugin` is checked, then click OK.
+
+<img width="387" height="803" alt="image" src="https://github.com/user-attachments/assets/8489fbe4-6d0f-4ac0-b212-ba66740d8e3b" />
+
+<img width="1097" height="830" alt="image" src="https://github.com/user-attachments/assets/f3750e8f-2d23-4a31-b35b-21241fc4a3ac" />
+
+<img width="882" height="339" alt="image" src="https://github.com/user-attachments/assets/6e483727-7a4e-4f9c-9d04-896bbb0b9c88" />
+
+
 After that, you can open Claude Desktop, and go to `Claude` > `Settings` > `Developer` > `Edit Config` > `claude_desktop_config.json` and add the following json data into it:
 
 ```json
@@ -50,7 +61,7 @@ After that, you can open Claude Desktop, and go to `Claude` > `Settings` > `Deve
     "ghidra": {
       "command": "python",
       "args": [
-        "/ABSOLUTE_PATH_TO/bridge_mcp_ghidra.py",
+        "\\ABSOLUTE_PATH_TO\\bridge_mcp_ghidra.py",
         "--ghidra-server",
         "http://127.0.0.1:8080/"
       ]
@@ -58,3 +69,26 @@ After that, you can open Claude Desktop, and go to `Claude` > `Settings` > `Deve
   }
 }
 ```
+
+For example, since my GhidraMCP folder and `bridge_mcp_ghidra.py` is on my Desktop, my config will look like this:
+
+```json
+{
+  "mcpServers": {
+    "ghidra": {
+      "command": "python",
+      "args": [
+        "C:\\Users\\resetti\\Desktop\\GhidraMCP\\bridge_mcp_ghidra.py",
+        "--ghidra-server",
+        "http://127.0.0.1:8080/"
+      ]
+    }
+  }
+}
+```
+
+You should use my config as a guide for what your config should look like.
+
+Once you have edited that config, save it, and close out Claude completely, this includes closing Claude from Task Manager or the little up arrow task bar thing on Windows I have no idea what its called lol.
+
+Then, you should re
