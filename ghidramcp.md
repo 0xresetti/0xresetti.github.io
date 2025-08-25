@@ -109,7 +109,7 @@ Once you see the plugin has been enabled and is there, you should be able to loa
 
 After I pressed enter, Claude will ask for permission to use the tools provided by GhidraMCP, select "Allow always". (This may pop up a few times for different functions)
 
-<img width="1857" height="1109" alt="image" src="https://github.com/user-attachments/assets/0786f4a9-6ba6-4275-9e35-b7f02b88625c" />
+<img width="857" height="700" alt="image" src="https://github.com/user-attachments/assets/0786f4a9-6ba6-4275-9e35-b7f02b88625c" />
 
 Here we can see what the tool is actually doing when we allow it, as you can see it is renaming a variable from `local_24a` to `cdm_service_handle`, this is a LOT more useful for me to understand the binary and what it is doing.
 
