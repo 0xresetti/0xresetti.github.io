@@ -53,7 +53,7 @@ When you have restarted Ghidra, put a random binary into it, don't bother doing 
 <img width="882" height="339" alt="image" src="https://github.com/user-attachments/assets/6e483727-7a4e-4f9c-9d04-896bbb0b9c88" />
 
 
-After that, you can open Claude Desktop, and go to `Claude` > `Settings` > `Developer` > `Edit Config` > `claude_desktop_config.json` and add the following json data into it:
+After that, you can click OK out of all of that, restart Ghidra, and then open Claude Desktop, and go to `Claude` > `Settings` > `Developer` > `Edit Config` > `claude_desktop_config.json` and add the following json data into it:
 
 ```json
 {
