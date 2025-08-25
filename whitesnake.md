@@ -82,7 +82,7 @@ We also have a ```LIST_PROCESSES``` function.
 
 Overall, from what ive seen, ```mA2Z``` is where a lot of the malicious functionality lies.
 
-The malware also uses SQL Queries! What for? I have no fucking idea, this shit is Windows malware, and as much as WhiteSnakes dev apparently has a Linux stub, i dont see ```Win32_ComputerSystem``` working on Linux lol:
+The malware also uses SQL Queries! What for? I have no fucking idea, this shit is Windows malware, and as much as WhiteSnakes dev apparently has a Linux stub, i dont see ```Win32_ComputerSystem``` working on Linux lol (EDIT: I am genuinely stupid and this is obviously retreiving the total memory of the infected computer, I was drunk, leave me alone lol):
 
 ![image](https://github.com/0xwyvn/0xwyvn.github.io/assets/114181159/d65fc91b-b94e-47a8-9189-1640838a0456)
 
