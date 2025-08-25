@@ -109,7 +109,7 @@ Once you see the plugin has been enabled and is there, you should be able to loa
 
 After I pressed enter, Claude will ask for permission to use the tools provided by GhidraMCP, select "Allow always". (This may pop up a few times for different functions)
 
-<img width="857" height="700" alt="image" src="https://github.com/user-attachments/assets/0786f4a9-6ba6-4275-9e35-b7f02b88625c" />
+<img width="1050" height="650" alt="image" src="https://github.com/user-attachments/assets/0786f4a9-6ba6-4275-9e35-b7f02b88625c" />
 
 Here we can see what the tool is actually doing when we allow it, as you can see it is renaming a variable from `local_24a` to `cdm_service_handle`, this is a LOT more useful for me to understand the binary and what it is doing.
 
@@ -125,7 +125,7 @@ Once Claude has finished it's analysis, it will give you a final document that e
 
 Here we can see all of Claude's hard work in it's glory:
 
-<img width="1518" height="945" alt="image" src="https://github.com/user-attachments/assets/87fc7e2e-2d38-41d2-97b2-d2e143dc2f36" />
+<img width="800" height="750" alt="image" src="https://github.com/user-attachments/assets/87fc7e2e-2d38-41d2-97b2-d2e143dc2f36" />
 
 We can also see in Ghidra, that the functions AND variables have been renamed to better names to help us understand the binary!
 
