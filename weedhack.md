@@ -2,10 +2,6 @@
 
 > Multi-stage infostealer targeting Minecraft players, distributed as fake Fabric mods. Two major variants observed with significant architectural differences.
 
-**First Seen:** December 2025
-**Threat Level:** Critical
-**Classification:** Infostealer / RAT / MaaS
-
 ---
 
 ## Executive Summary
