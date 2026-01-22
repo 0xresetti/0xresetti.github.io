@@ -13,6 +13,10 @@ im a simple guy. and you should follow me on [twitter](https://twitter.com/fucka
 
 this is my blog dedicated to writeups and notes, whether that be reverse engineering an iot camera, or analysing some new malware, ill be writing all about it here. stay tuned for more.
 
+# [Weedhack Stealer: A new stealer targeting Minecraft users](./weedhack.html)
+
+Recently, I came across a lot of new .jar malware which seems to be a rebranded version of another .jar malware known as "Majanito", developed by a threat actor under the same name. After the rebrand, the stealer was renamed to "Weedhack" and was subsequently setup as a MaaS for sale. They provide a free and paid payload, the latter including more features and spying functionality such as a keylogger, webcam viewer, and screensharing.
+
 # [Setting up & Configuring GhidraMCP - Using AI for quick Malware Analysis](./ghidramcp.html)
 
 A while back, I came across an awesome video by LaurieWired which was talking about GhidraMCP, which is essentially an MCP (Model Context Protocol) designed for use with Ghidra. In this blog I will walk through the setup and use of this program!
