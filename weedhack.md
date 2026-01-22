@@ -23,8 +23,10 @@ Sold as MaaS with buyer UUID tracking through weedhack.cy panel.
 
 
 ================================================================================
+
                          VERSION 1 - ORIGINAL VARIANT
                               (mod.jar / ~500KB)
+                              
 ================================================================================
 
 First observed late 2025. Pure Java implementation with no native code in Stage1.
