@@ -29,7 +29,9 @@ Two Stage1 variants exist - v1 was pure Java and trivially analyzed, v2 introduc
 # Version 1 - Original Variant
 
 **File:** `mod.jar` (~500KB)
+
 **First Seen:** Late 2025
+
 **Protection:** None - pure Java
 
 ### File Structure
@@ -113,7 +115,9 @@ Algorithm fully visible in bytecode. Trivially reversible.
 # Version 2 - Hardened Variant
 
 **File:** `NewMod.jar` (~1.5MB)
+
 **First Seen:** Early 2026
+
 **Protection:** JNIC native obfuscation + blockchain C2 fallback
 
 ### File Structure
@@ -235,6 +239,7 @@ Allows running outside Minecraft/Fabric context. SecurityManager.jar uses this t
 ### v2 DLL Details
 
 **Resource:** `/dev/jnic/lib/c4f763d6-e34c-42e9-bba1-b80cfa5a55df.dat`
+
 **Package:** `dev.jnic.lXpXvp`
 
 Contains:
@@ -338,7 +343,9 @@ All stealing logic hidden in DLL.
 # Stage 3 - Premium RAT ($5)
 
 **File:** `Component.jar`
+
 **Protection:** JNIC (`dev.jnic.fwcMeR`)
+
 **Shared by:** Both v1 and v2 (premium tier only)
 
 Downloaded by SecurityManager.jar from `receiver.cy/files/jar/component`.
@@ -375,7 +382,9 @@ public class WebcamShareHandler {
 #### 3. Screen Share (`ScreenShareHandler.java`)
 
 **Tech:** WebSocket + Robot class
+
 **Format:** WebP @ 0.85 quality, max 720p
+
 **Rate:** 25 FPS
 
 ```java
@@ -403,6 +412,7 @@ private static final float WEBP_QUALITY = 0.85f;
 # Persistence Module
 
 **File:** `SecurityManager.jar`
+
 **Shared by:** Both v1 and v2 (premium tier only)
 
 Orchestrates persistence, AV evasion, and component updates.
@@ -447,6 +457,7 @@ public static void addExclusions() {
 Adds entire `C:\Users` to exclusions. Downloads, Documents, everything = unscanned.
 
 **Detection:** Event ID 5007 in Windows Defender logs
+
 **Check:** `Get-MpPreference | select ExclusionPath`
 
 ### Scheduled Task (`SchedulerHelper.java`)
@@ -685,7 +696,7 @@ The evolution from v1 to v2 shows the author learned from their mistakes. v1 was
 
 That said, they still left the same encryption keys, same package names, and the "SecurityUpdates" folder is a joke that any IR analyst will spot.
 
-The blockchain C2 is concerning. Can't just file a takedown request with Cyprus NIC anymore. Need to track the smart contract, monitor for updates, potentially coordinate with blockchain forensics.
+The blockchain C2 is concerning. Can't just file a takedown request with Cyprus NIC anymore (not that they would care anyways). Need to track the smart contract, monitor for updates, potentially coordinate with blockchain forensics.
 
 Primary targets are Minecraft players, likely kids. The webcam/keylogger capabilities in the premium tier are disturbing.
 
