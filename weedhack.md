@@ -6,6 +6,8 @@
 
 ## Executive Summary
 
+### Recently, I came across a lot of new .jar malware which seems to be a rebranded version of another .jar malware known as “Majanito”, developed by a threat actor under the same name. After the rebrand and a change in ownership, the stealer was renamed to “WeedHack” and was subsequently setup as a MaaS for sale. They provide a free and paid payload, the latter including more features and spying functionality such as a keylogger, webcam viewer, and screensharing. I’ve also [written a basic tool](https://github.com/0xresetti/Weedhack-Remover) to remove WeedHack.
+
 Weedhack is a multi-stage malware operation sold as Malware-as-a-Service through `weedhack.cy`. Buyers receive customized JAR files with embedded UUIDs for victim tracking.
 
 **Base tier** functionality:
