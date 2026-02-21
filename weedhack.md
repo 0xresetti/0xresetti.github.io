@@ -705,3 +705,32 @@ Primary targets are Minecraft players, likely kids. The webcam/keylogger capabil
 Sold as MaaS - multiple buyers distributing modified JARs. Each has a UUID for victim tracking. Panel at `weedhack.cy` shows buyer their specific victims.
 
 ---
+
+# 21/02/2026 UPDATE
+
+## After I finished this report, I sort of left WeedHack alone, I was banned from their server, so I started investigating other Minecraft Stealers, however my friend [Neiki](https://www.threat.rip/contact/) contacted me to show me an updated version of WeedHack that he ran through [app.any.run](https://app.any.run). He sent me the link, and we could see that this latest version was doing a couple more things:
+
+[Any.Run Report](https://app.any.run/tasks/b137d26c-2a51-436b-b39c-8af263e91038)
+
+### Turns out, the developer has decided to take advantage of how popular WeedHack has become in the Minecraft malware scene, by backdooring it!
+
+As you can see in the Any.Run report, you can scroll down to near the middle of the processes list, or filter by the following URLs/Process names:
+
+- `whreceive.ru/files/jar/Pjibf.exe` - The backdoor, a PureLogs/PureHVNC binary. Obfuscated with NETReactor, also the latest domain for the `reciever.cy` C2
+- `45.141.119.34/huehnchenfarm.ru` - The C2 (PortDst 50169 - PortSrc 56001) - Windows RDP
+- `eth.llamarpc.com` - Latest WeedHack-specific C2 (this is where logs are legitimately sent to the threat actor, proxied through Ethereum RPC)
+- `remotev2.whreceive.ru/ws/client` - WebSocket endpoint
+
+I did call the developer out on this, acting like I didn't know what it was, and he claimed that it was for the UAC bypass, which is funny, because the UAC elevation via a CMSTPLUA COM exploit happens **before** this `"Pjibf.exe"` file is downloaded and executed.
+
+Also, WeedHack already has its own "elevator.jar" binary, which is executed by a `.vbs` script dropped in `%TEMP%`. (Again, this happens **before** the `"Pjibf.exe"` file is downloaded and executed, lol.)
+
+```
+""C:\Program Files\Java\jdk-21.0.10\bin\javaw.exe" -cp "C:\Users\admin\AppData\Local\Temp\elevator.jar" dev.majanito.Main b64:eyJleGVjdXRpb25FbnZpcm9ubWVudCI6IkRvdWJsZUNsaWNrIiwidXNlcklkIjoiNThlYjBlMjItZTRiNC00NGQ3LWI5MmUtMTcwNTMxNjZkOTg2In0="
+```
+
+(The Base64 decodes to `{"executionEnvironment":"DoubleClick","userId":"58eb0e22-e4b4-44d7-b92e-17053166d986"}`, which is used to tell how the Jar was executed and also what threat actor UUID to send the logs to, nothing special.)
+
+Overall, I'm not surprised, and I don't really care lol, maybe the users of WeedHack will catch on to it, maybe they wont ¯\_(ツ)_/¯
+
+Thanks for reading.
