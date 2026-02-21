@@ -731,6 +731,6 @@ Also, WeedHack already has its own "elevator.jar" binary, which is executed by a
 
 (The Base64 decodes to `{"executionEnvironment":"DoubleClick","userId":"58eb0e22-e4b4-44d7-b92e-17053166d986"}`, which is used to tell how the Jar was executed and also what threat actor UUID to send the logs to, nothing special.)
 
-Overall, I'm not surprised, and I don't really care lol, maybe the users of WeedHack will catch on to it, maybe they wont ¯\_(ツ)_/¯
+Overall, I'm not surprised, and I don't really care lol, maybe the users of WeedHack will catch on to it, maybe they wont ¯\\_(ツ)_/¯
 
 Thanks for reading.
