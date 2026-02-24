@@ -708,7 +708,7 @@ Sold as MaaS - multiple buyers distributing modified JARs. Each has a UUID for v
 
 # 21/02/2026 UPDATE
 
-## After I finished this report, I sort of left WeedHack alone, I was banned from their server, so I started investigating other Minecraft Stealers, however my friend [Neiki](https://www.threat.rip/contact/) contacted me to show me an updated version of WeedHack that he ran through [app.any.run](https://app.any.run). He sent me the link, and we could see that this latest version was doing a couple more things:
+## After I finished this report, I sort of left WeedHack alone, I was banned from their server, so I started investigating other Minecraft Stealers, however my friend [Neiki](https://www.threat.rip/contact/) contacted me to show me an updated version of WeedHack that he ran through [app.any.run](https://app.any.run). So, I decided to build a new version of WeedHack on my account, run it through Any.Run, and we could see that this latest version was doing a couple more things:
 
 [Any.Run Report](https://app.any.run/tasks/b137d26c-2a51-436b-b39c-8af263e91038)
 
