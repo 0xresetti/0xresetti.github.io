@@ -718,7 +718,7 @@ As you can see in the Any.Run report, you can scroll down to near the middle of 
 
 - `whreceive.ru/files/jar/Pjibf.exe` - The backdoor, a PureLogs/PureHVNC binary. Obfuscated with NETReactor, also the latest domain for the `reciever.cy` C2
 - `45.141.119.34/huehnchenfarm.ru` - The C2 (PortDst 50169 - PortSrc 56001) - Windows RDP
-- `eth.llamarpc.com` - Latest WeedHack-specific C2 (this is where logs are legitimately sent to the threat actor, proxied through Ethereum RPC)
+- `eth.llamarpc.com` - Ethereum RPC Proxy
 - `remotev2.whreceive.ru/ws/client` - WebSocket endpoint
 - `huehnchenfarm.ru` - Associated C2
 - `whreceiver.ru` - Associated C2
