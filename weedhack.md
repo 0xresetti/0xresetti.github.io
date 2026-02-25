@@ -720,6 +720,9 @@ As you can see in the Any.Run report, you can scroll down to near the middle of 
 - `45.141.119.34/huehnchenfarm.ru` - The C2 (PortDst 50169 - PortSrc 56001) - Windows RDP
 - `eth.llamarpc.com` - Latest WeedHack-specific C2 (this is where logs are legitimately sent to the threat actor, proxied through Ethereum RPC)
 - `remotev2.whreceive.ru/ws/client` - WebSocket endpoint
+- `huehnchenfarm.ru` - Associated C2
+- `whreceiver.ru` - Associated C2
+- `marsalek.cy` - Associated C2 (Writeup on this soon, basically WeedHack and Marsalek stealer are owned or are being backdoored by the same person)
 
 I did call the developer out on this, acting like I didn't know what it was, and he claimed that it was for the UAC bypass, which is funny, because the UAC elevation via a CMSTPLUA COM exploit happens **before** this `"Pjibf.exe"` file is downloaded and executed.
 
