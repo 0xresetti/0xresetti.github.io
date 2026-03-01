@@ -130,11 +130,11 @@ Opening the file in dnSpy, it is a fairly simple and small file with not much ha
 
 <img src="/images/checkadmin.png" alt= "checkadmin" width="70%" height="70%">
 
-Looking at the ```jumptoSys``` function, it's concept is to use the WinAPI's ```GetProcessByName``` method to get the Process Token of the ```winlogon``` process, which runs with Administrator privileges. It then duplicates this token and creates a new process using the duplicated token, this is probably to migrate the **LicGet.exe** process to a less obvious one, since ```winlogon``` is known to run with Administrator privileges.
+Looking at the ```jumptoSys``` function, its (thank you edgar pro pentester 8900 EXE for the spelling mistake correction) concept is to use the WinAPI's ```GetProcessByName``` method to get the Process Token of the ```winlogon``` process, which runs with Administrator privileges. It then duplicates this token and creates a new process using the duplicated token, this is probably to migrate the **LicGet.exe** process to a less obvious one, since ```winlogon``` is known to run with Administrator privileges.
 
 <img src="/images/jumptosysfunc.png" alt= "jump2sys" width="70%" height="70%">
 
-On the other hand, looking at the ```Disable``` function, it's concept is slightly different, it again uses the WinAPI's ```GetProcessByName``` method to get the Process Token, but instead of targeting the ```winlogon``` process, it targets the ```MsMpEng``` process, this process is the core process of the Windows Defender Anti-malware Application, and also runs with Administrator privileges. 
+On the other hand, looking at the ```Disable``` function, its (thank you edgar pro pentester 8900 EXE for the spelling mistake correction) concept is slightly different, it again uses the WinAPI's ```GetProcessByName``` method to get the Process Token, but instead of targeting the ```winlogon``` process, it targets the ```MsMpEng``` process, this process is the core process of the Windows Defender Anti-malware Application, and also runs with Administrator privileges. 
 
 It looks like the ```Disable``` functions job is to emulate the ```MsMpEng``` process token, then allocate new memory and set the process token information to the same process token as the ```MsMpEng``` process, giving the **LicGet.exe** process Administrator privileges.
 
