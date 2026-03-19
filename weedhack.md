@@ -737,3 +737,7 @@ Also, WeedHack already has its own "elevator.jar" binary, which is executed by a
 Overall, I'm not surprised, and I don't really care lol, maybe the users of WeedHack will catch on to it, maybe they wont ¯\\_(ツ)_/¯
 
 Thanks for reading.
+
+AND BIG THANK YOU TO NTTS (No Text To Speech) FOR MAKING A VIDEO ON WEEDHACK AND INCLUDING THIS BLOGPOST IN IT! :D
+
+GO CHECK OUT HIS VIDEO HERE: [https://www.youtube.com/watch?v=96UuXwlYy8Q](https://www.youtube.com/watch?v=96UuXwlYy8Q)
