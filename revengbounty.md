@@ -132,11 +132,11 @@ It mixes the TSC bits and stores the result straight into the dispatcher's state
 
 <img width="884" height="672" alt="Screenshot_225" src="https://github.com/user-attachments/assets/78712367-6b79-45f0-8ad7-ab527c1aadc9" />
 
-Here's the truth table I built:
+So, here's the current situation:
 
 | Environment | Result |
 |---|---|
-| Host, no debugger | **Runs** (reaches the password prompt) |
+| Host (No VM), no debugger | **Runs** (reaches the password prompt) |
 | VM, no debugger | Instant close |
 | Host **or** VM, under a debugger | Crash `0x8ED10` |
 
