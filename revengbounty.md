@@ -1,6 +1,6 @@
-# Executing a VM-Hostile Crackme *inside* a VM (and why patching was the wrong move)
+# Running a VM-Hostile Crackme Inside a VM
 
-### So I picked up a reversing bounty and the challenge was beautifully simple to read and absolutely cursed to actually do:
+### So I picked up a reversing bounty, and the challenge sounded simple enough:
 
 *"Successfully execute this sample inside a VM and publish a technical blog explaining how you did it."*
 
@@ -8,10 +8,10 @@ That's it. Run the thing in a VM. Except the second you drop it in any VM, it in
 
 [📷 PASTE screenshot_234 HERE — the crackmes.one page for kaganisildak / Malwation "$1K AntiVM": difficulty **Insane**, the $1000 VM-execution bounty + the $250 password bonus]
 
-The interesting part, and the whole reason I'm writing this, is that the winning move here is **not** patching the binary. The challenge literally says "execute *this* sample", and you'll see later the binary self-hashes itself, so the moment you touch a single byte it bails. The actual win is making the **VM lie convincingly enough that the genuine, unmodified binary runs itself.** Hide the VM, don't crack the binary.
+The interesting part is that the way to beat this isn't to patch the binary. The challenge says "execute *this* sample", and the binary self-hashes itself anyway (more on that later), so the second you change a byte it bails. So instead you have to make the VM look enough like real hardware that the original, unmodified binary runs on its own.
 
 The sample:
-- `crackme_NoVM.exe`, 64-bit MSVC console app, 1,597,073 bytes
+- `crackme_NoVM.exe`, 64-bit MSVC console app, ~1.5MB
 - SHA256 `5E3ABC2D38A41E0DF846026C5E41690EDFF0498258D4594355CC633A062679B1`
 - Image base `0x140000000` (it's ASLR'd at runtime so I'll quote everything as `base + RVA`)
 
@@ -38,7 +38,7 @@ The landmine is in the **Debug Directory**. The first entry is a forged `IMAGE_D
 
 [📷 PASTE screenshot_217 HERE — PE-bear/CFF Explorer Debug Directory view — the forged Type=2 CODEVIEW entry with SizeOfData=0x7FFFFF and the bogus pointers, alongside the two legit MSVC entries (Type 12 VC_FEATURE, Type 13 POGO)]
 
-IDA, being eager, follows the debug dir to load symbols, tries to read a `0x7FFFFF` blob at file offset `0x7FFFFFF`, and chokes. **Windows ignores the debug directory at load time**, so the sample still runs perfectly fine. The malformation is aimed squarely at tooling, not the OS. This becomes a recurring theme, by the way: *the binary is broken on purpose to break your tools, never the loader.*
+IDA follows the debug dir to load symbols, tries to read a `0x7FFFFF` blob at file offset `0x7FFFFFF`, and chokes. **Windows ignores the debug directory at load time**, so the sample still runs fine. So it's malformed on purpose to break your tools, not Windows, which is a theme throughout this whole sample.
 
 Fun detail, the other two debug entries are actually legit MSVC (Type 12 `VC_FEATURE`, Type 13 `POGO`). That's how you fingerprint the toolchain.
 
@@ -61,7 +61,7 @@ P.S. don't zero it on your run copy, only the analysis copy. We're not patching 
 
 [📷 PASTE screenshot_218 HERE (same image as above) — imports list with the anti-debug / timing APIs highlighted (IsDebuggerPresent, Get/SetThreadContext, GetTickCount64, QueryPerformanceCounter, GetSystemTimeAsFileTime)]
 
-Here's the deduction I want to spell out because it ends up being the whole ballgame: with **no registry, file, device, firmware, or network APIs** and **no vendor strings**, any environment sensing this thing does has to be **CPU-level or timing based.** There's literally nothing else for it to use.
+So with **no registry, file, device, firmware or network APIs**, and **no vendor strings**, whatever environment check this thing is doing has to be **CPU-level or timing based**. There's nothing else left for it to use.
 
 ### The obfuscation
 
@@ -93,11 +93,11 @@ Whoever wrote this knew what they were doing. The fingerprints:
 
 - **Code self-hash / anti-tamper.** I proved this later but I'll spoil it now: edit *any* byte and the process exits `10002` (`0x2712`). This is what makes patching a losing game.
 
-Lovely stuff. Genuinely one of the nicer protected binaries I've poked at.
+Lovely stuff. One of the nicer protected binaries I've poked at.
 
 ### Ruling out the usual anti-VM
 
-Before I went off on a timing tangent I wanted to eliminate the boring stuff, because credibility:
+Before going down the timing rabbit hole I wanted to rule out the usual stuff:
 
 - No **VMware backdoor**, the `VMXh` magic (`68 58 4D 56`) is absent.
 
@@ -111,7 +111,7 @@ So all the off-the-shelf detections are out. It's timing. It has to be timing. I
 
 ### Going dynamic
 
-Setup, because this part is genuinely useful for anyone wiring up a similar rig:
+My setup for this:
 - **IDA Pro MCP + Ghidra MCP** for static, driven from the host.
 - **x64dbg + an MCP plugin inside FlareVM** for dynamic, also driven from the host.
 
@@ -133,7 +133,7 @@ That's the MCP plugin being built against a newer x64dbg SDK than the one FlareV
 
 Then I tried **ScyllaHide** with everything turned on, all hooks + timing-API hooks + KiUserExceptionDispatcher. Didn't help even slightly.
 
-And honestly that null result is *important*, because here's the reasoning: ScyllaHide hooks *APIs*. It cannot touch the `rdtsc` **instruction** itself. So the fact that it did nothing basically confirmed for me that the timing check is **rdtsc-based**, not API-based. Sometimes the thing that doesn't work tells you the most.
+That null result actually told me something useful: ScyllaHide hooks *APIs*, it can't touch the `rdtsc` **instruction** itself. So the fact that it changed nothing pointed me at the timing check being `rdtsc`-based rather than something hookable.
 
 ### The crash, and the rdtsc discovery
 
@@ -145,21 +145,21 @@ C000001D  EXCEPTION_ILLEGAL_INSTRUCTION
 
 [📷 PASTE screenshot_226 HERE — x64dbg first-chance `C000001D EXCEPTION_ILLEGAL_INSTRUCTION`, RIP parked on the `9A 1D 1A 24…` decoy blob at RVA 0x8ED10]
 
-at a junk blob, RVA `0x8ED10`, where the byte is `9A` (far-call, which is illegal in x64). Those same bytes exist in the file, so it's a **decoy** that the code deliberately jumps into when something goes wrong. It's not a bug, it's a trap door.
+at a junk blob, RVA `0x8ED10`, where the byte is `9A` (far-call, illegal in x64). Those same bytes exist in the file, so it's a **decoy** the code jumps into on purpose when something goes wrong, not an actual bug.
 
 Now for the fun part. The **determinism test**:
 - Run it straight through, it always crashes at `0x8ED10`.
 - But the **moment I pause in the debugger**, the crash *moves*, e.g. into an XXH3 hash that overruns the image and access-violates somewhere else.
 
-Inserting delay changes *where* it dies. That's timing-sensitivity, full stop. The control flow is a function of *how long things took*.
+Inserting delay changes *where* it dies, so the control flow depends on how long things take. It's timing-sensitive.
 
-The smoking gun: I scanned `.text` for `rdtsc` (`0F 31`). Only a handful in the whole binary, and the two that matter are at RVA **`0x11912`** and **`0x11946`** — right next to the flattening dispatcher from earlier. The math is worth quoting because it's gorgeous and evil:
+So I scanned `.text` for `rdtsc` (`0F 31`). Only a handful in the whole binary, and the two that matter are at RVA **`0x11912`** and **`0x11946`**, right next to the flattening dispatcher from earlier. The math behind it:
 
 ```
 rdx = 2*(TSC>>8) + (TSC & 0xFF)
 ```
 
-A hash-mix of TSC bits, stored straight into the dispatcher's state array. In plain English: **the timestamp is woven directly into the control flow.** The CPU's clock literally decides which "state" the flattened dispatcher jumps to next. There's no `if (vm) die()` to find because the timing *is* the branch.
+It mixes the TSC bits and stores the result straight into the dispatcher's state array. So the timestamp is feeding directly into the control flow, the clock value decides which block the flattened dispatcher jumps to next. There's no `if (vm) die()` to find anywhere, the timing itself is the check.
 
 [📷 PASTE screenshot_224 HERE — byte-search results for `0F 31` (rdtsc) showing only a handful of hits, with the two at RVA 0x11912 / 0x11946 highlighted]
 
@@ -175,11 +175,11 @@ Here's the truth table I built:
 
 [📷 PASTE composite HERE — three states side by side: VM instant-close = screenshot_241 (gif) ✅; under-debugger crash = screenshot_226 ✅; host-no-debugger reaching the prompt = still to grab (quick host run)]
 
-Interpretation: in a stock VM, `rdtsc` gets trapped/emulated, so it comes back "wrong" (too slow, or inconsistent), the dispatcher's state computes wrong, and it jumps into the decoy. A debugger adds the same kind of overhead and gets the same punishment. **Bare-metal-with-no-debugger is the only happy path.** So to run it in a VM, I need the VM's `rdtsc` to behave exactly like bare metal.
+In a stock VM, `rdtsc` gets trapped/emulated, so it comes back wrong (too slow, or inconsistent), the dispatcher's state computes wrong, and it jumps into the decoy. A debugger adds the same kind of overhead so it breaks the same way. Bare metal with no debugger is the only setup that works. So to run it in a VM, I need the VM's `rdtsc` to behave exactly like bare metal.
 
 ### Dead ends
 
-Not everything I tried worked, and I think hiding that makes writeups worse, so:
+Not everything I tried worked, but I'll leave these in anyway:
 
 - **The AVX hypothesis.** CRT `__isa_available` reads `2` (SSE4.2, no AVX) inside the VM. So I thought maybe it's an AVX check. Set `VBoxInternal/CPUM/IsaExts/AVX(2)=1`... and `coreinfo` *still* showed `AVX -`. Why? The host **Hyper-V backend** was masking it. Wrong theory, but it taught me the host backend was in the way, which mattered later.
 
@@ -203,7 +203,7 @@ Which is exactly why the cleaner answer is to never touch the binary at all. Fix
 
 ### The environment defeat
 
-Root cause, one more time: `rdtsc` emulation. The whole game is giving the guest **bare-metal `rdtsc` passthrough** so the timing math comes out identical to real hardware.
+Root cause again: `rdtsc` emulation. The goal is to give the guest **bare-metal `rdtsc` passthrough** so the timing comes out the same as real hardware.
 
 **Step 1, find what's actually pinning the hypervisor.** Turns out it wasn't "Hyper-V the role", it was **VBS / Memory Integrity (HVCI)** quietly forcing everything through the Hyper-V backend. Diagnostics you can run to confirm:
 - `(Get-CimInstance Win32_ComputerSystem).HypervisorPresent` → `True`
@@ -223,13 +223,13 @@ bcdedit /set hypervisorlaunchtype off
 What each line is actually doing — this trio **is** the host-side half of why the binary runs in a VM:
 - `HypervisorEnforcedCodeIntegrity\Enabled = 0` → turns **Memory Integrity (HVCI)** off.
 - `EnableVirtualizationBasedSecurity = 0` → turns off **VBS** — the thing silently force-loading the Hyper-V hypervisor in the first place.
-- `bcdedit … hypervisorlaunchtype off` → stops Windows launching its *own* hypervisor at boot, so **VirtualBox gets native VT-x and a real `rdtsc`** instead of the trapped/emulated one. This is the whole point: as long as Windows owns the hypervisor, every VM's `rdtsc` is second-hand and the crackme smells it.
+- `bcdedit … hypervisorlaunchtype off` → stops Windows launching its *own* hypervisor at boot, so **VirtualBox gets native VT-x and a real `rdtsc`** instead of the trapped/emulated one. As long as Windows owns the hypervisor, every VM's `rdtsc` is second-hand, and the crackme picks up on it.
 
 After reboot, `HypervisorPresent` → **False**. VirtualBox now uses native VT-x instead of WHPX/Hyper-V.
 
 [📷 PASTE screenshot_242 HERE — post-reboot PowerShell `HypervisorPresent` → False]
 
-**Step 3... the first VM test still failed.** Yeah. After the reboot `HypervisorPresent` read `False` — the host half was done, Windows had handed the CPU back to VirtualBox — and I fully expected the sample to run. It didn't. The unmodified binary *still* instant-closed in the VM. Native VT-x alone was not enough, and I want that in here because I genuinely thought I was done and I wasn't. **The host fix and the VM fix are two halves of the same lock — `HypervisorPresent=False` is necessary but not sufficient; on its own the sample still dies.**
+**Step 3... the first VM test still failed.** After the reboot `HypervisorPresent` read `False`, so the host side was done and Windows had handed the CPU back to VirtualBox. I expected the sample to run at this point. It didn't, the unmodified binary *still* instant-closed in the VM. So turning off Hyper-V on its own wasn't enough, you also need the VM-side fix, which I figured out next.
 
 [📷 PASTE screenshot_243 (gif) HERE — the unmodified sample STILL instant-closing in the VM (cpus=8, Hyper-V already removed) — the "I thought I was done" failure. Pairs with screenshot_244 (gif) below, where the same binary runs fine once cpus=1 + TSC passthrough are applied → a clean before/after of the vCPU fix.]
 
@@ -261,11 +261,11 @@ Incorrect password
 
 [📷 PASTE screenshot_229 HERE — HashMyFiles showing crackme_NoVM.exe (the one run in the VM) SHA256 `5E3ABC2D…79B1` matching the original — proving no patch]
 
-That's it. That's the win. The genuine sample, self-hash intact, **same SHA256 as the file I started with**, running inside a VM, reaching its password prompt. Challenge met. No patch, no crack, just a VM convinced it's bare metal.
+That's the win. The original sample, self-hash intact, **same SHA256 as the file I started with**, running inside a VM and reaching its password prompt. No patching, no cracking, I just made the VM look like bare metal.
 
 ### The lesson
 
-The anti-VM here was never a string check or a CPUID flag. It was **timing woven into a control-flow-flattening obfuscator**, and the real fight wasn't in the binary at all, it was at the **hypervisor layer** — Hyper-V/WHPX vs native VT-x, and that sneaky multi-vCPU TSC-sync trapping. "Execute *this* sample" is best honored by making the environment honest, and the code self-hash makes that the *only* clean option anyway, so it works out.
+The anti-VM here wasn't a string check or a CPUID flag, it was **timing folded into a control-flow-flattening obfuscator**, and the actual problem was at the **hypervisor layer** instead of in the binary, Hyper-V/WHPX vs native VT-x plus the multi-vCPU TSC-sync trapping. And since the binary self-hashes itself, fixing the environment instead of the file is the only clean way to run it anyway.
 
 Reversible cleanup for anyone following along (this restores WSL2 / Docker / Sandbox, you'll want it back):
 
@@ -327,7 +327,7 @@ all sitting on the same ChaCha20 from the main analysis. The input gets run **th
 [📷 PASTE screenshot_238 HERE — IDA pseudocode of `sub_14010B6F0` (XChaCha20-Poly1305 AEAD): derives the XChaCha20 keystream, verifies the Poly1305 tag (returns `0xFFFFFFFF` on mismatch), then decrypts via `sub_1400A7330` — the authenticated-crypto wall]
 
 ### The wall
-Here's the part that makes this genuinely Insane-tier and not a one-afternoon job: **the control flow is exception-driven.** Instead of normal `call`/`jmp`, the obfuscator **software-raises a `C000001D` exception** (via `RtlRaiseException`) and a handler decides which block runs next. I caught it red-handed by freezing the process mid-check and reading the exception record it was building, code `0xC000001D`, raised straight out of the dispatcher. That single design choice is *why* IDA xrefs dead-end and *why* debuggers die, and it's the same `C000001D` fingerprint from the main analysis, just software-raised here instead of a decoy fault.
+This is the part that makes it Insane-rated: **the control flow is exception-driven.** Instead of normal `call`/`jmp`, the obfuscator **software-raises a `C000001D` exception** (via `RtlRaiseException`) and a handler decides which block runs next. I caught it red-handed by freezing the process mid-check and reading the exception record it was building, code `0xC000001D`, raised straight out of the dispatcher. That single design choice is *why* IDA xrefs dead-end and *why* debuggers die, and it's the same `C000001D` fingerprint from the main analysis, just software-raised here instead of a decoy fault.
 
 [📷 PASTE screenshot_237 HERE — (paired with the emu shot) `snapshot.py` freezing the process + the `EXCEPTION_RECORD` with `ExceptionCode = 0xC000001D`]
 
@@ -335,4 +335,4 @@ Here's the part that makes this genuinely Insane-tier and not a one-afternoon jo
 
 To actually read the password comparison you'd have to **devirtualize that exception dispatcher**, recover its block table, rebuild the real control flow, then walk to the compare. On a pro-built VM-obfuscator that's a multi-day project, not one-more-script, so i'm calling it here for now.
 
-So: the machinery's fully mapped, the password isn't cracked, and that's the honest state of it. Shoutout to kaganisildak, genuinely one of the meanest, best-built things i've taken apart. The $250's still on the table, if/when i devirt this thing i'll update. (Unfinished, stay tuned.)
+So the machinery's fully mapped, the password isn't cracked, and that's the honest state of it. Shoutout to kaganisildak, one of the meanest, best-built things i've taken apart. The $250's still on the table, if/when i devirt this thing i'll update. (This post is unfinished, stay tuned for more!)
