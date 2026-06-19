@@ -6,7 +6,7 @@
 
 That's it. Run the thing in a VM. Except the second you drop it in any VM, it instantly closes on you. No crash dialog, no error, no nothing, it just dies.
 
-[📷 PASTE screenshot_234 HERE — the crackmes.one page for kaganisildak / Malwation "$1K AntiVM": difficulty **Insane**, the $1000 VM-execution bounty + the $250 password bonus]
+<img width="2148" height="1224" alt="Screenshot_234" src="https://github.com/user-attachments/assets/870ba811-afc7-42f6-b070-36ee1dbd43be" />
 
 The interesting part is that the way to beat this isn't to patch the binary. The challenge says "execute *this* sample", and the binary self-hashes itself anyway (more on that later), so the second you change a byte it bails. So instead you have to make the VM look enough like real hardware that the original, unmodified binary runs on its own.
 
@@ -25,7 +25,7 @@ Loading it into IDA, immediately:
 Cannot read 8388607 bytes, starting at offset 134217727
 ```
 
-[📷 PASTE screenshot_216 HERE — the IDA "Cannot read 8388607 bytes, starting at offset 134217727" error dialog on load]
+<img width="439" height="164" alt="Screenshot_216" src="https://github.com/user-attachments/assets/ee0a00f5-8052-456d-a3d3-ab92ac45a3bd" />
 
 `8388607 = 0x7FFFFF`, `134217727 = 0x7FFFFFF`. Suspiciously power-of-two-adjacent, right? That's not a coincidence, that's someone messing with me on purpose.
 
@@ -36,7 +36,7 @@ The landmine is in the **Debug Directory**. The first entry is a forged `IMAGE_D
 - `AddressOfRawData = 0x7FFFFFF`
 - `PointerToRawData = 0x7FFFFFF`
 
-[📷 PASTE screenshot_217 HERE — PE-bear/CFF Explorer Debug Directory view — the forged Type=2 CODEVIEW entry with SizeOfData=0x7FFFFF and the bogus pointers, alongside the two legit MSVC entries (Type 12 VC_FEATURE, Type 13 POGO)]
+<img width="1259" height="220" alt="Screenshot_217" src="https://github.com/user-attachments/assets/1e5809d5-0f38-48f5-b304-27b02fa72479" />
 
 IDA follows the debug dir to load symbols, tries to read a `0x7FFFFF` blob at file offset `0x7FFFFFF`, and chokes. **Windows ignores the debug directory at load time**, so the sample still runs fine. So it's malformed on purpose to break your tools, not Windows, which is a theme throughout this whole sample.
 
@@ -48,18 +48,19 @@ P.S. don't zero it on your run copy, only the analysis copy. We're not patching 
 
 ### Recon: what are we even dealing with
 
-[📷 PASTE screenshot_221 HERE — DetectItEasy on crackme_NoVM.exe — PE32+ console, MSVC, statically-linked CRT]
+<img width="725" height="554" alt="Screenshot_221" src="https://github.com/user-attachments/assets/c6d9077c-3a43-4084-a915-45fec7d95399" />
 
 - Only **KERNEL32** imported. That's it.
 
-[📷 PASTE screenshot_218 HERE — the imports view (IDA/CFF) showing KERNEL32 as the only imported DLL]
 - 428 strings, and they're *all* CRT boilerplate. **Zero** VM-vendor strings. I grepped `vmware`, `vbox`, `qemu`, all of it, nothing. And that absence is itself a clue, more on that in a sec.
 
-[📷 PASTE screenshot_219 + screenshot_220 HERE — strings vendor-absence: empty filter for vmware (219) / vbox (220); the list is all-CRT boilerplate]
+<img width="731" height="203" alt="Screenshot_219" src="https://github.com/user-attachments/assets/51fd8f49-c455-46d4-9a2c-8a0845ffd915" />
+
+<img width="667" height="207" alt="Screenshot_220" src="https://github.com/user-attachments/assets/06d0309a-3054-44a3-8fe2-d65bb5b013f6" />
 
 - Anti-debug imports are sitting right there though: `IsDebuggerPresent`, `Get/SetThreadContext`, a pile of timing APIs (`GetTickCount64`, `QueryPerformanceCounter`, `GetSystemTimeAsFileTime`), plus `TerminateProcess`/`ExitProcess`.
 
-[📷 PASTE screenshot_218 HERE (same image as above) — imports list with the anti-debug / timing APIs highlighted (IsDebuggerPresent, Get/SetThreadContext, GetTickCount64, QueryPerformanceCounter, GetSystemTimeAsFileTime)]
+<img width="687" height="760" alt="Screenshot_218" src="https://github.com/user-attachments/assets/c1589382-de02-464c-827b-256ab6a23218" />
 
 So with **no registry, file, device, firmware or network APIs**, and **no vendor strings**, whatever environment check this thing is doing has to be **CPU-level or timing based**. There's nothing else left for it to use.
 
@@ -75,14 +76,14 @@ Whoever wrote this knew what they were doing. The fingerprints:
   ```
   That's `jmp stateTable[state] + base`. Classic flattening, the real control flow lives in a state variable.
 
-[📷 PASTE screenshot_222 HERE — IDA disasm of the flattening dispatcher at RVA 0x1190F — the `mov r8,[r12+r9]; add r8,r15; jmp r8` block]
+<img width="308" height="627" alt="Screenshot_222" src="https://github.com/user-attachments/assets/4ead6913-ca5d-4a2e-93d9-b502e2d12acc" />
 
 - **Opaque predicates** everywhere, e.g. `(x*(x+1)) & 1` which is *always* 0 (product of two consecutive ints is always even). Fake branches to make you waste your life.
 - **Pointer encryption.** Real pointers are recovered as `*(global) - 0x4E0253A3BAFBADE9` and `global - 0x688D3FBC21B48D4D` (64-bit additive keys). Decompilers render these as absolutely nonsense huge offsets, which is the point.
 
 - **Anti-disassembly junk bytes** and a **decoy `main`.** IDA's `main` symbol points at `0x14007A9D0`, which is 55 junk bytes starting with `0x3F` (invalid in x64) followed by `CC` padding.
 
-[📷 PASTE screenshot_223 HERE — the decoy `main` at 0x14007A9D0 — hex/disasm view showing the 0x3F junk bytes + CC padding that IDA mislabels as main]
+<img width="962" height="176" alt="Screenshot_223" src="https://github.com/user-attachments/assets/f184f098-46b9-4cfe-b5ab-5e0b64fd0900" />
 
   Confession time: I briefly mis-computed the CRT's `call main` target and went chasing a phantom function for a bit. The lesson I took away, and I'm leaving this in because it's honest, is **trust the actual call bytes over the tool's heuristic symbol.** The CRT actually calls main at `0x140122957`, the bytes are `E8 74 80 F5 FF`. The decoy symbol was a trap and I walked right into it.
 - **Encrypted strings**, decrypted on demand. That's why static string search came up blind earlier. I later confirmed the cipher is **ChaCha20**, the `expand 32-byte k` constant shows up in memory.
@@ -143,7 +144,7 @@ Under x64dbg it dies with:
 C000001D  EXCEPTION_ILLEGAL_INSTRUCTION
 ```
 
-[📷 PASTE screenshot_226 HERE — x64dbg first-chance `C000001D EXCEPTION_ILLEGAL_INSTRUCTION`, RIP parked on the `9A 1D 1A 24…` decoy blob at RVA 0x8ED10]
+<img width="736" height="830" alt="Screenshot_226" src="https://github.com/user-attachments/assets/9ac7b65c-35de-44d2-8809-ad8ebc2b648b" />
 
 at a junk blob, RVA `0x8ED10`, where the byte is `9A` (far-call, illegal in x64). Those same bytes exist in the file, so it's a **decoy** the code jumps into on purpose when something goes wrong, not an actual bug.
 
@@ -161,9 +162,9 @@ rdx = 2*(TSC>>8) + (TSC & 0xFF)
 
 It mixes the TSC bits and stores the result straight into the dispatcher's state array. So the timestamp is feeding directly into the control flow, the clock value decides which block the flattened dispatcher jumps to next. There's no `if (vm) die()` to find anywhere, the timing itself is the check.
 
-[📷 PASTE screenshot_224 HERE — byte-search results for `0F 31` (rdtsc) showing only a handful of hits, with the two at RVA 0x11912 / 0x11946 highlighted]
+<img width="976" height="189" alt="Screenshot_224" src="https://github.com/user-attachments/assets/185cdf6c-bd9c-4054-b44d-d5a95f2834a3" />
 
-[📷 PASTE screenshot_225 HERE — IDA disasm of the rdtsc-fold block at RVA 0x11912 — `rdtsc; ... shr rax,1; mul rsi; shr rdx,5` feeding the dispatcher state array]
+<img width="884" height="672" alt="Screenshot_225" src="https://github.com/user-attachments/assets/78712367-6b79-45f0-8ad7-ab527c1aadc9" />
 
 Here's the truth table I built:
 
@@ -173,7 +174,9 @@ Here's the truth table I built:
 | VM, no debugger | Instant close |
 | Host **or** VM, under a debugger | Crash `0x8ED10` |
 
-[📷 PASTE composite HERE — three states side by side: VM instant-close = screenshot_241 (gif) ✅; under-debugger crash = screenshot_226 ✅; host-no-debugger reaching the prompt = still to grab (quick host run)]
+<img width="800" height="495" alt="Screenshot_241" src="https://github.com/user-attachments/assets/f782967d-5b40-4c6f-b9fa-0f5b561cf934" />
+
+<img width="736" height="830" alt="Screenshot_226" src="https://github.com/user-attachments/assets/b5a46caa-a73f-429e-8c5b-e6c7000feb11" />
 
 In a stock VM, `rdtsc` gets trapped/emulated, so it comes back wrong (too slow, or inconsistent), the dispatcher's state computes wrong, and it jumps into the decoy. A debugger adds the same kind of overhead so it breaks the same way. Bare metal with no debugger is the only setup that works. So to run it in a VM, I need the VM's `rdtsc` to behave exactly like bare metal.
 
@@ -183,7 +186,8 @@ Not everything I tried worked, but I'll leave these in anyway:
 
 - **The AVX hypothesis.** CRT `__isa_available` reads `2` (SSE4.2, no AVX) inside the VM. So I thought maybe it's an AVX check. Set `VBoxInternal/CPUM/IsaExts/AVX(2)=1`... and `coreinfo` *still* showed `AVX -`. Why? The host **Hyper-V backend** was masking it. Wrong theory, but it taught me the host backend was in the way, which mattered later.
 
-[📷 PASTE screenshot_240 HERE — `coreinfo` in the VM still showing `AVX -` even after setting the IsaExts/AVX extradata — i.e. the Hyper-V backend masking it]
+<img width="762" height="433" alt="Screenshot_240" src="https://github.com/user-attachments/assets/96eb9ece-d6b5-4071-8223-ca25db89ca8e" />
+
 - **TSCMode.** Set `VBoxInternal/TM/TSCMode RealTSCOffset`, no change *at that point*, also because Hyper-V was overriding it. The right idea at the wrong time.
 - **The "entropy must cancel" reasoning.** Bare metal runs deterministically every single time *despite* `rdtsc` returning a different value on every run. So I (briefly, wrongly) reasoned that the TSC-entropy must be cosmetic, and therefore there must be one single discrete check I could patch out. Nope. The determinism comes from the timing *deltas* being consistent on real hardware, not from the entropy being fake. Led me down the patching path, which leads us to...
 
@@ -191,11 +195,15 @@ Not everything I tried worked, but I'll leave these in anyway:
 
 I did actually build a patch. Neutralized both `rdtsc` blocks in the file (`mov rcx,0` + NOPs at file offsets **`0x10D12`** and **`0x10D46`**, using `file = RVA - 0xC00`). Result: `crackme_cracked.exe` runs but immediately exits `0x2712` (10002).
 
-[📷 PASTE screenshot_230 HERE — terminal showing `crackme_cracked.exe` exiting with code 0x2712 / 10002 instead of reaching the prompt (e.g. `echo %errorlevel%`)]
+<img width="977" height="150" alt="Screenshot_230" src="https://github.com/user-attachments/assets/d947badd-15f1-4117-8c0f-dbfebc6acf96" />
 
 So then I ran the clean experiment to prove what was happening. I flipped **one single byte** in the *never-executed decoy* (RVA `0x8ED10` / file `0x8E110`). That decoy is not on the execution path, nothing ever runs it. And yet: **same `0x2712` exit.**
 
-[📷 PASTE screenshot_231 + screenshot_232 + screenshot_233 HERE — at file offset 0x8E110 the byte is `9A` in the original (231) vs `65` in selfhash_test.exe (232); running it still exits 10002 (233) — proving the broad self-hash catches even a dead-byte edit]
+<img width="160" height="62" alt="Screenshot_231" src="https://github.com/user-attachments/assets/ec021282-58ed-4d55-81df-f4f9e63d0ae2" />
+
+<img width="139" height="68" alt="Screenshot_232" src="https://github.com/user-attachments/assets/1a302994-8093-4be6-9a32-b01919f0f70b" />
+
+<img width="901" height="150" alt="Screenshot_233" src="https://github.com/user-attachments/assets/e0c0e97b-5b62-4843-9952-54367930dae4" />
 
 That's the proof. The only way flipping a dead byte can be noticed is a **broad code self-hash** over the whole code section. So **any** static byte-patch, anywhere, gets detected. To patch this thing for real you'd have to defeat the self-hash *and* the TSC-keyed dispatch *and* the decoys, all at once. 
 
@@ -210,7 +218,7 @@ Root cause again: `rdtsc` emulation. The goal is to give the guest **bare-metal 
 - `Win32_DeviceGuard.VirtualizationBasedSecurityStatus` → `2` (running)
 - `Win32_DeviceGuard.SecurityServicesRunning` → `2` (Memory Integrity)
 
-[📷 PASTE screenshot_239 HERE — PowerShell output of the three diagnostics — HypervisorPresent=True, VirtualizationBasedSecurityStatus=2, SecurityServicesRunning=2]
+<img width="966" height="265" alt="Screenshot_239" src="https://github.com/user-attachments/assets/d2f26132-9dea-4142-a747-e812f93f658f" />
 
 **Step 2, kill it (host, as Administrator), then reboot:**
 
@@ -227,11 +235,14 @@ What each line is actually doing — this trio **is** the host-side half of why 
 
 After reboot, `HypervisorPresent` → **False**. VirtualBox now uses native VT-x instead of WHPX/Hyper-V.
 
-[📷 PASTE screenshot_242 HERE — post-reboot PowerShell `HypervisorPresent` → False]
+<img width="758" height="230" alt="Screenshot_242" src="https://github.com/user-attachments/assets/b45e82ae-4c1c-405b-914d-6fc92da1c6d6" />
+
 
 **Step 3... the first VM test still failed.** After the reboot `HypervisorPresent` read `False`, so the host side was done and Windows had handed the CPU back to VirtualBox. I expected the sample to run at this point. It didn't, the unmodified binary *still* instant-closed in the VM. So turning off Hyper-V on its own wasn't enough, you also need the VM-side fix, which I figured out next.
 
-[📷 PASTE screenshot_243 (gif) HERE — the unmodified sample STILL instant-closing in the VM (cpus=8, Hyper-V already removed) — the "I thought I was done" failure. Pairs with screenshot_244 (gif) below, where the same binary runs fine once cpus=1 + TSC passthrough are applied → a clean before/after of the vCPU fix.]
+<img width="800" height="572" alt="Screenshot_243" src="https://github.com/user-attachments/assets/412da909-c2db-42e6-bea7-47b7b1d3232f" />
+
+<img width="800" height="540" alt="Screenshot_244" src="https://github.com/user-attachments/assets/d6d9d33a-ba18-4ffc-b57f-9040293be77a" />
 
 **Step 4, the decisive piece, vCPU count.** The VM was set to `cpus=8`. Here's the kicker: with multiple vCPUs, VirtualBox **traps `rdtsc` to keep the cores' TSCs in sync.** So every single `rdtsc` becomes a slow VM-exit, which is exactly the overhead the crackme is sniffing for. Drop it to one core:
 
@@ -244,7 +255,7 @@ VBoxManage setextradata "FlareVM" VBoxInternal/TM/TSCMode RealTSCOffset
 - `--paravirtprovider none` → no paravirt-clock skew
 - `RealTSCOffset` → host-TSC passthrough
 
-[📷 PASTE screenshot_243 (png) HERE — `restore_fixed_VM.cmd` executing the `VBoxManage modifyvm --cpus 1 --paravirtprovider none` + `TSCMode RealTSCOffset` commands]
+<img width="513" height="234" alt="Screenshot_243" src="https://github.com/user-attachments/assets/b8c1ab57-9ebf-4e2d-8806-c247deadfca2" />
 
 **Result.** In FlareVM, `coreinfo` now shows `AVX *` / `AVX2 *` (the masking is gone), and the **unmodified** `crackme_NoVM.exe` finally prints:
 
@@ -255,11 +266,11 @@ Let me check........
 Incorrect password
 ```
 
-[📷 PASTE screenshot_228 HERE — `coreinfo` in the VM now showing `AVX *` / `AVX2 *`]
+<img width="758" height="243" alt="Screenshot_228" src="https://github.com/user-attachments/assets/3886041e-5922-45bd-abc4-34e9d273ec6e" />
 
-[📷 PASTE screenshot_227 HERE — THE MONEY SHOT: the unmodified crackme_NoVM.exe reaching the password prompt inside FlareVM, with the VM chrome/window title clearly visible to prove it's in a VM]
+<img width="1919" height="1151" alt="Screenshot_227" src="https://github.com/user-attachments/assets/7c5660b1-3a58-45d9-bdf0-8ba1e2db269e" />
 
-[📷 PASTE screenshot_229 HERE — HashMyFiles showing crackme_NoVM.exe (the one run in the VM) SHA256 `5E3ABC2D…79B1` matching the original — proving no patch]
+<img width="830" height="169" alt="Screenshot_229" src="https://github.com/user-attachments/assets/10d1d550-625d-4a0f-b3de-0e47fe88fe09" />
 
 That's the win. The original sample, self-hash intact, **same SHA256 as the file I started with**, running inside a VM and reaching its password prompt. No patching, no cracking, I just made the VM look like bare metal.
 
@@ -312,7 +323,9 @@ You can't debug this thing, the same `rdtsc` timing wall + the code self-hash fr
 - `SuspendThread` + `GetThreadContext` + `ReadProcessMemory` is **not** a debugger, no debug port, no DR registers, so it sails straight past the timing trap and lets me read the live process while it runs.
 - To actually drive the prompt i inject keystrokes with `WriteConsoleInput` using real VK + scan codes, that's the bit that makes the CRT `_getch` path actually swallow the input. Once that worked the process eats all 10 chars, runs the check, prints `Incorrect password`, and exits clean ~2.85s later. (Quick honesty beat: my first injection harness was silently broken, the input wasn't being consumed at all, so an early "i found hash bytes next to my input" read was garbage. I rebuilt it and re-ran everything, so the findings below are on a check that genuinely ran.)
 
-[📷 PASTE screenshot_235 + screenshot_236 HERE — `condrv.py` running (235) + `condrv_test.log` output (236): `inject ok=True written=20 | EXITED after ~2.85s exitcode=0x0`, i.e. injection works and the check runs to completion]
+<img width="1668" height="223" alt="Screenshot_235" src="https://github.com/user-attachments/assets/cee5471e-db28-4dcd-a207-31d34fe54eb7" />
+
+<img width="999" height="173" alt="Screenshot_236" src="https://github.com/user-attachments/assets/d5e1c97c-27d2-42ff-9c5f-ba42156dc38f" />
 
 ### What the check actually is
 It is **not** a plaintext compare. Driving a known input in and diffing process memory across the check, the expected password is **never** in RAM as plaintext, the only thing that shows up is my own input plus constant decrypted-string noise. So there's nothing to just lift out of memory.
@@ -324,15 +337,11 @@ It's also not some simple hash-equals-a-constant. The strings and resources sit 
 
 all sitting on the same ChaCha20 from the main analysis. The input gets run **through** that one-way pipeline, the check is "did this transform/decrypt validate", not "does this string equal that string". I confirmed the input genuinely drives a transform too (different inputs → different internal hash values). In short the password behaves like a **key**, not a stored secret, so there's no plaintext to recover.
 
-[📷 PASTE screenshot_238 HERE — IDA pseudocode of `sub_14010B6F0` (XChaCha20-Poly1305 AEAD): derives the XChaCha20 keystream, verifies the Poly1305 tag (returns `0xFFFFFFFF` on mismatch), then decrypts via `sub_1400A7330` — the authenticated-crypto wall]
+<img width="1273" height="862" alt="Screenshot_238" src="https://github.com/user-attachments/assets/4221c6d2-a1db-49cf-8c3f-1853d73f7f77" />
 
 ### The wall
 This is the part that makes it Insane-rated: **the control flow is exception-driven.** Instead of normal `call`/`jmp`, the obfuscator **software-raises a `C000001D` exception** (via `RtlRaiseException`) and a handler decides which block runs next. I caught it red-handed by freezing the process mid-check and reading the exception record it was building, code `0xC000001D`, raised straight out of the dispatcher. That single design choice is *why* IDA xrefs dead-end and *why* debuggers die, and it's the same `C000001D` fingerprint from the main analysis, just software-raised here instead of a decoy fault.
 
-[📷 PASTE screenshot_237 HERE — (paired with the emu shot) `snapshot.py` freezing the process + the `EXCEPTION_RECORD` with `ExceptionCode = 0xC000001D`]
-
-[📷 PASTE screenshot_237 HERE — `emu_check.py` offline Unicorn replay stopping at `*** EXCEPTION RAISED: ZwRaiseException ExceptionCode=0xc000001d`; the `stubs called` line shows `RtlGetExtendedContextLength2` / `RtlInitializeExtendedContext2` / `ZwRaiseException` (the software-raise fingerprint)]
+<img width="1098" height="372" alt="Screenshot_237" src="https://github.com/user-attachments/assets/f50f431f-7909-4d7a-9365-6a03d2ba4236" />
 
 To actually read the password comparison you'd have to **devirtualize that exception dispatcher**, recover its block table, rebuild the real control flow, then walk to the compare. On a pro-built VM-obfuscator that's a multi-day project, not one-more-script, so i'm calling it here for now.
-
-So the machinery's fully mapped, the password isn't cracked, and that's the honest state of it. Shoutout to kaganisildak, one of the meanest, best-built things i've taken apart. The $250's still on the table, if/when i devirt this thing i'll update. (This post is unfinished, stay tuned for more!)
