@@ -1,6 +1,6 @@
 # Executing a VM-Hostile Crackme *inside* a VM (and why patching was the wrong move)
 
-### So I picked up a reversing bounty the other day and the challenge was beautifully simple to read and absolutely cursed to actually do:
+### So I picked up a reversing bounty and the challenge was beautifully simple to read and absolutely cursed to actually do:
 
 *"Successfully execute this sample inside a VM and publish a technical blog explaining how you did it."*
 
@@ -63,7 +63,7 @@ P.S. don't zero it on your run copy, only the analysis copy. We're not patching 
 
 Here's the deduction I want to spell out because it ends up being the whole ballgame: with **no registry, file, device, firmware, or network APIs** and **no vendor strings**, any environment sensing this thing does has to be **CPU-level or timing based.** There's literally nothing else for it to use.
 
-### The obfuscation (a.k.a. the god-tier file section)
+### The obfuscation
 
 Whoever wrote this knew what they were doing. The fingerprints:
 
@@ -80,8 +80,6 @@ Whoever wrote this knew what they were doing. The fingerprints:
 - **Opaque predicates** everywhere, e.g. `(x*(x+1)) & 1` which is *always* 0 (product of two consecutive ints is always even). Fake branches to make you waste your life.
 - **Pointer encryption.** Real pointers are recovered as `*(global) - 0x4E0253A3BAFBADE9` and `global - 0x688D3FBC21B48D4D` (64-bit additive keys). Decompilers render these as absolutely nonsense huge offsets, which is the point.
 
-[📷 ⬛ SKIP (delete this line) (text covers it) — decompiler rendering a pointer-encryption line as a nonsense huge offset like `- 0x4E0253A3BAFBADE9`]
-
 - **Anti-disassembly junk bytes** and a **decoy `main`.** IDA's `main` symbol points at `0x14007A9D0`, which is 55 junk bytes starting with `0x3F` (invalid in x64) followed by `CC` padding.
 
 [📷 PASTE screenshot_223 HERE — the decoy `main` at 0x14007A9D0 — hex/disasm view showing the 0x3F junk bytes + CC padding that IDA mislabels as main]
@@ -89,37 +87,29 @@ Whoever wrote this knew what they were doing. The fingerprints:
   Confession time: I briefly mis-computed the CRT's `call main` target and went chasing a phantom function for a bit. The lesson I took away, and I'm leaving this in because it's honest, is **trust the actual call bytes over the tool's heuristic symbol.** The CRT actually calls main at `0x140122957`, the bytes are `E8 74 80 F5 FF`. The decoy symbol was a trap and I walked right into it.
 - **Encrypted strings**, decrypted on demand. That's why static string search came up blind earlier. I later confirmed the cipher is **ChaCha20**, the `expand 32-byte k` constant shows up in memory.
 
-[📷 ⬛ SKIP (delete this line) (crypto visual lives in C1) — the ChaCha20 `expand 32-byte k` constant in memory/.rdata]
-
 - Two real hash primitives baked in:
   - **XXH3** at `sub_140093230` (constants `0x9E3779B185EBCA87`, `0xC2B2AE3D27D4EB4F`, `0x61C8864E7A143579`)
   - a **MurmurHash2** PRNG seed at `sub_140096800` (`0x5BD1E995` / `0x6C1B4395`, mixing `rdtsc ^ GetTickCount64 ^ rand`). Note the `rdtsc` showing up in the seed, foreshadowing.
-
-[📷 ⬛ SKIP (delete this line) (crypto visual lives in C1) — the XXH3 constants (`0x9E3779B185EBCA87` etc) in sub_140093230, and/or the MurmurHash2 seed]
 
 - **Code self-hash / anti-tamper.** I proved this later but I'll spoil it now: edit *any* byte and the process exits `10002` (`0x2712`). This is what makes patching a losing game.
 
 Lovely stuff. Genuinely one of the nicer protected binaries I've poked at.
 
-### Ruling out the usual anti-VM (showing my homework)
+### Ruling out the usual anti-VM
 
 Before I went off on a timing tangent I wanted to eliminate the boring stuff, because credibility:
 
 - No **VMware backdoor**, the `VMXh` magic (`68 58 4D 56`) is absent.
 
-[📷 ⬛ SKIP (delete this line) (weak proof-of-absence) — empty byte-search for `68 58 4D 56` (VMXh) + the descriptor red-pill opcodes]
-
 - No **descriptor red-pills**, no `sidt`/`sgdt`/`sldt`/`smsw` anywhere.
 - The only real **CPUID** routine is MSVC's `__isa_available_init` (vendor "GenuineIntel", ISA feature leaves). It never tests the hypervisor bit (ECX[31]) or leaf `0x40000000`. So it's not sniffing the hypervisor via CPUID either.
-
-[📷 ⬛ SKIP (delete this line) (text covers it) — the `__isa_available_init` CPUID routine (sub_140123524): vendor + ISA leaves only, no hypervisor bit / leaf 0x40000000]
 
 - No active **TLS callbacks**, the callback array starts with a NULL.
 - No custom kill-switch. `ExitProcess`/`TerminateProcess` are CRT-only, so the anti-VM **branches** somewhere, it doesn't cleanly bail with a dedicated "die" function. Which means I have to find the branch.
 
 So all the off-the-shelf detections are out. It's timing. It has to be timing. I just didn't have proof yet.
 
-### Going dynamic (the tooling saga)
+### Going dynamic
 
 Setup, because this part is genuinely useful for anyone wiring up a similar rig:
 - **IDA Pro MCP + Ghidra MCP** for static, driven from the host.
@@ -133,23 +123,19 @@ VBoxManage controlvm "FlareVM" natpf1 "x64dbgmcp,tcp,127.0.0.1,3000,,3000"
 
 Then the host just hits `127.0.0.1:3000`. Bind the plugin to `0.0.0.0` and allow inbound 3000 in the guest firewall and you're good.
 
-[📷 ⬛ SKIP (delete this line) (optional tooling; prose covers it) — terminal showing the `VBoxManage natpf1` port-forward + host reaching `127.0.0.1:3000`]
-
 Second problem, version mismatch:
 
 ```
 The procedure entry point DbgUpdateGui could not be located...
 ```
 
-[📷 ⬛ SKIP (delete this line) (optional, one-time error; prose covers it) — the `DbgUpdateGui could not be located` x64dbg plugin-load error dialog]
-
 That's the MCP plugin being built against a newer x64dbg SDK than the one FlareVM ships with. Fix: update x64dbg to the latest snapshot. Easy.
 
 Then I tried **ScyllaHide** with everything turned on, all hooks + timing-API hooks + KiUserExceptionDispatcher. Didn't help even slightly.
 
-[📷 ⬛ SKIP (delete this line) (optional tooling; prose covers it) — ScyllaHide config with all hooks enabled and the sample still crashing anyway] And honestly that null result is *important*, because here's the reasoning: ScyllaHide hooks *APIs*. It cannot touch the `rdtsc` **instruction** itself. So the fact that it did nothing basically confirmed for me that the timing check is **rdtsc-based**, not API-based. Sometimes the thing that doesn't work tells you the most.
+And honestly that null result is *important*, because here's the reasoning: ScyllaHide hooks *APIs*. It cannot touch the `rdtsc` **instruction** itself. So the fact that it did nothing basically confirmed for me that the timing check is **rdtsc-based**, not API-based. Sometimes the thing that doesn't work tells you the most.
 
-### The crash, and the rdtsc discovery (the core of the whole thing)
+### The crash, and the rdtsc discovery
 
 Under x64dbg it dies with:
 
@@ -166,8 +152,6 @@ Now for the fun part. The **determinism test**:
 - But the **moment I pause in the debugger**, the crash *moves*, e.g. into an XXH3 hash that overruns the image and access-violates somewhere else.
 
 Inserting delay changes *where* it dies. That's timing-sensitivity, full stop. The control flow is a function of *how long things took*.
-
-[📷 ⬛ SKIP (delete this line) (fiddly to repro; shot 19 + the rdtsc analysis carry the timing point) — the two crash flavors side by side: straight-through dying at 0x8ED10 vs a paused run dying in the XXH3 overrun AV elsewhere]
 
 The smoking gun: I scanned `.text` for `rdtsc` (`0F 31`). Only a handful in the whole binary, and the two that matter are at RVA **`0x11912`** and **`0x11946`** — right next to the flattening dispatcher from earlier. The math is worth quoting because it's gorgeous and evil:
 
@@ -193,7 +177,7 @@ Here's the truth table I built:
 
 Interpretation: in a stock VM, `rdtsc` gets trapped/emulated, so it comes back "wrong" (too slow, or inconsistent), the dispatcher's state computes wrong, and it jumps into the decoy. A debugger adds the same kind of overhead and gets the same punishment. **Bare-metal-with-no-debugger is the only happy path.** So to run it in a VM, I need the VM's `rdtsc` to behave exactly like bare metal.
 
-### Dead ends (leaving these in because they're honest)
+### Dead ends
 
 Not everything I tried worked, and I think hiding that makes writeups worse, so:
 
@@ -203,7 +187,7 @@ Not everything I tried worked, and I think hiding that makes writeups worse, so:
 - **TSCMode.** Set `VBoxInternal/TM/TSCMode RealTSCOffset`, no change *at that point*, also because Hyper-V was overriding it. The right idea at the wrong time.
 - **The "entropy must cancel" reasoning.** Bare metal runs deterministically every single time *despite* `rdtsc` returning a different value on every run. So I (briefly, wrongly) reasoned that the TSC-entropy must be cosmetic, and therefore there must be one single discrete check I could patch out. Nope. The determinism comes from the timing *deltas* being consistent on real hardware, not from the entropy being fake. Led me down the patching path, which leads us to...
 
-### The self-hash wall (why patching loses, proven)
+### The self-hash wall
 
 I did actually build a patch. Neutralized both `rdtsc` blocks in the file (`mov rcx,0` + NOPs at file offsets **`0x10D12`** and **`0x10D46`**, using `file = RVA - 0xC00`). Result: `crackme_cracked.exe` runs but immediately exits `0x2712` (10002).
 
@@ -217,7 +201,7 @@ That's the proof. The only way flipping a dead byte can be noticed is a **broad 
 
 Which is exactly why the cleaner answer is to never touch the binary at all. Fix the environment, not the file.
 
-### The environment defeat (the actual win)
+### The environment defeat
 
 Root cause, one more time: `rdtsc` emulation. The whole game is giving the guest **bare-metal `rdtsc` passthrough** so the timing math comes out identical to real hardware.
 
@@ -306,13 +290,11 @@ then reboot.
 
 </details>
 
-### #UPDATE — going after the password (the +$250 bonus)
+### #UPDATE — going after the password
 
 Right, so the bounty itself ("execute it in a VM") is **done and dusted**, this whole post is that win. For the record the challenge is **kaganisildak / Malwation's "$1K AntiVM"** off crackmes.one, and it's rated **Insane**, which, having now lived in it for a while, yeah, that's fair. The VM-execution was the $1000; the actual **password** is a separate **+$250 bonus**, and at the time of writing nobody's published a solution to it. So that `Incorrect password` taunt has been living rent-free in my head and i went back in for the bonus.
 
 What follows is the honest state of it: exactly how far i got and the wall i hit. No "trust me bro", only stuff i actually confirmed. I have **not** cracked the password yet, and i'd rather show you the wall than fake a win.
-
-[📷 ⬛ SKIP (delete this line) — screenshot_234 was already pasted at the top of the post]
 
 ### The target
 ```
@@ -324,8 +306,6 @@ Hold on, getting ready...
 
 **10 chars**, it **auto-checks the instant you hit the 10th key**, and there's a **10-second idle timeout per keystroke** (too slow → `No password entered??` and it bails). That timeout is itself an anti-analysis measure, it hard-caps how long you get with a live process.
 
-[📷 ⬛ SKIP (delete this line) (prompt already shown via shot 28 / 244) — the prompt flow + `No password entered??` timeout]
-
 ### Reading the check without a debugger
 You can't debug this thing, the same `rdtsc` timing wall + the code self-hash from the main analysis guard the check too (debugger contact → it faults, any byte-patch → exit `10002`). So i went fully **passive** instead, and this part i'm actually proud of:
 
@@ -334,12 +314,8 @@ You can't debug this thing, the same `rdtsc` timing wall + the code self-hash fr
 
 [📷 PASTE screenshot_235 + screenshot_236 HERE — `condrv.py` running (235) + `condrv_test.log` output (236): `inject ok=True written=20 | EXITED after ~2.85s exitcode=0x0`, i.e. injection works and the check runs to completion]
 
-[📷 ⬛ SKIP (delete this line) (thin terminal output; prose covers it) — `stack_blocked.py` passive `SuspendThread`+`GetThreadContext` stack-walk resolving `IMG+0x12295c` / `IMG+0x7a843`]
-
-### What the check actually is (confirmed)
+### What the check actually is
 It is **not** a plaintext compare. Driving a known input in and diffing process memory across the check, the expected password is **never** in RAM as plaintext, the only thing that shows up is my own input plus constant decrypted-string noise. So there's nothing to just lift out of memory.
-
-[📷 ⬛ SKIP (delete this line) (thin terminal output; prose covers it) — `check_string_diff.py`: only the injected input + constant noise, no 10-char expected password in RAM]
 
 It's also not some simple hash-equals-a-constant. The strings and resources sit under a proper **authenticated-crypto stack** that i pulled apart in IDA:
 - **XChaCha20-Poly1305** (HChaCha20 subkey → ChaCha20 → Poly1305 tag verify),
@@ -350,9 +326,7 @@ all sitting on the same ChaCha20 from the main analysis. The input gets run **th
 
 [📷 PASTE screenshot_238 HERE — IDA pseudocode of `sub_14010B6F0` (XChaCha20-Poly1305 AEAD): derives the XChaCha20 keystream, verifies the Poly1305 tag (returns `0xFFFFFFFF` on mismatch), then decrypts via `sub_1400A7330` — the authenticated-crypto wall]
 
-[📷 ⬛ SKIP (delete this line) (thin terminal output; prose covers it) — `hash_probe.py`/`diff_ab.py`: input is transformed, but its computed custom-XXH3 is NOT in memory (not a simple `XXH3(input)==const` gate)]
-
-### The wall (and where the password lives)
+### The wall
 Here's the part that makes this genuinely Insane-tier and not a one-afternoon job: **the control flow is exception-driven.** Instead of normal `call`/`jmp`, the obfuscator **software-raises a `C000001D` exception** (via `RtlRaiseException`) and a handler decides which block runs next. I caught it red-handed by freezing the process mid-check and reading the exception record it was building, code `0xC000001D`, raised straight out of the dispatcher. That single design choice is *why* IDA xrefs dead-end and *why* debuggers die, and it's the same `C000001D` fingerprint from the main analysis, just software-raised here instead of a decoy fault.
 
 [📷 PASTE screenshot_237 HERE — (paired with the emu shot) `snapshot.py` freezing the process + the `EXCEPTION_RECORD` with `ExceptionCode = 0xC000001D`]
