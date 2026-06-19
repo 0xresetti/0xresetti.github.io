@@ -13,6 +13,10 @@ im a simple guy. and you should follow me on [twitter](https://twitter.com/fucka
 
 this is my blog dedicated to writeups and notes, whether that be reverse engineering an iot camera, or analysing some new malware, ill be writing all about it here. stay tuned for more.
 
+# [Running a VM-Hostile Crackme Inside a VM for a $1,000 Bounty](./revengbounty.html)
+
+"Successfully execute this sample inside a VM and publish a technical blog explaining how you did it, **Win $1,000**" - That's it. Run it in a VM. Except the second you drop it in a VM, it instantly closes on you. No crash dialog, no error, nothing, it just dies. This blog covers how I tracked down a Crackme's rdtsc-based anti-VM and beat it by making the VM look like bare metal.
+
 # [WeedHack Stealer: A new stealer targeting Minecraft users](./weedhack.html)
 
 Recently, I came across a lot of new .jar malware which seems to be a rebranded version of another .jar malware known as "Majanito", developed by a threat actor under the same name. After the rebrand and a change in ownership, the stealer was renamed to "WeedHack" and was subsequently setup as a MaaS for sale. They provide a free and paid payload, the latter including more features and spying functionality such as a keylogger, webcam viewer, and screensharing. I've also [written a basic tool](https://github.com/0xresetti/Weedhack-Remover) to remove WeedHack.
