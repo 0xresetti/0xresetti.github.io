@@ -19,7 +19,7 @@ Keep that SHA in mind, because at the end the file we successfully run inside a 
 
 ### First contact: IDA won't even open it
 
-Loading it into IDA, immediately:
+Loading it into IDA, immediately I am terrified:
 
 <img width="439" height="164" alt="Screenshot_216" src="https://github.com/user-attachments/assets/ee0a00f5-8052-456d-a3d3-ab92ac45a3bd" />
 
