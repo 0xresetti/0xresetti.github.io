@@ -1,4 +1,4 @@
-# Running a VM-Hostile Crackme Inside a VM
+# Running a VM-Hostile Crackme Inside a VM for a $1,000 Bounty
 
 ### So I picked up a reversing bounty, and the challenge sounded simple enough:
 
