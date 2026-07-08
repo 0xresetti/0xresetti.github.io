@@ -281,9 +281,8 @@ This is the part that makes it difficult, the control flow is exception-driven. 
 
 To actually read the password comparison you'd have to **devirtualize that exception dispatcher**, recover its block table, rebuild the real control flow, then walk to the compare.. Which I might look into in the future, but I was quite excited to get this running in a VM in the first place, so I'll take my cake while its on the table :)
 
-### Proof i got my cake :) Thanks again Kagan and shoutout to his company [Malwation!](https://x.com/malwation)
+### Proof i got my cake :) 
 
 <img width="1170" height="674" alt="image" src="https://github.com/user-attachments/assets/e3e8aaf3-3eb6-4cac-b251-12f5594d4005" />
 
-
-Thanks for reading, and thanks to [@kaganisildak](https://x.com/kaganisildak) for the challenge!
+Thanks again [@kaganisildak](https://x.com/kaganisildak) for the challenge and shoutout to his company [Malwation!](https://x.com/malwation)
