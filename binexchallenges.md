@@ -1,3 +1,12 @@
+---
+layout: post
+title: |-
+  Binary Exploitation Challenge Writeups
+date: 2023-06-16
+kind: WRITEUP
+summary: |-
+  This is just a page of writeups I have done for Binary Exploitation Challenges
+---
 # Binary Exploitation Challenge Writeups
 
 ### Here are my writeups from any Binary Exploitation Challenges I have done. Mainly from [CTF Workshop](https://github.com/kablaa/CTF-Workshop) which you can download yourself and follow along if you like.

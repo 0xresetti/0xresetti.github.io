@@ -1,3 +1,12 @@
+---
+layout: post
+title: |-
+  Reverse Engineering Notes
+date: 2023-10-11
+kind: NOTES
+summary: |-
+  This is just a page of notes and important things to me to remember while learning Reverse Engineering
+---
 # Reverse Engineering Notes
 
 **This is just a page of notes and important things to me to remember while learning Reverse Engineering**

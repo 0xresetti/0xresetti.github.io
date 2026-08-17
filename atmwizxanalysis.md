@@ -1,3 +1,12 @@
+---
+layout: post
+title: |-
+  Analysing ATMWizX, an undocumented ATM Malware Sample
+date: 2024-07-24
+kind: WRITEUP
+summary: |-
+  While gathering new ATM Malware resources for some study time, I came across an undocumented sample of ATMWizX which I got from the Global ATM Malware Wall. Let's document it!
+---
 # ATMWizX Undocumented Sample Analysis
 
 ### While gathering new ATM Malware resources for some study time, I came across an undocumented sample of ATMWizX which I got from the [Global ATM Malware Wall](https://atm.cybercrime-tracker.net/index.php?x=stats). (file hash: `7bd2c97ac5027c360011dc5aa8f2371cd934f73e885e41f7e80152332b3af1db`) Shoutout those guys, they got some real exotic shit.

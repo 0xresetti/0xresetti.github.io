@@ -1,3 +1,12 @@
+---
+layout: post
+title: |-
+  First writeup: Reversing a "Game Cheat" ;)
+date: 2023-02-22
+kind: WRITEUP
+summary: |-
+  One day I was chilling on Telegram, when someone who shared a group with me decided to mass spread some leaked game cheats & other tools! Lets take a look and see if they are what they say they are...
+---
 # First writeup: Reversing a "Game Cheat" ;)
 
 ### One day I was chilling on Telegram, when someone who shared a group with me decided to mass spread some leaked game cheats & other tools! Lets take a look and see if they are what they say they are... 
