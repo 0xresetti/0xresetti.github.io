@@ -1,3 +1,8 @@
+---
+layout: post
+unlisted: true
+---
+
 # Genom Crypto Traffer Malware Analysis
 
 ### Recently, I found someone within the JH Discord (John Hammonds Discord Server), who said they had been infected by some sort of malware that stole all the crypto from his wallet.

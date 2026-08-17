@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: index
 ---
 
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
@@ -12,51 +12,3 @@ im a simple guy. and you should follow me on [twitter](https://twitter.com/fucka
 ### what is this?
 
 this is my blog dedicated to writeups and notes, whether that be reverse engineering an iot camera, or analysing some new malware, ill be writing all about it here. stay tuned for more.
-
-# [Running a VM-Hostile Crackme Inside a VM for a $1,000 Bounty](./revengbounty.html)
-
-"Successfully execute this sample inside a VM and publish a technical blog explaining how you did it, **Win $1,000**" - That's it. Run it in a VM. Except the second you drop it in a VM, it instantly closes on you. No crash dialog, no error, nothing, it just dies. This blog covers how I tracked down a Crackme's rdtsc-based anti-VM and beat it by making the VM look like bare metal.
-
-# [WeedHack Stealer: A new stealer targeting Minecraft users](./weedhack.html)
-
-Recently, I came across a lot of new .jar malware which seems to be a rebranded version of another .jar malware known as "Majanito", developed by a threat actor under the same name. After the rebrand and a change in ownership, the stealer was renamed to "WeedHack" and was subsequently setup as a MaaS for sale. They provide a free and paid payload, the latter including more features and spying functionality such as a keylogger, webcam viewer, and screensharing. I've also [written a basic tool](https://github.com/0xresetti/Weedhack-Remover) to remove WeedHack.
-
-# [Setting up & Configuring GhidraMCP - Using AI for quick Malware Analysis](./ghidramcp.html)
-
-A while back, I came across an awesome video by LaurieWired which was talking about GhidraMCP, which is essentially an MCP (Model Context Protocol) designed for use with Ghidra. In this blog I will walk through the setup and use of this program!
-
-# [Analysing Piolin, a modified version of Ploutus, and (kind-of) undocumented ATM Malware Sample](./piolinanalysis.html)
-
-Once again, while gathering new ATM Malware resources for some study time, I came across a (kind-of) undocumented sample of Piolin which I got from the Global ATM Malware Wall. So once again, let's document it!
-
-# [Analysing ATMWizX, an undocumented ATM Malware Sample](./atmwizxanalysis.html)
-
-While gathering new ATM Malware resources for some study time, I came across an undocumented sample of ATMWizX which I got from the Global ATM Malware Wall. Let's document it!
-
-# [Uncovering a Palestinian & French Stealer Campaign](./palestine-france-stealer-campaign.html)
-
-An interesting file was dropped in a Telegram channel I was apart of with the message "i will be using my private stealer for #opisrael, message me to help it spread". This blog shows the world of Stealer-as-a-Service markets, and political hacktivism within Telegram against Israel, and a very noisy piece of malware!
-
-# [Reverse Engineering Notes](./reversing.html)
-
-This is just a page of notes and important things to me to remember while learning Reverse Engineering
-
-# [WhiteSnake Malware Analysis](./whitesnake.html)
-
-WhiteSnake Malware Analysis
-
-# [Binary Exploitation Challenge Writeups](./binexchallenges.html)
-
-This is just a page of writeups I have done for Binary Exploitation Challenges
-
-# [Binary Exploitation Notes](./binex.html)
-
-This is just a page of notes and important things to me to remember while learning Binary Exploitation
-
-# [Architecture 1001: x86-64 Assembly Notes](./assemblynotes.html)
-
-This is just a page of notes and important things to me to remember while going through the "Architecture 1001: x86-64 Assembly" Course.
-
-# [First writeup: Reversing a "Game Cheat" ;)](./reversinggamecheat.html)
-
-One day I was chilling on Telegram, when someone who shared a group with me decided to mass spread some leaked game cheats & other tools! Lets take a look and see if they are what they say they are... 

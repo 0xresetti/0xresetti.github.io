@@ -1,3 +1,12 @@
+---
+layout: post
+title: |-
+  Architecture 1001: x86-64 Assembly Notes
+date: 2023-04-27
+kind: NOTES
+summary: |-
+  This is just a page of notes and important things to me to remember while going through the "Architecture 1001: x86-64 Assembly" Course.
+---
 # Architecture 1001: x86-64 Assembly Notes
 
 **This is just a page of notes and important things to me to remember while learning Assembly**

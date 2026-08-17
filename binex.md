@@ -1,3 +1,12 @@
+---
+layout: post
+title: |-
+  Binary Exploitation Notes
+date: 2023-05-04
+kind: NOTES
+summary: |-
+  This is just a page of notes and important things to me to remember while learning Binary Exploitation
+---
 # Binary Exploitation Notes
 
 **Just a bunch of notes for me to remember when learning Binary Exploitation, in no particular order, I just write as I go**

@@ -6,3 +6,5 @@ description: making blog posts about malware
 header_pages:
 - index.md
 style: dark
+exclude:
+- docs

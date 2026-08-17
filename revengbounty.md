@@ -1,3 +1,12 @@
+---
+layout: post
+title: |-
+  Running a VM-Hostile Crackme Inside a VM for a $1,000 Bounty
+date: 2026-06-19
+kind: WRITEUP
+summary: |-
+  "Successfully execute this sample inside a VM and publish a technical blog explaining how you did it, **Win $1,000**" - That's it. Run it in a VM. Except the second you drop it in a VM, it instantly closes on you. No crash dialog, no error, nothing, it just dies. This blog covers how I tracked down a Crackme's rdtsc-based anti-VM and beat it by making the VM look like bare metal.
+---
 # Running a VM-Hostile Crackme Inside a VM for a $1,000 Bounty
 
 ### So I picked up a reversing bounty, and the challenge sounded simple enough:

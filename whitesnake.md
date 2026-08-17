@@ -1,3 +1,12 @@
+---
+layout: post
+title: |-
+  WhiteSnake Malware Analysis
+date: 2023-06-25
+kind: WRITEUP
+summary: |-
+  WhiteSnake Malware Analysis
+---
 # WhiteSnake Stealer Analysis
 
 ### I'm drunk and this is my analysis on WhiteSnake Stealer. My friend Global wouldn't stop bothering me to analyse it with him so here it is.

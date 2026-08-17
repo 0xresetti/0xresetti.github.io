@@ -1,3 +1,12 @@
+---
+layout: post
+title: |-
+  Uncovering a Palestinian & French Stealer Campaign
+date: 2023-11-14
+kind: WRITEUP
+summary: |-
+  An interesting file was dropped in a Telegram channel I was apart of with the message "i will be using my private stealer for #opisrael, message me to help it spread". This blog shows the world of Stealer-as-a-Service markets, and political hacktivism within Telegram against Israel, and a very noisy piece of malware!
+---
 # Uncovering a Palestinian & French Stealer Campaign
 
 ### An interesting file was dropped in a Telegram channel I was apart of with the message "i will be using my private stealer for #opisrael, message me to help it spread". This blog shows the world of Stealer-as-a-Service markets, and political hacktivism within Telegram against Israel, and a very noisy piece of malware!

@@ -1,3 +1,12 @@
+---
+layout: post
+title: |-
+  WeedHack Stealer: A new stealer targeting Minecraft users
+date: 2026-01-22
+kind: WRITEUP
+summary: |-
+  Recently, I came across a lot of new .jar malware which seems to be a rebranded version of another .jar malware known as "Majanito", developed by a threat actor under the same name. After the rebrand and a change in ownership, the stealer was renamed to "WeedHack" and was subsequently setup as a MaaS for sale. They provide a free and paid payload, the latter including more features and spying functionality such as a keylogger, webcam viewer, and screensharing. I've also [written a basic tool](https://github.com/0xresetti/Weedhack-Remover) to remove WeedHack.
+---
 # Weedhack Stealer - Technical Analysis
 
 > Multi-stage infostealer targeting Minecraft players, distributed as fake Fabric mods. Two major variants observed with significant architectural differences.

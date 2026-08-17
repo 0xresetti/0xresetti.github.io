@@ -1,3 +1,12 @@
+---
+layout: post
+title: |-
+  Analysing Piolin, a modified version of Ploutus, and (kind-of) undocumented ATM Malware Sample
+date: 2024-07-30
+kind: WRITEUP
+summary: |-
+  Once again, while gathering new ATM Malware resources for some study time, I came across a (kind-of) undocumented sample of Piolin which I got from the Global ATM Malware Wall. So once again, let's document it!
+---
 ![gif](https://camo.githubusercontent.com/79870d63d7f43840b67bce8ab3739cfb3d6c7a94f2c1b1a2b5469f95ce23180b/68747470733a2f2f632e74656e6f722e636f6d2f634a52634d795541694d6341414141642f74656e6f722e676966)
 
 # Piolin ATM Malware Analysis
